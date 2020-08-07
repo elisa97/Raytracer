@@ -1,7 +1,10 @@
 #ifndef BOX_HPP
 #define BOX_HPP
 
+// header, external
 #include <glm/vec3.hpp>
+
+// header, project
 #include "shape.hpp"
 
 class Box : public Shape {

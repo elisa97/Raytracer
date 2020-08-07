@@ -1,6 +1,10 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+// header, external
+#include <glm/vec3.hpp>
+
+// header, system
 #include <fstream>
 #include <sstream>
 #include <ostream>
@@ -10,7 +14,8 @@
 #include <set>
 #include <memory>
 #include <algorithm>
-#include <glm/vec3.hpp>
+
+// header, project
 #include "material.hpp"
 #include "sphere.hpp"
 #include "box.hpp"

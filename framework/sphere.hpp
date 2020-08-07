@@ -1,7 +1,10 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
+// header, external
 #include <glm/vec3.hpp>
+
+// header, project
 #include "shape.hpp"
 #include "hitpoint.hpp"
 

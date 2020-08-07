@@ -10,11 +10,17 @@
 #ifndef BUW_RENDERER_HPP
 #define BUW_RENDERER_HPP
 
+// header, external
+
+#include <glm/glm.hpp>
+
+// header, system
+#include <string>
+
+// header, project
 #include "color.hpp"
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
-#include <string>
-#include <glm/glm.hpp>
 
 class Renderer
 {

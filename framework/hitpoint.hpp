@@ -1,6 +1,7 @@
 #ifndef HITPOINT_HPP
 #define HITPOINT_HPP
 
+// header, project
 #include "color.hpp"
 #include "ray.hpp"
 

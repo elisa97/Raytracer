@@ -1,10 +1,10 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-// External libraries
+// header, external
 #include <glm/vec3.hpp>
 
-// Standard libraries
+// header, project
 #include <string>
 #include <fstream>
 #include <sstream>

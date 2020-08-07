@@ -1,6 +1,7 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 
+// header, project
 #include "color.hpp"
 
 class Shape {

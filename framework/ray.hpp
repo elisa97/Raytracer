@@ -1,6 +1,7 @@
 #ifndef RAY_HPP
 #define RAY_HPP
 
+// header, external
 #include <glm/vec3.hpp>
 
 struct Ray

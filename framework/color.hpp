@@ -10,6 +10,7 @@
 #ifndef BUW_COLOR_HPP
 #define BUW_COLOR_HPP
 
+// header, system
 #include <iostream>
 
 struct Color

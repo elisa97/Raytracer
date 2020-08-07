@@ -1,8 +1,11 @@
 #ifndef LIGHT_HPP
 #define LIGHT_HPP
 
-#include "color.hpp"
+// header, external
 #include <glm/vec3.hpp>
+
+// header, project
+#include "color.hpp"
 
 struct Light
 {

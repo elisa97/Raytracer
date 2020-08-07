@@ -10,19 +10,24 @@
 #ifndef BUW_WINDOW_HPP
 #define BUW_WINDOW_HPP
 
-#include "color.hpp"
-
+// header, external
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <vector>
 
-#define GLM_FORCE_RADIANS
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/gtx/multiple.hpp>
 
+// header, system
+#include <vector>
 #include <array>
 #include <string>
+
+// header, project
+#include "color.hpp"
+
+
+#define GLM_FORCE_RADIANS
 
 struct GLFWwindow;
 class Window
