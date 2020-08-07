@@ -20,5 +20,4 @@ class Sphere : public Shape {
     float rad_;
 };
 
-
 #endif

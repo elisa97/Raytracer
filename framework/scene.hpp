@@ -11,9 +11,11 @@
 #include <memory>
 #include <algorithm>
 #include <glm/vec3.hpp>
-#include "Material.hpp"
-#include "Sphere.hpp"
-#include "Box.hpp"
+#include "material.hpp"
+#include "sphere.hpp"
+#include "box.hpp"
+#include "camera.hpp"
+#include "light.hpp"
 
 struct Scene
 {
@@ -27,6 +29,6 @@ struct Scene
     Camera camera;
     Color ambient {1.0f,1.0f,1.0f};
      
-}
+};
 
 #endif

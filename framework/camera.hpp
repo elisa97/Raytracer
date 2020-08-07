@@ -18,5 +18,6 @@ struct Camera {
     glm::vec3 direction = {0.0f, 0.0f, -1.0f};
 
     //Ray shoot_ray () Methode implementieren?
-}
+};
+
 #endif

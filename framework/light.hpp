@@ -4,7 +4,7 @@
 #include "color.hpp"
 #include <glm/vec3.hpp>
 
-struct light
+struct Light
 {
     std::string name = "light0";
     float brightness = 1.0f;
