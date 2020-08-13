@@ -1,7 +1,15 @@
 #include "shape.hpp"
 
-Shape::Shape() {
+Shape::Shape():
+  name_{"default name"},
+  material_{}{
   std::cout << "Cnst/Shape " << name_ << "\n";
+}
+
+Shape::Shape(std::shared_ptr<Material> material,std::string const& name):
+material_{material},
+name_{name}{
+
 }
 
 Shape::~Shape() {
@@ -9,8 +17,7 @@ Shape::~Shape() {
 }
 
 std::ostream& Shape::print(std::ostream & os) const {
-   return os << "Shape " << name_ << "\nRGB " << color_.r 
-          << "|" << color_.g << "|" << color_.b << "\n\n";
+   return os << "Shape " << name_ << "\nMaterial name " << material_->name_ << "\n\n";
 }
 
 std::ostream& operator<<(std::ostream& os, Shape const& s) {
