@@ -17,12 +17,19 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   , ppm_(width_, height_)
 {}
 
-void Renderer::render()
+void Renderer::render(Scene const& current_scene)
 {
   std::size_t const checker_pattern_size = 20;
+  float aspect_ratio = height_ / (float)width_;
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
+
+      //Ray current_eye_ray;
+
+      //HitPoint closest_hit = generate_eye_ray(x / float(width_) -0.5f, aspect_ratio * (y / float(height_) -0.5f), current_eye_ray);
+
+
       Pixel p(x,y);
       if ( ((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
         p.color = Color{0.0f, 1.0f, float(x)/height_};
@@ -51,3 +58,8 @@ void Renderer::write(Pixel const& p)
 
   ppm_.write(p);
 }
+
+HitPoint Renderer::generate_eye_ray(Scene const& scene, Ray const& ray) const {
+  
+}
+

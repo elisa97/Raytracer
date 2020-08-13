@@ -18,22 +18,26 @@
 #include <string>
 
 // header, project
-#include "color.hpp"
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
+#include "camera.hpp"
+#include "scene.hpp"
+#include "shape.hpp"
+#include "material.hpp"
 
 class Renderer
 {
 public:
   Renderer(unsigned w, unsigned h, std::string const& file);
 
-  void render();
+  void render(Scene const& current_scene);
   void write(Pixel const& p);
 
   inline std::vector<Color> const& color_buffer() const
   {
     return color_buffer_;
   }
+  HitPoint Renderer::generate_eye_ray(Scene const& scene, Ray const& ray) const;
 
 private:
   unsigned width_;
@@ -42,5 +46,7 @@ private:
   std::string filename_;
   PpmWriter ppm_;
 };
+
+
 
 #endif // #ifndef BUW_RENDERER_HPP
