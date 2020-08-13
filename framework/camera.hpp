@@ -19,7 +19,7 @@ struct Camera {
     glm::vec3 position = {0.0f, 0.0f, 0.0f};
     glm::vec3 direction = {0.0f, 0.0f, -1.0f};
 
-    void generate_eye_ray(float x, float y, Ray& out_ray)
+    void generate_eye_ray(float x, float y, Ray& out_ray);
 };
 
 #endif
