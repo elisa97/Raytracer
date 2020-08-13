@@ -17,7 +17,7 @@ Shape::~Shape() {
 }
 
 std::ostream& Shape::print(std::ostream & os) const {
-   return os << "Shape " << name_ << "\nMaterial name " << material_->name_ << "\n\n";
+   return os << "Shape " << name_ << "\nMaterial name " << material_->name << "\n\n";
 }
 
 std::ostream& operator<<(std::ostream& os, Shape const& s) {

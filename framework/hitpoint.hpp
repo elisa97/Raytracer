@@ -7,11 +7,11 @@
 
 struct HitPoint
 {
-  bool cut = false;            //1
-  float cdist = -1.0f;         //2
-  std::string name = "default";  //3
-  Material mat = {};              //4
-  Ray pt_dir = {};             //5+6
+  bool cut = false;                      //1
+  float cdist = -1.0f;                   //2
+  std::string name = "default";          //3
+  std::shared_ptr<Material> material{};  //4
+  Ray pt_dir{};                          //5+6
 };
 
 #endif

@@ -7,8 +7,8 @@
 Sphere::Sphere() {
   mid_ = {0.0f, 0.0f, 0.0f};
   rad_ = 10.0f;
-  name_ = "Jeff";
-  color_ = {0.0f, 0.0f, 0.0f};
+  name_ = "default";
+  material_ = {};
 }
 
 Sphere::~Sphere() {
@@ -18,16 +18,16 @@ Sphere::~Sphere() {
 Sphere::Sphere(glm::vec3 const& m , float r)  {
   mid_ = m;
   rad_ = abs(r);
-  name_ = "Jeff";
-  color_ = {0.0f, 0.0f, 0.0f};
+  name_ = "default";
+  material_ = {};
 }
 
-Sphere::Sphere(glm::vec3 const& m , float r, std::string const& n, Color const& c)  {
+Sphere::Sphere(glm::vec3 const& m , float r, std::string const& name, std::shared_ptr<Material> material)  {
   std::cout << "Cnst/Sphere " << name_ << "\n";
   mid_ = m;
   rad_ = abs(r);
-  name_ = n;
-  color_ = c;
+  name_ = name;
+  material_ = material;
 }
 
 float Sphere::area() const {
@@ -39,10 +39,9 @@ float Sphere::volume() const {
 }
 
 std::ostream& Sphere::print(std::ostream & os) const {
-   return os << "Sphere " << name_ << "\nRGB [" 
-   << color_.r << "|" << color_.g << "|" << color_.b 
-   << "]\nMiddle: (" << mid_.x << "|" << mid_.y << "|" << mid_.z 
-   << ") Radian: " << rad_ << "\n\n";
+   return os << "Sphere " << name_ << "\nMaterial name: " 
+   << material_->name << " \nMiddle: (" << mid_.x << "|" 
+   << mid_.y << "|" << mid_.z << ") Radian: " << rad_ << "\n\n";
 }
 
 HitPoint Sphere::intersect(Ray const& r) const {
@@ -53,7 +52,7 @@ HitPoint Sphere::intersect(Ray const& r) const {
 
   if (res) {
     glm::vec3 ct = r.origin + (d * n);
-    return{true, d, name_, color_, {ct, n}};
+    return{true, d, name_, material_, {ct, n}};
   }
   
   return{};

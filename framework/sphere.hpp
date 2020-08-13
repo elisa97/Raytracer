@@ -13,7 +13,7 @@ class Sphere : public Shape {
     Sphere();
     ~Sphere();
     Sphere(glm::vec3 const& m, float r);
-    Sphere(glm::vec3 const& m, float r, std::string const& n, Color const& c);
+    Sphere(glm::vec3 const& m, float r, std::string const& name, std::shared_ptr<Material> material);
     float area() const override;
     float volume() const override;
     std::ostream& print(std::ostream & os) const override;
