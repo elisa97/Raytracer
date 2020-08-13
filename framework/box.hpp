@@ -12,7 +12,7 @@ class Box : public Shape {
     Box();
     Box(glm::vec3 const& lhs, glm::vec3 const& rhs);
     Box(glm::vec3 const& lhs, glm::vec3 const& rhs, 
-        std::string const& n, Color const& c);
+        std::string const& n, std::shared_ptr<Material> mat);
         
     float area() const override;
     float volume() const override;
