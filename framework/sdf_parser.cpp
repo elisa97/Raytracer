@@ -2,6 +2,7 @@
 #include <fstream>  // open / read write / close files
 #include <string>  // stringstream -> easy parsing mechanics
 #include <sstream>  // buffer lines read from file
+#include <vector>
 #include <glm/vec3.hpp> 
 
 
@@ -21,6 +22,10 @@ int main(int argc, char** argv) {
 
     std::string identifier;
     std::string class_name;
+
+    std::vector<std::string> materials;
+    std::vector<std::string> shape_mats;
+
 
     while( std::getline(in_file, line_buffer) ) {
         std::cout << ++line_count << ":" << line_buffer << std::endl;
@@ -48,6 +53,9 @@ int main(int argc, char** argv) {
                     in_sstream >> box_v2.x >> box_v2.y >> box_v2.z;
                     in_sstream >> box_mat_name;
 
+                    //using a vector to store and later check materials
+                    shape_mats.push_back(box_mat_name);
+
                     //Debug 
                     std::cout << "Shape: Box: " << box_name << std::endl;
                     std::cout << "Vec1: (" << box_v1.x << ", " << box_v1.y << ", " << box_v1.z << ")" << std::endl;
@@ -64,7 +72,10 @@ int main(int argc, char** argv) {
                     in_sstream >> sphere_name;
                     in_sstream >> sphere_m.x >> sphere_m.y >> sphere_m.z;
                     in_sstream >> sphere_r;
-                    
+
+                    //same as with box
+                    shape_mats.push_back(sphere_mat_name);
+
                     //Debug
                     std::cout << "Shape: Sphere: " << sphere_name << std::endl;
                     std::cout << "Center m: (" << sphere_m.x << ", " << sphere_m.y << ", " << sphere_m.z << ")" << std::endl;
@@ -84,6 +95,9 @@ int main(int argc, char** argv) {
                 in_sstream >> ka.r >> ka.g >> ka.b;
                 in_sstream >> kd.r >> kd.g >> kd.b;
                 in_sstream >> ks.r >> ks.g >> ks.b;
+
+                //vector to staore materials
+                materials.push_back(material_name);
                 
                 //Debug
                 std::cout << "Object: Material: " <<  material_name << std::endl;
@@ -116,5 +130,17 @@ int main(int argc, char** argv) {
 
     in_file.close();
 
+    //checking if all the materials are availible
+    //generating extra array with each material of the shapes only once present, checking that with the materials array to make sure that all
+    //each shape has a valid material, otherwise print a error message.
+    std::vector<std::string> tmp_mat;
+    if (shape_mats.size() > 0) {
+        tmp_mat.push_back(shape_mats[0]);
+    }
+    for (int i = 1; i < shape_mats.size(); ++i) {
+        for (int j = 0; j < tmp_mat.size(); ++j) {
+            
+        }
+    }
     return 0;
 }
