@@ -18,8 +18,7 @@ struct Camera {
     float fov_x = 60.0;  // between 0 and 180
     glm::vec3 position = {0.0f, 0.0f, 0.0f};
     glm::vec3 direction = {0.0f, 0.0f, -1.0f};
-
-    void generate_eye_ray(float x, float y, Ray& out_ray);
+    glm::vec3 up = {0.0f, 1.0f, 0.0f};
 };
 
 #endif
