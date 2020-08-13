@@ -10,20 +10,20 @@
 
 struct  Material
 {
-    std::string name_ = "standard rough";
-    Color ka_{0,0,0};
-    Color kd_{0,0,0};
-    Color ks_{0,0,0};
-    float m_ = 1;
+    std::string name = "standard rough";
+    Color ka{0,0,0};
+    Color kd{0,0,0};
+    Color ks{0,0,0};
+    float m = 1.0f;
 
     Material(){}
-    Material(std::string name, Color ka, Color kd, Color ks, float m)
+    Material(std::string name_c, Color ka_c, Color kd_c, Color ks_c, float m)
     {
-        name_ = name;
-        ka_ = ka;
-        kd_ = kd;
-        ks_ = ks;
-        m_ = m;
+        name = name_c;
+        ka = ka_c;
+        kd = kd_c;
+        ks = ks_c;
+        m = m;
     }
     std::ostream& print(std::ostream& os);
 };
