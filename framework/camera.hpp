@@ -4,11 +4,13 @@
 // header, external
 #include <glm/vec3.hpp>
 
-// header, project
+// header, system
 #include <string>
 #include <fstream>
 #include <sstream>
 
+//header, project
+#include "ray.hpp"
 
 struct Camera {
 
@@ -17,7 +19,7 @@ struct Camera {
     glm::vec3 position = {0.0f, 0.0f, 0.0f};
     glm::vec3 direction = {0.0f, 0.0f, -1.0f};
 
-    //Ray shoot_ray () Methode implementieren?
+    void generate_eye_ray(float x, float y, Ray& out_ray)
 };
 
 #endif
