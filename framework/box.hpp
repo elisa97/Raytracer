@@ -20,7 +20,7 @@ class Box : public Shape {
     float area() const override;
     float volume() const override;
     std::ostream& print(std::ostream & os) const override;
-    HitPoint Box::intersect(Ray const& ray);
+    HitPoint intersect(Ray const& ray) const override;
   private:
     glm::vec3 min_, max_;
 };

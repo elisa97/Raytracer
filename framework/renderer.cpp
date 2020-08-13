@@ -59,7 +59,5 @@ void Renderer::write(Pixel const& p)
   ppm_.write(p);
 }
 
-HitPoint Renderer::generate_eye_ray(Scene const& scene, Ray const& ray) const {
-  
-}
+//HitPoint Renderer::generate_eye_ray(Scene const& scene, Ray const& ray) const {}
 

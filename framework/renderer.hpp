@@ -37,7 +37,7 @@ public:
   {
     return color_buffer_;
   }
-  HitPoint Renderer::generate_eye_ray(Scene const& scene, Ray const& ray) const;
+  //HitPoint Renderer::generate_eye_ray(Scene const& scene, Ray const& ray) const;
 
 private:
   unsigned width_;

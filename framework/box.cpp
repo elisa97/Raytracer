@@ -41,7 +41,7 @@ std::ostream& Box::print(std::ostream & os) const {
    << ") (" << min_.x << "|" << min_.y << "|" << min_.z << ")\n\n";
 }
 
-HitPoint Box::intersect(Ray const& ray){
+HitPoint Box::intersect(Ray const& ray) const {
     float t = (min_.x - ray.origin.x) / ray.direction.x;
     HitPoint hitpoint{};
     glm::vec3 p = ray.origin + t * ray.direction;
