@@ -6,7 +6,6 @@
 
 // header, project
 #include "shape.hpp"
-#include "hitpoint.hpp"
 
 class Sphere : public Shape {
   public:
