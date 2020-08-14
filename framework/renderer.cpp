@@ -24,15 +24,23 @@ void Renderer::render(Scene const& current_scene)
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
+
+      //setting up the rays
       glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
       glm::vec3 ray_norm = glm::normalize(ray_vec);
       Ray current_eye_ray {{}, ray_norm};
 
-      // HitPoint closest_hit = generate_eye_ray(x / float(width_) -0.5f, aspect_ratio * (y / float(height_) -0.5f), current_eye_ray);
-      auto test = &current_scene.objects.front();
-      auto non_ptr_test = test->get();
-      HitPoint test_hp = non_ptr_test->intersect(current_eye_ray);
-
+      //tried to iterate trough the vector, checking which object is the closest to the camera
+      HitPoint test_hp{};
+      HitPoint tmp_hp{};
+      for (auto const& i : current_scene.objects) {
+        auto test = i;
+        auto non_ptr_test = test.get();
+        test_hp = non_ptr_test->intersect(current_eye_ray);
+        if ((tmp_hp.cdist < 0) || ((tmp_hp.cdist > test_hp.cdist) && (tmp_hp.cdist >= 0))) {
+          tmp_hp = test_hp;
+        }
+      }
       Pixel p(x,y);
       if (test_hp.cut) {
         p.color = Color{test_hp.material->ka.r, test_hp.material->ka.g, test_hp.material->ka.b};
