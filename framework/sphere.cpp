@@ -54,7 +54,7 @@ HitPoint Sphere::intersect(Ray const& r) const {
 
   if (res) {
     glm::vec3 ct = r.origin + (d * n);
-    return{true, d, name_, material_, {ct, n}};
+    return{true, d, name_, material_, ct, n};
   }
   
   return{};

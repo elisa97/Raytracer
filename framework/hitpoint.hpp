@@ -1,9 +1,11 @@
 #ifndef HITPOINT_HPP
 #define HITPOINT_HPP
 
+//header, external
+#include <glm/vec3.hpp>
+
 // header, project
 #include "material.hpp"
-#include "ray.hpp"
 
 struct HitPoint
 {
@@ -11,7 +13,8 @@ struct HitPoint
   float cdist = -1.0f;                   //2
   std::string name = "default";          //3
   std::shared_ptr<Material> material{};  //4
-  Ray pt_dir{};                          //5+6
+  glm::vec3 origin{};                    //5
+  glm::vec3 normal{};                    //6
 };
 
 #endif

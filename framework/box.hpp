@@ -2,10 +2,12 @@
 #define BOX_HPP
 
 // header, external
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 
 // header, system
-#include "cmath"
+#include <cmath>
+#include <vector>
+#include <algorithm>
 
 // header, project
 #include "shape.hpp"

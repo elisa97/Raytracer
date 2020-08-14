@@ -7,6 +7,7 @@
 // header, project
 #include "color.hpp"
 #include "hitpoint.hpp"
+#include "ray.hpp"
 
 
 class Shape {
