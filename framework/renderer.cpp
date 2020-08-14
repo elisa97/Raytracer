@@ -24,10 +24,11 @@ void Renderer::render(Scene const& current_scene)
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
+      glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
+      glm::vec3 ray_norm = glm::normalize(ray_vec);
+      Ray current_eye_ray {{}, ray_norm};
 
-    Ray current_eye_ray {{}, {x / float(width_) -0.5f, aspect_ratio * (y / float(height_) -0.5f), 0}};
-
-     // HitPoint closest_hit = generate_eye_ray(x / float(width_) -0.5f, aspect_ratio * (y / float(height_) -0.5f), current_eye_ray);
+      // HitPoint closest_hit = generate_eye_ray(x / float(width_) -0.5f, aspect_ratio * (y / float(height_) -0.5f), current_eye_ray);
       auto test = &current_scene.objects.front();
       auto non_ptr_test = test->get();
       HitPoint test_hp = non_ptr_test->intersect(current_eye_ray);

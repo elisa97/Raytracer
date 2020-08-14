@@ -4,10 +4,9 @@
 int main(int argc, char* argv[]){
     Scene new_scene;
     Renderer new_renderer{600, 400, "output.ppm"};
-    Material new_material{};
-    std::shared_ptr<Material> mat_ptr = new_material;
-    Sphere new_sphere{{-2, 0, 0}, 0.5, mat_ptr};
-    std::shared_ptr<Sphere> sphere_ptr = new_sphere ;
+    //Material new_material = new Material{};
+    std::shared_ptr<Material> mat_ptr(new Material{});
+    std::shared_ptr<Sphere> sphere_ptr(new Sphere{{0, 0, -2}, 0.5f, "test_sphere", mat_ptr});
     new_scene.objects.push_back(sphere_ptr);
 
     new_renderer.render(new_scene);

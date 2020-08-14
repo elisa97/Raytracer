@@ -129,4 +129,5 @@ Scene importScene(std::string const& sdf_file) {
             
         }
     }
+    return new_scene;
 }
