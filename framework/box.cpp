@@ -1,4 +1,4 @@
- #include "box.hpp"
+#include "box.hpp"
 
 Box::Box() {
   min_ = {0.0f, 0.0f, 0.0f};
@@ -42,8 +42,8 @@ std::ostream& Box::print(std::ostream & os) const {
 }
 
 HitPoint Box::intersect(Ray const& ray) const {
-    float t = (min_.x - ray.origin.x) / ray.direction.x;
     HitPoint hitpoint{};
+    float t = (min_.x - ray.origin.x) / ray.direction.x;
     glm::vec3 p = ray.origin + t * ray.direction;
 
     if (p.y > min_.y && p.y < max_.y && p.z > min_.z && p.z < max_.z){
@@ -51,9 +51,11 @@ HitPoint Box::intersect(Ray const& ray) const {
         hitpoint.cdist = t;
         hitpoint.name = name_;
         hitpoint.material = material_;
-        auto ct = ray.origin + t * ray.direction;
-        auto n = ray.direction;
-        hitpoint.pt_dir = {ct, n};
+        hitpoint.point = ray.origin + t * ray.direction;
+        hitpoint.direction = ray.direction;
+        //auto ct = ray.origin + t * ray.direction;
+        //auto n = ray.direction;
+        //hitpoint.pt_dir = {ct, n};
         return hitpoint;
     }
     else{
