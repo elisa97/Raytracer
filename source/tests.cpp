@@ -83,23 +83,23 @@ TEST_CASE("outputstream test", "[os]") {
   REQUIRE(str1.str() == cstr1);
   std::ostringstream str2;
   str2 << b2;
-  std::string cstr2 = "Box default\nMaterial: def material\nPoints: (12|5|10) (10|1|5)\n\n";
+  std::string cstr2 = "Box default\nMaterial: def material\nPoints: (10|1|5) (12|5|10)\n\n";
   REQUIRE(str2.str() == cstr2);
   std::ostringstream str3;
   str3 << b3;
-  std::string cstr3 = "Box Guntram\nMaterial: mat1\nPoints: (0|-2|8) (-3|-7|3)\n\n";
+  std::string cstr3 = "Box Guntram\nMaterial: def material\nPoints: (-3|-7|3) (0|-2|8)\n\n";
   REQUIRE(str3.str() == cstr3);
   std::ostringstream str4;
   str4 << s1;
-  std::string cstr4 = "Sphere default\nMaterial: def material\nMiddle: (0|0|0) Radian: 10\n\n";
+  std::string cstr4 = "Sphere default\nMaterial name: def material\nMiddle: (0|0|0) Radian: 10\n\n";
   REQUIRE(str4.str() == cstr4);
   std::ostringstream str5;
   str5 << s2;
-  std::string cstr5 = "Sphere default\nMaterial: def material\nMiddle: (1.5|5.3|2.7) Radian: 4.51\n\n";
+  std::string cstr5 = "Sphere default\nMaterial name: def material\nMiddle: (1.5|5.3|2.7) Radian: 4.51\n\n";
   REQUIRE(str5.str() == cstr5);
   std::ostringstream str6;
   str6 << s3;
-  std::string cstr6 = "Sphere Kurt\nMaterial: mat17|0.7]\nMiddle: (3|1|5) Radian: 21\n\n";
+  std::string cstr6 = "Sphere Kurt\nMaterial name: def material\nMiddle: (3|1|5) Radian: 21\n\n";
   REQUIRE(str6.str() == cstr6);
 }
 
@@ -194,7 +194,7 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
   auto n = hp.name;
   REQUIRE(d == Approx(10.87f));
   REQUIRE(b == true);
-  REQUIRE(n == "Jeff");
+  REQUIRE(n == "default");
 
   //ray almost touches the sphere bc 6.3f != 6.3
   Ray r9 {{-4.0f, 2.0f, 9.0f},{0.0f, 0.3f, 1.7f}};

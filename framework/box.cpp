@@ -38,7 +38,7 @@ float Box::volume() const {
 }
 
 std::ostream& Box::print(std::ostream & os) const {
-   return os << "Box " << name_ << "\n Material: " << material_->name 
+   return os << "Box " << name_ << "\nMaterial: " << material_->name 
    << "\nPoints: (" << max_.x << "|" << max_.y << "|" << max_.z 
    << ") (" << min_.x << "|" << min_.y << "|" << min_.z << ")\n\n";
 }
