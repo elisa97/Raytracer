@@ -22,7 +22,9 @@ class Box : public Shape {
     std::ostream& print(std::ostream & os) const override;
     HitPoint intersect(Ray const& ray) const override;
   private:
-    glm::vec3 min_, max_;
+    glm::vec3 min_;
+    glm::vec3 max_;
+
 };
 
 
