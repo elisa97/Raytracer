@@ -53,8 +53,8 @@ HitPoint Box::intersect(Ray const& ray) const {
         hitpoint.cdist = t;
         hitpoint.name = name_;
         hitpoint.material = material_;
-        hitpoint.point = ray.origin + t * ray.direction;
-        hitpoint.direction = ray.direction;
+        hitpoint.pt_dir.origin = ray.origin + t * ray.direction;
+        hitpoint.pt_dir.direction = ray.direction;
         //auto ct = ray.origin + t * ray.direction;
         //auto n = ray.direction;
         //hitpoint.pt_dir = {ct, n};
