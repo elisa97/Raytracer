@@ -32,15 +32,19 @@ void Renderer::render(Scene const& current_scene)
 
       //tried to iterate trough the vector, checking which object is the closest to the camera
       HitPoint test_hp{};
+      test_hp.cdist = 1000000;
       HitPoint tmp_hp{};
       for (auto const& i : current_scene.objects) {
-        auto test = i;
-        auto non_ptr_test = test.get();
-        test_hp = non_ptr_test->intersect(current_eye_ray);
-        if ((tmp_hp.cdist < 0) || ((tmp_hp.cdist > test_hp.cdist) && (tmp_hp.cdist >= 0))) {
-          tmp_hp = test_hp;
+        tmp_hp = i->intersect(current_eye_ray);
+
+        if (tmp_hp.cut) {
+          if (((test_hp.cdist < 0) && (tmp_hp.cdist >= 0)) || ((tmp_hp.cdist < test_hp.cdist) && (test_hp.cdist >= 0))) {
+          //if (tmp_hp.cdist < test_hp.cdist) {
+            test_hp = tmp_hp;
+          }
         }
       }
+
       Pixel p(x,y);
       if (test_hp.cut) {
         p.color = Color{test_hp.material->ka.r, test_hp.material->ka.g, test_hp.material->ka.b};

@@ -6,10 +6,12 @@ int main(int argc, char* argv[]){
     Renderer new_renderer{600, 400, "output.ppm"};
     //Material new_material = new Material{};
     std::shared_ptr<Material> mat_ptr(new Material{});
-    std::shared_ptr<Sphere> sphere_ptr(new Sphere{{4, 3, -2}, 0.5f, "test_sphere", mat_ptr});
-    std::shared_ptr<Box> box_ptr(new Box{{0,0,0}, {2,2,2}, "test_box", mat_ptr});
+    std::shared_ptr<Sphere> sphere_ptr(new Sphere{{1, 0, -2}, 0.2f, "test_sphere", mat_ptr});
+    std::shared_ptr<Box> box_ptr(new Box{{0,0,-3}, {1.3f,-4.4f,-5.0f}, "test_box", mat_ptr});
+    std::shared_ptr<Sphere> sphere_ptr2(new Sphere{{-1, 0, -2}, 0.2f, "test_sphere", mat_ptr});
     new_scene.objects.push_back(sphere_ptr);
     new_scene.objects.push_back(box_ptr);
+    new_scene.objects.push_back(sphere_ptr2);
 
     new_renderer.render(new_scene);
 
