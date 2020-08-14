@@ -103,7 +103,6 @@ TEST_CASE("outputstream test", "[os]") {
   REQUIRE(str6.str() == cstr6);
 }
 
-
 TEST_CASE("intersect_ray_sphere", "[intersect_s]") {
   //Ray
   glm::vec3 ray_origin{0.0f, 0.0f, 0.0f};
@@ -194,10 +193,9 @@ TEST_CASE("intersect_ray_box", "[intersect_b]") {
   Box b1 {};
   Box b2 {{3.0f, 2.0f, 3.0f}, {2.0f, -3.0f, 1.0f}, "Box 2", {}};
   auto hp = b1.intersect(r1);
-  REQUIRE(hp.cdist == Approx(-1.0f));
-  REQUIRE(hp.cut == false);
+  REQUIRE(hp.cdist == Approx(40.0f));
+  REQUIRE(hp.cut == true);
 }
-
 
 TEST_CASE("con- and destructor", "[deconst]") {
   std::shared_ptr<Material> mat1 (new Material{});
