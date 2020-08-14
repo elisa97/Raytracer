@@ -17,13 +17,13 @@ struct  Material
     float m = 1.0f;
 
     Material(){}
-    Material(std::string name_c, Color ka_c, Color kd_c, Color ks_c, float m)
+    Material(std::string name_c, Color ka_c, Color kd_c, Color ks_c, float m_c)
     {
         name = name_c;
         ka = ka_c;
         kd = kd_c;
         ks = ks_c;
-        m = m;
+        m = m_c;
     }
     std::ostream& print(std::ostream& os);
 };
