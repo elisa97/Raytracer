@@ -10,7 +10,7 @@
 
 struct  Material
 {
-    std::string name = "standard rough";
+    std::string name = "def material";
     Color ka{0,0,0};
     Color kd{0,0,0};
     Color ks{0,0,0};

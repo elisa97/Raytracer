@@ -16,3 +16,10 @@ add_dependencies(render_test glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 
 install(TARGETS render_test DESTINATION .)
 
+add_executable(tests
+  tests.cpp
+)
+target_link_libraries(tests
+  ${GLFW_LIBRARIES}
+  ${FRAMEWORK_NAME}
+  )

@@ -1,4 +1,4 @@
-#include "box.hpp"
+ #include "box.hpp"
 
 Box::Box() {
   min_ = {0.0f, 0.0f, 0.0f};
