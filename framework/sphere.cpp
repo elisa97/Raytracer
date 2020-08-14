@@ -8,7 +8,8 @@ Sphere::Sphere() {
   mid_ = {0.0f, 0.0f, 0.0f};
   rad_ = 10.0f;
   name_ = "default";
-  material_ = {};
+  std::shared_ptr<Material> mat1(new Material{});
+  material_ = mat1;
 }
 
 Sphere::~Sphere() {
@@ -19,7 +20,8 @@ Sphere::Sphere(glm::vec3 const& m , float r)  {
   mid_ = m;
   rad_ = abs(r);
   name_ = "default";
-  material_ = {};
+  std::shared_ptr<Material> mat1(new Material{});
+  material_ = mat1;
 }
 
 Sphere::Sphere(glm::vec3 const& m , float r, std::string const& name, std::shared_ptr<Material> material)  {
