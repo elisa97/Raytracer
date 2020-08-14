@@ -104,7 +104,7 @@ TEST_CASE("outputstream test", "[os]") {
 }
 
 
-TEST_CASE("intersect_ray_sphere", "[intersect]") {
+TEST_CASE("intersect_ray_sphere", "[intersect_s]") {
   //Ray
   glm::vec3 ray_origin{0.0f, 0.0f, 0.0f};
   //ray direction has to be normalized
@@ -126,84 +126,76 @@ TEST_CASE("intersect_ray_sphere", "[intersect]") {
   Ray r1 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c1 {{0.0f, 0.0f, 5.0f}, 1.0f};
   auto hp = c1.intersect(r1);
-  bool b = hp.cut;
-  float d = hp.cdist;
-  REQUIRE(d == Approx(4.0f));
-  REQUIRE(b == true);
+  REQUIRE(hp.cdist == Approx(4.0f));
+  REQUIRE(hp.cut == true);
 
   //if radian is equal to zero
   Ray r2 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c2 {{0.0f, 0.0f, 1.0f}, 0.0f};
   hp = c2.intersect(r2);
-  d = hp.cdist;
-  b = hp.cut;
-  REQUIRE(d == Approx(1.0f)); 
-  REQUIRE(b == true);
+  REQUIRE(hp.cdist== Approx(1.0f)); 
+  REQUIRE(hp.cut== true);
 
   //not intersecting
   Ray r3 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c3 {{0.0f, 0.1f, 1.0f}, 0.0f};
   hp = c3.intersect(r3);
-  d = hp.cdist;
-  b = hp.cut;
-  REQUIRE(d == Approx(-1.0f));
-  REQUIRE(b == false);
+  REQUIRE(hp.cdist == Approx(-1.0f));
+  REQUIRE(hp.cut == false);
 
   //negative radian
   Ray r4 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c4 {{0.0f, 0.0f, 5.0f}, -1.0f};
   hp = c4.intersect(r4);
-  b = hp.cut;
-  d = hp.cdist;
-  REQUIRE(d == Approx(4.0f));
-  REQUIRE(b == true);
+  REQUIRE(hp.cdist == Approx(4.0f));
+  REQUIRE(hp.cut == true);
 
   //ray in opposite direction
   Ray r5 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, -1.0f}};
   Sphere c5 {{0.0f, 0.0f, 5.0f}, 1.0f};
   hp = c5.intersect(r5);
-  b = hp.cut;
-  d = hp.cdist;
-  REQUIRE(d == Approx(-1.0f));
-  REQUIRE(b == false);
+  REQUIRE(hp.cdist == Approx(-1.0f));
+  REQUIRE(hp.cut == false);
 
   //ray starts somwhere inside the circle
   Ray r6 {{0.0f, 2.0f, 1.0f},{0.0f, 3.0f, -2.0f}};
   Sphere c6 {{5.0f, 2.0f, 2.0f}, 10.0f};
   hp = c6.intersect(r6);
-  b = hp.cut;
-  d = hp.cdist;
-  REQUIRE(d == Approx(8.0655f));
-  REQUIRE(b == true);
+  REQUIRE(hp.cdist == Approx(8.0655f));
+  REQUIRE(hp.cut == true);
 
   //ray goes trough the exact middle of the sphere
   Ray r7 {{5.0f, 2.0f, 7.0f},{2.0f, 1.5f, 1.0f}};
   Sphere c7 {{19.0f, 12.5f, 14.0f}, 3.0f};
   hp = c7.intersect(r7);
-  b = hp.cut;
-  d = hp.cdist;
-  REQUIRE(d == Approx(15.848f));
-  REQUIRE(b == true);
+  REQUIRE(hp.cdist == Approx(15.848f));
+  REQUIRE(hp.cut == true);
 
   //ray touches the sphere
   Ray r8 {{-4.0f, 2.0f, 9.0f},{0.0f, 0.3f, 1.7f}};
   Sphere c8 {{-6.29999f, 3.89f, 19.71f}, 2.3f};
   hp = c8.intersect(r8);
-  b = hp.cut;
-  d = hp.cdist;
-  auto n = hp.name;
-  REQUIRE(d == Approx(10.87f));
-  REQUIRE(b == true);
-  REQUIRE(n == "default");
+  REQUIRE(hp.cdist == Approx(10.87f));
+  REQUIRE(hp.cut == true);
+  REQUIRE(hp.name == "default");
 
   //ray almost touches the sphere bc 6.3f != 6.3
   Ray r9 {{-4.0f, 2.0f, 9.0f},{0.0f, 0.3f, 1.7f}};
   Sphere c9 {{-6.3f, 3.89f, 19.71f}, 2.3f};
   hp = c9.intersect(r9);
-  b = hp.cut;
-  d = hp.cdist;
-  REQUIRE(d == Approx(-1));
-  REQUIRE(b == false);
+  REQUIRE(hp.cdist == Approx(-1));
+  REQUIRE(hp.cut == false);
+}
+
+TEST_CASE("intersect_ray_box", "[intersect_b]") {
+  glm::vec3 ray_origin{0.0f, 0.0f, 0.0f};
+  glm::vec3 ray_direction{0.0f, 0.0f, 1.0f};
+  Ray r1{ray_origin, ray_direction};
+  Box b1 {};
+  Box b2 {{3.0f, 2.0f, 3.0f}, {2.0f, -3.0f, 1.0f}, "Box 2", {}};
+  auto hp = b1.intersect(r1);
+  REQUIRE(hp.cdist == Approx(-1.0f));
+  REQUIRE(hp.cut == false);
 }
 
 
