@@ -42,7 +42,7 @@ float Sphere::volume() const {
 
 std::ostream& Sphere::print(std::ostream & os) const {
    return os << "Sphere " << name_ << "\nMaterial name: " 
-   << material_->name << " \nMiddle: (" << mid_.x << "|" 
+   << material_->name << "\nMiddle: (" << mid_.x << "|" 
    << mid_.y << "|" << mid_.z << ") Radian: " << rad_ << "\n\n";
 }
 
