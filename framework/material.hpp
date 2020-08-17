@@ -11,9 +11,9 @@
 struct  Material
 {
     std::string name = "def material";
-    Color ka{0,0,0};
-    Color kd{0,0,0};
-    Color ks{0,0,0};
+    Color ka{0.0f,0.0f,0.0f};
+    Color kd{0.0f,0.0f,0.0f};
+    Color ks{0.0f,0.0f,0.0f};
     float m = 1.0f;
 
     Material(){}

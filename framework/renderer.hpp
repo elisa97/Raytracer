@@ -33,6 +33,9 @@ public:
   void render(Scene const& current_scene);
   void write(Pixel const& p);
 
+  Color calc_ambient(std::shared_ptr<Material> const& material, Scene const& scene) const;
+  void tone_mapping(Color & color) const;
+
   inline std::vector<Color> const& color_buffer() const
   {
     return color_buffer_;
