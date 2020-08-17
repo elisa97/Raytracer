@@ -18,7 +18,7 @@ class Box : public Shape {
     Box(glm::vec3 const& lhs, glm::vec3 const& rhs);
     Box(glm::vec3 const& lhs, glm::vec3 const& rhs, 
         std::string const& name, std::shared_ptr<Material> material);
-        
+    void intersectPlane(HitPoint& hitpoint, Ray const& ray, int dim, bool side, float plane_value) const;
     float area() const override;
     float volume() const override;
     std::ostream& print(std::ostream & os) const override;

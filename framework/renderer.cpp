@@ -38,7 +38,8 @@ void Renderer::render(Scene const& current_scene)
         tmp_hp = i->intersect(current_eye_ray);
 
         if (tmp_hp.cut) {
-          if (((test_hp.cdist < 0) && (tmp_hp.cdist >= 0)) || ((tmp_hp.cdist < test_hp.cdist) && (test_hp.cdist >= 0))) {
+          if ((tmp_hp.cdist < test_hp.cdist) && (tmp_hp.cdist >= 0)) {
+            //std::cout << tmp_hp.cdist << " ";
             test_hp = tmp_hp;
           }
         }
@@ -48,8 +49,11 @@ void Renderer::render(Scene const& current_scene)
       if (test_hp.cut) {
         //p.color = Color{test_hp.material->ka.r, test_hp.material->ka.g, test_hp.material->ka.b};
         //p.color = Color{1.0f, 1.0f, 1.0f/test_hp.cdist};
-        p.color = calc_ambient(test_hp.material, current_scene);
-        tone_mapping(p.color);
+        //p.color = calc_ambient(test_hp.material, current_scene);
+        p.color.r = test_hp.normal.x;
+        p.color.g = test_hp.normal.y;
+        p.color.b = test_hp.normal.z;
+        //tone_mapping(p.color);
       } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
         p.color = Color{0.0f, 1.0f, float(x)/height_};
       } else {
@@ -78,12 +82,24 @@ void Renderer::write(Pixel const& p)
   ppm_.write(p);
 }
 
+
+
 Color Renderer::calc_ambient(std::shared_ptr<Material> const& material, Scene const& scene) const {
   Color ambient{scene.ambient};
   ambient.r = material->ka.r * ambient.r;
   ambient.g = material->ka.g * ambient.g;
   ambient.b = material->ka.b * ambient.b;
   return ambient;
+}
+
+Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
+  Color final {0.0f, 0.0f, 0.0f};
+  glm::vec3 incoming_direction = glm::normalize(hitpoint.origin);
+  glm::vec3 normal = glm::normalize(hitpoint.normal);
+  glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
+  Ray reflect_ray {hitpoint.hit + 1.0f, glm::normalize(reflect_ray_dir)};
+
+  return final;
 }
 
 void Renderer::tone_mapping(Color &color) const {
