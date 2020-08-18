@@ -33,6 +33,6 @@ struct Scene
     Color ambient {1.0f, 1.0f, 1.0f};
 };
 
-Scene importScene(std::string const& path);
+Scene importScene(std::string const& path, bool verbose);
 
 #endif

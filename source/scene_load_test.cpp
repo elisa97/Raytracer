@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[]){
   std::string path = "../source/scene_test.sdf";
-  Scene test = importScene(path);
+  Scene test = importScene(path, false);
   Renderer new_renderer{600, 400, "output.ppm"};
   new_renderer.render(test);
 
