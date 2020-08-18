@@ -193,7 +193,7 @@ TEST_CASE("intersect_ray_box", "[intersect_b]") {
   Box b1 {};
   Box b2 {{3.0f, 2.0f, 3.0f}, {2.0f, -3.0f, 1.0f}, "Box 2", {}};
   auto hp = b1.intersect(r1);
-  REQUIRE(hp.cdist == Approx(40.0f));
+  REQUIRE(hp.cdist == Approx(-0.0001f)); //?
   REQUIRE(hp.cut == true);
 }
 

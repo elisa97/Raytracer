@@ -16,6 +16,7 @@ Box::Box() {
 Box::Box(glm::vec3 const& lhs, glm::vec3 const& rhs) {
   min_ = lhs;
   max_ = rhs;
+  minMax();
   name_ = "default";
   std::shared_ptr<Material> mat1(new Material{});
   material_ = mat1;
@@ -25,6 +26,7 @@ Box::Box(glm::vec3 const& lhs, glm::vec3 const& rhs,
         std::string const& name, std::shared_ptr<Material> material) {
   min_ = lhs;
   max_ = rhs;
+  minMax();
   name_ = name;
   material_ = material;
 }
@@ -52,8 +54,8 @@ void Box::minMax() {
 }
 std::ostream& Box::print(std::ostream & os) const {
    return os << "Box " << name_ << "\nMaterial: " << material_->name 
-   << "\nPoints: (" << max_.x << "|" << max_.y << "|" << max_.z 
-   << ") (" << min_.x << "|" << min_.y << "|" << min_.z << ")\n\n";
+   << "\nPoints: (" << min_.x << "|" << min_.y << "|" << min_.z 
+   << ") (" << max_.x << "|" << max_.y << "|" << max_.z << ")\n\n";
 }
 
 void Box::intersectPlane(HitPoint& hitpoint, Ray const& ray, int dim, bool side, float plane_value) const {
