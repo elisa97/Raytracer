@@ -16,11 +16,13 @@ Scene importScene(std::string const& sdf_file) {
     while(std::getline(in_file, line_buffer)) {
 
         std::cout << ++line_count << ":" << line_buffer << std::endl;
+        std::cout << "Identifiert content: " << identifier << std::endl;
 
         std::istringstream in_sstream(line_buffer);
         in_sstream >> identifier;
         if ("define" == identifier) {
             in_sstream >> class_name;
+            std::cout << "content: " << class_name << std::endl;
             if ("material" == class_name) {
                 std::string material_name;
                 glm::vec3 ka, kd, ks;

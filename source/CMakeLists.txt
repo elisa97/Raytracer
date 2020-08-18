@@ -23,3 +23,11 @@ target_link_libraries(tests
   ${GLFW_LIBRARIES}
   ${FRAMEWORK_NAME}
   )
+
+add_executable(scene_load_test
+  scene_load_test.cpp
+)
+target_link_libraries(scene_load_test
+  ${GLFW_LIBRARIES}
+  ${FRAMEWORK_NAME}
+  )
