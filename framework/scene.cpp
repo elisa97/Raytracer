@@ -58,7 +58,7 @@ Scene importScene(std::string const& sdf_file) {
 
                     in_sstream >> sphere_name;
                     in_sstream >> sphere_m.x >> sphere_m.y >> sphere_m.z;
-                    in_sstream >> sphere_r;
+                    in_sstream >> sphere_r >> sphere_mat_name;
 
                     //same as with box
                     shape_mats.push_back(sphere_mat_name);
@@ -117,24 +117,38 @@ Scene importScene(std::string const& sdf_file) {
 
     in_file.close();
 
+    //new Idea: just run it twice, first building the materials
+
     //checking if all the materials are availible
     //generating extra array with each material of the shapes only once present, checking that with the materials array to make sure that all
     //each shape has a valid material, otherwise print a error message.
-    std::vector<std::string> tmp_mat;
-    int check = 0;
-    for (int i = 0; i < shape_mats.size(); ++i) {
-        
-        if (check == i) {
-            tmp_mat[i] = i;
-            check++;
-        }
-    }
-    for (int i = 1; i < materials.size(); ++i) {
-        for (int j = 0; j < tmp_mat.size(); ++j) {
-            if (tmp_mat[j] == materials[i]) {
-
-            }
-        }
-    }
+    // std::vector<std::string> tmp_mat;
+    // int check = 0;
+    // bool same = false;
+    // for (int i = 0; i < shape_mats.size(); ++i) {
+    //     for (int j = 0; j < shape_mats.size(); ++j) {
+    //         if (j != i) {
+    //             if (shape_mats[i] == shape_mats[j]) {
+    //                 same = true;
+    //             }
+    //         }
+    //     }
+    //     if (same) {
+    //         same = false;
+    //         break;
+    //     }
+    //     tmp_mat.push_back(shape_mats[i]);
+    // }
+    //     if (check == i) {
+    //         tmp_mat[i] = i;
+    //         check++;
+    //     }
+    // }
+    // for (int i = 1; i < materials.size(); ++i) {
+    //     for (int j = 0; j < tmp_mat.size(); ++j) {
+    //         if (tmp_mat[j] == materials[i]) {
+    //         }
+    //     }
+    // }
     return new_scene;
 }
