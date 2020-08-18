@@ -79,7 +79,8 @@ Color diffus = calc_diffuse(hitpoint, current_scene);
 Color specular = calc_specular(hitpoint, current_scene);
 Color phong = ambient + diffus + specular;
 Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
-final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
+//final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
+final = reflection + phong;
 return final;
 }
 
