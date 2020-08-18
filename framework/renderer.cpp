@@ -35,13 +35,12 @@ void Renderer::render(Scene const& current_scene)
 
       Pixel p(x,y);
       if (test_hp.cut) {
-        //p.color = Color{test_hp.material->ka.r, test_hp.material->ka.g, test_hp.material->ka.b};
-        //p.color = Color{1.0f, 1.0f, 1.0f/test_hp.cdist};
         //p.color = calc_ambient(test_hp.material, current_scene);
         p.color.r = test_hp.normal.x;
         p.color.g = test_hp.normal.y;
         p.color.b = test_hp.normal.z;
-        //tone_mapping(p.color);
+        tone_mapping(p.color);
+        //p.color = calc_reflection(test_hp, current_scene, 40);
       } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
         p.color = Color{0.0f, 1.0f, float(x)/height_};
       } else {
@@ -66,6 +65,7 @@ HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_ey
       }
     }
   }
+  return test_hp;
 }
 
 void Renderer::write(Pixel const& p)
@@ -94,7 +94,7 @@ Color Renderer::calc_ambient(std::shared_ptr<Material> const& material, Scene co
   return ambient;
 }
 
-/*Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
+Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
   Color final {0.0f, 0.0f, 0.0f};
   glm::vec3 incoming_direction = glm::normalize(hitpoint.origin);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
@@ -103,24 +103,27 @@ Color Renderer::calc_ambient(std::shared_ptr<Material> const& material, Scene co
   HitPoint next_hit = closest_hit(scene, reflect_ray);
 
   if (!next_hit.cut){
-    //return scene.background
+    return scene.background;
   }
   else {
     if (recursive_boundary > 0 && next_hit.cut) {
+      Color reflect_color = calc_ambient(hitpoint.material, scene);
+      tone_mapping(reflect_color);
       //Color reflect_color = calc_color(next_hit, scene, recursive_boundary -1) * 0.8f;
-      //return reflect_color;
+      return reflect_color;
     }
     else
     {
-      return final
+      tone_mapping(final);
+      return final;
     }
   }
-}*/
+}
 
 void Renderer::tone_mapping(Color &color) const {
   color.r = color.r / (color.r + 1);
   color.g = color.g / (color.g + 1);
   color.b = color.b / (color.b + 1);
 }
-//HitPoint Renderer::generate_eye_ray(Scene const& scene, Ray const& ray) const {}
+
 
