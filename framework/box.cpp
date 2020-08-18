@@ -42,6 +42,14 @@ float Box::volume() const {
   return abs(tmp.x * tmp.y * tmp.z);
 }
 
+//function to correctly set the values for min and max
+void Box::minMax() {
+  for (int i = 0; i < 3; ++i) {
+    if (min_[i] > max_[i]) {
+      std::swap(min_[i], max_[i]);
+    }
+  }
+}
 std::ostream& Box::print(std::ostream & os) const {
    return os << "Box " << name_ << "\nMaterial: " << material_->name 
    << "\nPoints: (" << max_.x << "|" << max_.y << "|" << max_.z 
@@ -52,10 +60,12 @@ void Box::intersectPlane(HitPoint& hitpoint, Ray const& ray, int dim, bool side,
   glm::vec3 n = glm::normalize(ray.direction);
   float t = (plane_value - ray.origin[dim]) / n[dim];
   glm::vec3 plane_point = ray.origin + (t * n);
+
   if ((plane_point[(dim+1)%3] >= min_[(dim+1)%3]) 
     && (plane_point[(dim+1)%3] <= max_[(dim+1)%3]) 
     && (plane_point[(dim+2)%3] >= min_[(dim+2)%3]) 
     && (plane_point[(dim+2)%3] <= max_[(dim+2)%3])) {
+      
       glm::vec3 normal{};
       normal[dim] = (side) ? -1 : 1;
       hitpoint.cut = true;

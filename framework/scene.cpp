@@ -121,12 +121,19 @@ Scene importScene(std::string const& sdf_file) {
     //generating extra array with each material of the shapes only once present, checking that with the materials array to make sure that all
     //each shape has a valid material, otherwise print a error message.
     std::vector<std::string> tmp_mat;
-    if (shape_mats.size() > 0) {
-        tmp_mat.push_back(shape_mats[0]);
+    int check = 0;
+    for (int i = 0; i < shape_mats.size(); ++i) {
+        
+        if (check == i) {
+            tmp_mat[i] = i;
+            check++;
+        }
     }
-    for (int i = 1; i < shape_mats.size(); ++i) {
+    for (int i = 1; i < materials.size(); ++i) {
         for (int j = 0; j < tmp_mat.size(); ++j) {
-            
+            if (tmp_mat[j] == materials[i]) {
+
+            }
         }
     }
     return new_scene;
