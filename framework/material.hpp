@@ -15,6 +15,7 @@ struct  Material
     Color kd{0.0f,0.0f,0.0f};
     Color ks{0.0f,0.0f,0.0f};
     float m = 1.0f;
+    float opacity = 0.0f;
 
     Material(){}
     Material(std::string name_c, Color ka_c, Color kd_c, Color ks_c, float m_c)

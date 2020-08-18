@@ -36,10 +36,11 @@ void Renderer::render(Scene const& current_scene)
       Pixel p(x,y);
       if (test_hp.cut) {
         //p.color = calc_ambient(test_hp.material, current_scene);
-        p.color.r = test_hp.normal.x;
-        p.color.g = test_hp.normal.y;
-        p.color.b = test_hp.normal.z;
-        tone_mapping(p.color);
+        //p.color.r = test_hp.normal.x;
+        //p.color.g = test_hp.normal.y;
+        //p.color.b = test_hp.normal.z;
+        p.color = calc_diffuse(test_hp, current_scene);
+        //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
       } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
         p.color = Color{0.0f, 1.0f, float(x)/height_};
@@ -92,6 +93,44 @@ Color Renderer::calc_ambient(std::shared_ptr<Material> const& material, Scene co
   ambient.g = material->ka.g * ambient.g;
   ambient.b = material->ka.b * ambient.b;
   return ambient;
+}
+
+Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const {
+  Color final {0.0f, 0.0f, 0.0f};
+  std::vector<Color> light_color;
+  for (auto light: scene.lights){
+    HitPoint no_light;
+    glm::vec3 new_hitpoint;
+    glm::vec3 new_normal;
+    glm::vec3 light_hit = glm::normalize(light.location - hitpoint.hit);
+    bool invisible_light = false;
+
+    //check, if some other objects between light and object
+    for (auto shape: scene.objects){
+      no_light = shape->intersect(Ray{hitpoint.hit + 3.0f * hitpoint.normal, light_hit});
+      if (no_light.cut){
+        if(no_light.material->opacity < 0.001){
+          invisible_light = true;
+          break;    //if there is an object between light and object
+        }
+      }
+    }
+
+    //if there isn't a light blocking object
+    if (!no_light.cut){
+      float o = glm::dot(light_hit, glm::normalize(hitpoint.normal));
+      Color i_p = light.color  * light.brightness;
+      Color k_d = hitpoint.material->kd;
+      light_color.push_back(k_d * i_p * o); 
+    }
+  }
+
+  for (auto color: light_color){
+    final += color;
+  }
+
+  final.color_check();
+  return final;
 }
 
 Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
