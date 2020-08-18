@@ -10,9 +10,9 @@
 struct Light
 {
     std::string name = "light0";
-    float brightness = 1.0f;
+    float brightness = 15.0f;
     Color color = {0.5f, 0.5f, 0.5f};
-    glm::vec3 location = {0.0f, 10.0f, 0.0f};
+    glm::vec3 location = {0.0f, 3.0f, 0.0f};
 };
 
 #endif
