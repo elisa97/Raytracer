@@ -28,12 +28,13 @@ Scene importScene(std::string const& sdf_file) {
                 glm::vec3 ka, kd, ks;
                 float m;
                 float opacity;
+                float glossy;
 
                 in_sstream >> material_name >> ka.r >> ka.g >> ka.b>> kd.r >> 
-                        kd.g >> kd.b >>ks.r >> ks.g >> ks.b >> m >> opacity;
+                        kd.g >> kd.b >>ks.r >> ks.g >> ks.b >> m >> opacity >> glossy;
 
                 std::shared_ptr<Material> mt_ptr (new Material{material_name, 
-                    {ka.r, ka.g, ka.b}, {kd.r, kd.g, kd.b},{ks.r, ks.g, ks.g}, m, opacity});
+                    {ka.r, ka.g, ka.b}, {kd.r, kd.g, kd.b},{ks.r, ks.g, ks.g}, m, opacity, glossy});
 
                 new_scene.materials.emplace(material_name, mt_ptr);
             }
