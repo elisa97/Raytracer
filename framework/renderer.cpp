@@ -39,7 +39,7 @@ void Renderer::render(Scene const& current_scene)
         //p.color.r = test_hp.normal.x;
         //p.color.g = test_hp.normal.y;
         //p.color.b = test_hp.normal.z;
-        p.color = calc_diffuse(test_hp, current_scene);
+        p.color = calc_color(test_hp, current_scene);
         //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
       } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
@@ -67,6 +67,14 @@ HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_ey
     }
   }
   return test_hp;
+}
+
+Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene) const{
+Color final{0.0f, 0.0f, 0.0f};
+Color ambient = calc_ambient(hitpoint.material, current_scene);
+Color diffus = calc_diffuse(hitpoint, current_scene);
+final = ambient + diffus;
+return final;
 }
 
 void Renderer::write(Pixel const& p)
@@ -98,40 +106,59 @@ Color Renderer::calc_ambient(std::shared_ptr<Material> const& material, Scene co
 Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const {
   Color final {0.0f, 0.0f, 0.0f};
   std::vector<Color> light_color;
+  bool invisible_light;
   for (auto light: scene.lights){
     HitPoint no_light;
-    glm::vec3 new_hitpoint;
-    glm::vec3 new_normal;
     glm::vec3 light_hit = glm::normalize(light.location - hitpoint.hit);
-    bool invisible_light = false;
+    Ray ray_to_light {hitpoint.hit + 0.1f * hitpoint.normal, light_hit};
+    no_light = scene.objects[0]->intersect(ray_to_light);
 
-    //check, if some other objects between light and object
-    for (auto shape: scene.objects){
-      no_light = shape->intersect(Ray{hitpoint.hit + 3.0f * hitpoint.normal, light_hit});
-      if (no_light.cut){
-        if(no_light.material->opacity < 0.001){
-          invisible_light = true;
-          break;    //if there is an object between light and object
-        }
-      }
+    if(no_light.cut){
+      invisible_light = true;
     }
 
-    //if there isn't a light blocking object
-    if (!no_light.cut){
-      float o = glm::dot(light_hit, glm::normalize(hitpoint.normal));
-      Color i_p = light.color  * light.brightness;
-      Color k_d = hitpoint.material->kd;
-      light_color.push_back(k_d * i_p * o); 
+    if(!invisible_light){
+      float aux = glm::dot(light_hit, glm::normalize(hitpoint.normal));
+      Color ip = light.color * light.brightness;
+      Color kd = hitpoint.material->kd;
+      light_color.push_back(kd * aux * ip);
     }
   }
 
-  for (auto color: light_color){
+  for (auto color : light_color){
     final += color;
   }
 
-  final.color_check();
   return final;
 }
+
+    //check, if some other objects between light and object
+    // for (auto shape: scene.objects){
+    //   no_light = shape->intersect(Ray{hitpoint.hit + 3.0f * hitpoint.normal, light_hit});
+    //   if (no_light.cut){
+    //     if(no_light.material->opacity < 0.001){
+    //       invisible_light = true;
+    //       break;    //if there is an object between light and object
+    //     }
+    //   }
+    // }
+
+    //if there isn't a light blocking object
+  //   if (!no_light.cut){
+  //     float o = glm::dot(light_hit, glm::normalize(hitpoint.normal));
+  //     Color i_p = light.color  * light.brightness;
+  //     Color k_d = hitpoint.material->kd;
+  //     light_color.push_back(k_d * i_p * o); 
+  //   }
+  // }
+
+  // for (auto color: light_color){
+  //   final += color;
+//   }
+
+//   final.color_check();
+//   return final;
+// }
 
 Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
   Color final {0.0f, 0.0f, 0.0f};
