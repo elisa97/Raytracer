@@ -28,12 +28,9 @@ struct Scene
     std::map<std::string, std::shared_ptr<Material>> materials{};
     std::vector<std::shared_ptr<Shape>> objects{};
     std::vector<Light> lights{};
-    //Color ambient{0.0f, 0.0f, 0.0f};
-    //std::vector<std::string, Camera> cameras{};
-
     Camera camera;
-    Color ambient {1.0f,1.0f,1.0f};
-     
+    Color background {0.0f, 0.0f, 0.0f};
+    Color ambient {1.0f, 1.0f, 1.0f};
 };
 
 #endif

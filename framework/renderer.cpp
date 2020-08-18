@@ -31,19 +31,7 @@ void Renderer::render(Scene const& current_scene)
       Ray current_eye_ray {{}, ray_norm};
 
       //tried to iterate trough the vector, checking which object is the closest to the camera
-      HitPoint test_hp{};
-      test_hp.cdist = MAXFLOAT;
-      HitPoint tmp_hp{};
-      for (auto const& i : current_scene.objects) {
-        tmp_hp = i->intersect(current_eye_ray);
-
-        if (tmp_hp.cut) {
-          if ((tmp_hp.cdist < test_hp.cdist) && (tmp_hp.cdist >= 0)) {
-            //std::cout << tmp_hp.cdist << " ";
-            test_hp = tmp_hp;
-          }
-        }
-      }
+      
 
       Pixel p(x,y);
       if (test_hp.cut) {
@@ -64,6 +52,21 @@ void Renderer::render(Scene const& current_scene)
     }
   }
   ppm_.save(filename_);
+}
+
+HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_eye_ray) const {
+  HitPoint test_hp {};
+  test_hp.cdist = MAXFLOAT;
+  HitPoint tmp_hp{};
+  for (auto const& i : current_scene.objects) {
+    tmp_hp = i->intersect(current_eye_ray);
+    if (tmp_hp.cut) {
+      if ((tmp_hp.cdist < test_hp.cdist) && (tmp_hp.cdist >= 0)) {
+        //std::cout << tmp_hp.cdist << " ";
+        test_hp = tmp_hp;
+      }
+    }
+  }
 }
 
 void Renderer::write(Pixel const& p)
@@ -92,15 +95,28 @@ Color Renderer::calc_ambient(std::shared_ptr<Material> const& material, Scene co
   return ambient;
 }
 
-Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
+/*Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
   Color final {0.0f, 0.0f, 0.0f};
   glm::vec3 incoming_direction = glm::normalize(hitpoint.origin);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
   glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
   Ray reflect_ray {hitpoint.hit + 1.0f, glm::normalize(reflect_ray_dir)};
+  HitPoint next_hit = closest_hit(scene, reflect_ray);
 
-  return final;
-}
+  if (!next_hit.cut){
+    //return scene.background
+  }
+  else {
+    if (recursive_boundary > 0 && next_hit.cut) {
+      //Color reflect_color = calc_color(next_hit, scene, recursive_boundary -1) * 0.8f;
+      //return reflect_color;
+    }
+    else
+    {
+      return final
+    }
+  }
+}*/
 
 void Renderer::tone_mapping(Color &color) const {
   color.r = color.r / (color.r + 1);
