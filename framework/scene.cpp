@@ -16,30 +16,34 @@ Scene importScene(std::string const& sdf_file) {
     while(std::getline(in_file, line_buffer)) {
 
         std::cout << ++line_count << ":" << line_buffer << std::endl;
-        std::cout << "Identifiert content: " << identifier << std::endl;
-
         std::istringstream in_sstream(line_buffer);
         in_sstream >> identifier;
         if ("define" == identifier) {
             in_sstream >> class_name;
-            std::cout << "content: " << class_name << std::endl;
             if ("material" == class_name) {
                 std::string material_name;
                 glm::vec3 ka, kd, ks;
-                float m;
-                float opacity;
-                float glossy;
+                float m, opacity, glossy;
 
                 in_sstream >> material_name >> ka.r >> ka.g >> ka.b>> kd.r >> 
-                        kd.g >> kd.b >>ks.r >> ks.g >> ks.b >> m >> opacity >> glossy;
+                        kd.g >> kd.b >> ks.r >> ks.g >> ks.b >> m >> opacity >> glossy;
 
                 std::shared_ptr<Material> mt_ptr (new Material{material_name, 
                     {ka.r, ka.g, ka.b}, {kd.r, kd.g, kd.b},{ks.r, ks.g, ks.g}, m, opacity, glossy});
 
                 new_scene.materials.emplace(material_name, mt_ptr);
+
+                std::cout << "Object: Material: " <<  material_name << std::endl;
+                std::cout << ka.r << " " << ka.g << " " << ka.b << std::endl;
+                std::cout << kd.r << " " << kd.g << " " << kd.b << std::endl;
+                std::cout << ks.r << " " << ks.g << " " << ks.b << std::endl;
+                std::cout << m << " " << opacity << " " << glossy <<std::endl;
             }
         }
+    }
     line_count = 0;
+    in_file.clear();
+    in_file.seekg(0, std::ios::beg);
     while(std::getline(in_file, line_buffer)) {
         std::cout << ++line_count << ":" << line_buffer << std::endl;
 
@@ -53,7 +57,7 @@ Scene importScene(std::string const& sdf_file) {
         //check for shapes, materials, lights
         if("define" == identifier) {
             in_sstream >> class_name;
-
+            std::cout << "content: " << class_name << std::endl;
             if("shape" == class_name ) {
                 in_sstream >> class_name;
                 if("box" == class_name){
@@ -100,7 +104,8 @@ Scene importScene(std::string const& sdf_file) {
                     std::cout << "Error! No valid shape." << std::endl;
                 }
             
-            // } else if("material" == class_name){
+             } else if("material" == class_name){
+                 std::cout << "already in use" << std::endl;
             //     std::string material_name;
             //     glm::vec3 ka, kd, ks;
             //     float m;
@@ -140,13 +145,12 @@ Scene importScene(std::string const& sdf_file) {
                 std::cout << "Brightness: " << light_brightness << std::endl;
             } 
             else {
-                std::cout << "Line was not valid!" << std::endl;
+                std::cout << "Line " << line_count << " was not valid!" << std::endl;
             }
         }
     }
 
     in_file.close();
 
-    }
     return new_scene;
 }
