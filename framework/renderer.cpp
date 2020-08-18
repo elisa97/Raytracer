@@ -42,7 +42,7 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
         //p.color.r = test_hp.normal.x;
         //p.color.g = test_hp.normal.y;
         //p.color.b = test_hp.normal.z;
-        p.color = calc_color(test_hp, current_scene, -1);
+        p.color = calc_color(test_hp, current_scene, 10);
         //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
       } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
