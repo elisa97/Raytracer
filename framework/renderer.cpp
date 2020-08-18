@@ -30,7 +30,7 @@ void Renderer::render(Scene const& current_scene)
       glm::vec3 ray_norm = glm::normalize(ray_vec);
       Ray current_eye_ray {{}, ray_norm};
 
-      //tried to iterate trough the vector, checking which object is the closest to the camera
+      HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
       
 
       Pixel p(x,y);
@@ -62,7 +62,6 @@ HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_ey
     tmp_hp = i->intersect(current_eye_ray);
     if (tmp_hp.cut) {
       if ((tmp_hp.cdist < test_hp.cdist) && (tmp_hp.cdist >= 0)) {
-        //std::cout << tmp_hp.cdist << " ";
         test_hp = tmp_hp;
       }
     }
