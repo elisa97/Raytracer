@@ -1,4 +1,5 @@
 #include "scene.hpp"
+#include "renderer.hpp"
 
 Scene importScene(std::string const& sdf_file, bool verbose) {
    
@@ -122,26 +123,44 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     std::cout << "m " << mat->m << " opacity " << mat->opacity << " glossy " << mat->glossy << std::endl;
                 }
             } else if("light" == class_name) {
-            std::string light_name;
-            glm::vec3 light_pos, light_color;
-            float light_brightness;
+                std::string light_name;
+                glm::vec3 light_pos, light_color;
+                float light_brightness;
 
-            in_sstream >> light_name >> light_pos.x >> light_pos.y >> light_pos.z
-                >> light_color.r >> light_color.g >> light_color.b >> light_brightness;
-            
-            Light light{light_name, light_brightness, {light_color.r, light_color.g, light_color.b}, light_pos};
-            new_scene.lights.push_back(light);
-            
-            if(verbose) {
-                std::cout << "Object: Light: " << light_name << std::endl;
-                std::cout << "Position: (" << light_pos.x << ", " << light_pos.y << ", " << light_pos.z << ")" << std::endl;
-                std::cout << "Color: (" << light_color.r << " " << light_color.g << " " << light_color.b << ")" << std::endl;
-                std::cout << "Brightness: " << light_brightness << std::endl;
+                in_sstream >> light_name >> light_pos.x >> light_pos.y >> light_pos.z
+                    >> light_color.r >> light_color.g >> light_color.b >> light_brightness;
+                
+                Light light{light_name, light_brightness, {light_color.r, light_color.g, light_color.b}, light_pos};
+                new_scene.lights.push_back(light);
+                
+                if(verbose) {
+                    std::cout << "Object: Light: " << light_name << std::endl;
+                    std::cout << "Position: (" << light_pos.x << ", " << light_pos.y << ", " << light_pos.z << ")" << std::endl;
+                    std::cout << "Color: (" << light_color.r << " " << light_color.g << " " << light_color.b << ")" << std::endl;
+                    std::cout << "Brightness: " << light_brightness << std::endl;
                 }
-            } 
+            } else if("camera" == class_name) {
+                std::string cam_name;
+                float cam_fov;
+
+                in_sstream >> cam_name >> cam_fov;
+
+                new_scene.camera.name = cam_name;
+                new_scene.camera.fov_x = cam_fov;
+
+            }
             else {
                 std::cout << "Line " << line_count << " was not valid!" << std::endl;
             }
+        }
+        if ("render" == identifier) {
+            std::string cam_name, img_output;
+            unsigned int img_x, img_y;
+
+            in_sstream >> cam_name >> img_output >> img_x >> img_y;
+
+            Renderer renderer{img_x, img_y, img_output};
+            renderer.render(new_scene, new_scene.camera);
         }
     }
 

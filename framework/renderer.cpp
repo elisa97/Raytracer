@@ -17,7 +17,7 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   , ppm_(width_, height_)
 {}
 
-void Renderer::render(Scene const& current_scene)
+void Renderer::render(Scene const& current_scene, Camera const& cam)
 {
   std::size_t const checker_pattern_size = 20;
   float aspect_ratio = height_ / (float)width_;
@@ -26,9 +26,12 @@ void Renderer::render(Scene const& current_scene)
     for (unsigned x = 0; x < width_; ++x) {
 
       //setting up the rays
-      glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
-      glm::vec3 ray_norm = glm::normalize(ray_vec);
-      Ray current_eye_ray {{}, ray_norm};
+      //glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
+      //glm::vec3 ray_norm = glm::normalize(ray_vec);
+      //tried to implement fov, not quite ready yet
+      float fov_dist = (width_ / 2.0f) / std::tan(cam.fov_x * M_PI / 360.0f);
+      glm::vec3 dir{x - (width_ / 2.0f), y - (width_ / 2.0f), -fov_dist};
+      Ray current_eye_ray {{}, glm::normalize(dir)};
 
       HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
       

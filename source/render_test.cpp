@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     new_scene.ambient = {{0.5f}, {0.4f}, {0.7f}};
     new_scene.lights.push_back(light_1);
 
-    new_renderer.render(new_scene);
+    new_renderer.render(new_scene, {});
 
     return 0;
 }
