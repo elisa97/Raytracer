@@ -261,7 +261,7 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
     }
     else
     {
-      return final;
+      return {};
     }
   }
 }
