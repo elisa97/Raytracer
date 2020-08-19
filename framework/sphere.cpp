@@ -48,14 +48,15 @@ std::ostream& Sphere::print(std::ostream & os) const {
 
 HitPoint Sphere::intersect(Ray const& r) const {
 
-  glm::vec3 pos{};
-  glm::vec3 n{};
-  bool res = glm::intersectRaySphere(r.origin, {glm::normalize(r.direction)}, mid_, rad_ , pos, n);
+  glm::vec3 pos = {};
+  glm::vec3 n = {};
+
+  bool res = glm::intersectRaySphere(r.origin, glm::normalize(r.direction), mid_, rad_ , pos, n);
 
   if (res) {
-    glm::vec3 ct = pos;
     float d = glm::distance(r.origin, pos);
-    return{true, d, name_, material_, ct, n};
+    
+    return{true, d, name_, material_, r.direction, n, pos};
   }
   
   return{};

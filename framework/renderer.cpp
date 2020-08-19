@@ -75,12 +75,12 @@ HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_ey
 Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene, unsigned int reflection_steps) const{
   Color final{0.0f, 0.0f, 0.0f};
   Color ambient = calc_ambient(hitpoint, current_scene);
-  Color diffus = calc_diffuse(hitpoint, current_scene);
+  Color diffuse = calc_diffuse(hitpoint, current_scene);
   Color specular = calc_specular(hitpoint, current_scene);
-  Color phong = ambient + diffus + specular;
+  Color phong = ambient + diffuse + specular;
   Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
   //final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  final = ambient + specular;
+  final = reflection + ambient;
   //final = phong;
   return final;
 }
@@ -186,9 +186,9 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
     glm::vec3 light_hit = glm::normalize(light.location - hitpoint.hit);
 
     for (auto shape : scene.objects){
-      no_light = shape->intersect(Ray{hitpoint.hit + 0.01f * hitpoint.normal, light_hit});
+      no_light = shape->intersect(Ray{hitpoint.hit + 0.01f, light_hit});
       if (no_light.cut){
-        std::cout << ":)";
+        //std::cout << ":)";
         if (no_light.material->opacity > 0.1){
           invisible_light = true;
           break;
@@ -197,6 +197,7 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
     }
 
     if (!invisible_light) {
+      //std::cout << "buh";
       //glm::vec3 camera_hit = glm::normalize(camera_hit - hitpoint.hit);
       glm::vec3 r = light_hit - 2*(glm::dot(light_hit, hitpoint.normal)) * hitpoint.normal;
       //float p = abs(glm::dot(r, camera_hit));
@@ -207,7 +208,7 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
       Color k_s = hitpoint.material->ks;
       calc_color.push_back(k_s * m_pi *  i_p);
     } else {
-    std::cout << "hi";
+    //std::cout << "hi";
   }
   } 
 //     Ray ray_to_light {hitpoint.hit + 0.1f * hitpoint.normal, light_hit};
