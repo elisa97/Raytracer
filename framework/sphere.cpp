@@ -55,7 +55,6 @@ HitPoint Sphere::intersect(Ray const& r) const {
 
   if (res) {
     float d = glm::distance(r.origin, pos);
-    
     return{true, d, name_, material_, r.direction, n, pos};
   }
   

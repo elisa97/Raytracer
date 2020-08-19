@@ -42,13 +42,16 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
         //p.color.r = test_hp.normal.x;
         //p.color.g = test_hp.normal.y;
         //p.color.b = test_hp.normal.z;
-        p.color = calc_color(test_hp, current_scene, 5);
+        p.color = calc_color(test_hp, current_scene, 20);
+
         //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
-      } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
-        p.color = Color{0.0f, 1.0f, float(x)/height_};
+      //} else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
+        //p.color = Color{0.0f, 1.0f, float(x)/height_};
+        
       } else {
-        p.color = Color{1.0f, 0.0f, float(y)/width_};
+        //p.color = Color{1.0f, 0.0f, float(y)/width_};
+        p.color = current_scene.background;
       }
 
       write(p);
@@ -80,7 +83,7 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color phong = ambient + diffuse + specular;
   Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
   //final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  final = reflection + ambient;
+  final = ambient + reflection;
   //final = phong;
   return final;
 }
@@ -253,6 +256,7 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
 
   if (!next_hit.cut){
     return scene.background;
+    //return hitpoint.material->ka;
   }
   else {
     if (recursive_boundary > 0 && next_hit.cut) {
