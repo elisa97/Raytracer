@@ -30,7 +30,7 @@ struct Scene
     std::vector<Light> lights{};
     Camera camera;
     Color background {0.0f, 0.0f, 0.0f};
-    Color ambient {1.0f, 1.0f, 1.0f};
+    Light ambient {};
 };
 
 Scene importScene(std::string const& path, bool verbose);
