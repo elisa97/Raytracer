@@ -69,7 +69,7 @@ void Box::intersectPlane(HitPoint& hitpoint, Ray const& ray, int dim, bool side,
       hitpoint.cdist = t;
       hitpoint.name = name_;
       hitpoint.material = material_;
-      hitpoint.direction = n - 2 * (glm::dot(ray.direction, normal)) * normal ;
+      hitpoint.direction = n;
       hitpoint.normal = normal;
       hitpoint.hit = plane_point;
     }
