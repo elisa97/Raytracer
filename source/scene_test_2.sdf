@@ -1,6 +1,14 @@
 # materials
-define material red 1 0 0 1 0 0 1 0 0 1 0 1 0
-define material blue 0 0 1 0 0 1 0 0 1 1 1 0 1
+define material red     1 0 0   1 0 0   1 0 0   1       0   1   0
+define material blue    0 0 1   0 0 1   0 0 1   1       1   0   1
+define material red     1 0 0   1 0 0   1 0 0   100     0   0   0
+define material blue    0 0 1   0 0 1   0 0 1   1000    0   0   0
+define material reflect 0 0 1   0 0 1   0 0 1   100     1   1   1.5
+define material green   0 1 0   0 1 0   0 1 0   100	    0   0   0
+define material mirror  0 1 0   0 1 0   0 1 0   100	    1   0   0
+define material yellow  0.5 0.75 0.5   0.7  0.9  0     0.2 0.2 0.2   100  0  0  0
+define material grey    0.5 0.5  0.5   0.75 0.75 0.75  0.9 0.9 0.9   100  0  0  0
+
 # geometry
 define shape box rbottom -100 -80 -200 100 80 -100 red
 define shape sphere bsphere 0 0 -100 20 blue
@@ -9,4 +17,4 @@ define light sun 1000 700 0 .2 .2 .2 1000
 # camera
 define camera eye 45.0
 # ... and go
-render eye image.ppm 480 320
+render eye image.ppm 1000 800
