@@ -9,7 +9,7 @@ int main(int argc, char* argv[]){
     std::shared_ptr<Material> mat1_ptr(new Material{"red", {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.f, 0.0f}, 20.0f, 0.33f, 0.2f});
     std::shared_ptr<Material> mat2_ptr(new Material{"green", {0.0, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}, 20.0f, 0.0f, 0.0f});
     std::shared_ptr<Material> mat3_ptr(new Material{"blue", {0.0, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}, 20.0f, 0.3f, 0.4f});
-    std::shared_ptr<Material> mat4_ptr(new Material{"orange", {0.4, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, 20.0f, 0.5f, 0.5f});
+    std::shared_ptr<Material> mat4_ptr(new Material{"orange", {0.5, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, 20.0f, 0.5f, 0.5f});
 
     std::shared_ptr<Sphere> sphere_ptr(new Sphere{{0.0f, -0.5f, -4.0f}, 0.5f, "test_sphere", mat1_ptr});
     std::shared_ptr<Box> box_ptr(new Box{{-1.5f,-4.4f,-5.0f}, {-1.0f,-0.3f,-3.0f}, "test_box", mat2_ptr});
