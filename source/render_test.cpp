@@ -17,9 +17,9 @@ int main(int argc, char* argv[]){
     std::shared_ptr<Box> box_ptr2(new Box{{-1.5f,-1.0f,-1.0f}, {1.0f,-3.0f,-10.0f}, "test_box", mat4_ptr});
     Light light_1{"new light", 3.0f, {0.5f, 0.5f, 0.5f}, {3.0f, 1.0f, -3.0f}};
     //Light light_2{"new light1", 6.0f, {0.0f, 0.0f, 0.8f}, {-3.0f, 3.0f, 0.0f}};
-    new_scene.objects.push_back(sphere_ptr);
+    //new_scene.objects.push_back(sphere_ptr);
     new_scene.objects.push_back(box_ptr);
-    new_scene.objects.push_back(sphere_ptr2);
+    //new_scene.objects.push_back(sphere_ptr2);
     new_scene.objects.push_back(box_ptr2);
     new_scene.ambient = {"ambi", 1.0, {0.5f, 0.5f, 0.5f}, {}};
     new_scene.lights.push_back(light_1);

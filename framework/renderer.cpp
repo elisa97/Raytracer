@@ -27,10 +27,10 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
 
       //setting up the rays
       glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
-      glm::vec3 ray_norm = glm::normalize(ray_vec);
+      //glm::vec3 ray_norm = glm::normalize(ray_vec);
       //tried to implement fov, not quite ready yet
       //float fov_dist = (width_ / 2.0f) / std::tan(cam.fov_x * M_PI / 360.0f);
-      //glm::vec3 dir{x - (width_ / 2.0f), y - (width_ / 2.0f), -fov_dist};
+      //glm::vec3 dir{x - (width_ / 2.0f), y - (width_ / 2.0f), - fov_dist};
       Ray current_eye_ray {{}, glm::normalize(ray_vec)};
 
       HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
@@ -124,7 +124,7 @@ Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const
     bool invisible_light;
     HitPoint no_light;
     glm::vec3 light_hit = glm::normalize(hitpoint.hit - light.location);
-    Ray ray_to_light {hitpoint.hit + 0.1f * hitpoint.normal, -light_hit};
+    Ray ray_to_light {hitpoint.hit + 1.0f * hitpoint.normal, -light_hit};
 
     for (auto obj: scene.objects) {
       no_light = obj->intersect(ray_to_light);
@@ -250,7 +250,7 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
   glm::vec3 incoming_direction = glm::normalize(hitpoint.direction);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
   glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
-  Ray reflect_ray {hitpoint.hit + 1.0f, reflect_ray_dir};
+  Ray reflect_ray { (0.01f * hitpoint.normal) + hitpoint.hit, reflect_ray_dir};
   HitPoint next_hit = closest_hit(scene, reflect_ray);
 
   if (!next_hit.cut){
