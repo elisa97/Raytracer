@@ -46,12 +46,11 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
 
         //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
-      //} else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
-        //p.color = Color{0.0f, 1.0f, float(x)/height_};
-        
+      } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
+        p.color = Color{0.0f, 1.0f, float(x)/height_};
       } else {
-        //p.color = Color{1.0f, 0.0f, float(y)/width_};
-        p.color = current_scene.background;
+        p.color = Color{1.0f, 0.0f, float(y)/width_};
+        //p.color = current_scene.background;
       }
 
       write(p);
