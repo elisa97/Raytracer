@@ -248,7 +248,7 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
 
 Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
   Color final {0.0f, 0.0f, 0.0f};
-  glm::vec3 incoming_direction = glm::normalize(hitpoint.origin);
+  glm::vec3 incoming_direction = glm::normalize(hitpoint.direction);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
   glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
   Ray reflect_ray {hitpoint.hit + 1.0f, glm::normalize(reflect_ray_dir)};

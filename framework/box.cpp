@@ -74,7 +74,7 @@ void Box::intersectPlane(HitPoint& hitpoint, Ray const& ray, int dim, bool side,
       hitpoint.cdist = t;
       hitpoint.name = name_;
       hitpoint.material = material_;
-      hitpoint.origin = n;
+      hitpoint.direction = n;
       hitpoint.normal = normal;
       hitpoint.hit = plane_point;
     }
