@@ -42,7 +42,7 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
         //p.color.r = test_hp.normal.x;
         //p.color.g = test_hp.normal.y;
         //p.color.b = test_hp.normal.z;
-        p.color = calc_color(test_hp, current_scene, 2);
+        p.color = calc_color(test_hp, current_scene, 5);
 
         //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
@@ -249,8 +249,10 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
   Color final {0.0f, 0.0f, 0.0f};
   glm::vec3 incoming_direction = glm::normalize(hitpoint.direction);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
-  glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
-  Ray reflect_ray { (0.01f * hitpoint.normal) + hitpoint.hit, reflect_ray_dir};
+  //glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
+  glm::vec3 reflect_ray_dir = glm::reflect(incoming_direction, normal);
+  Ray reflect_ray {hitpoint.hit + 0.1f * normal, glm::normalize(reflect_ray_dir)};
+  //Ray reflect_ray { (0.01f * hitpoint.normal) + hitpoint.hit, reflect_ray_dir};
   HitPoint next_hit = closest_hit(scene, reflect_ray);
 
   if (!next_hit.cut){

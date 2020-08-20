@@ -7,7 +7,7 @@ int main(int argc, char* argv[]){
   Scene test = importScene(path, false);
   Renderer new_renderer{600, 400, "output.ppm"};
   new_renderer.render(test, {});
-  Scene test2 = importScene(path2, true);
+  Scene test2 = importScene(path2, false);
 
   return 0;
 }
