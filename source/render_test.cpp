@@ -16,7 +16,7 @@ int main(int argc, char* argv[]){
     //Light light_2{"new light1", 6.0f, {0.0f, 0.0f, 0.8f}, {-3.0f, 3.0f, 0.0f}};
     new_scene.objects.push_back(sphere_ptr);
     new_scene.objects.push_back(box_ptr);
-    new_scene.objects.push_back(sphere_ptr2);
+    //new_scene.objects.push_back(sphere_ptr2);
     new_scene.objects.push_back(box_ptr2);
     new_scene.ambient = {"ambi", 1.0, {0.0f, 0.7f, 0.1f}, {}};
     new_scene.lights.push_back(light_1);
