@@ -82,7 +82,7 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color phong = ambient + specular;
   Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
   final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  //final = ambient + reflection;
+  //final = specular;
   tone_mapping(final);
   //final = phong;
   return final;
@@ -183,18 +183,17 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
   Color final {0.0f, 0.0f, 0.0f};
   std::vector<Color> calc_color;
 
-  for (auto light : scene.lights){
+  for (auto light : scene.lights) {
     bool invisible_light = false;
     HitPoint no_light;
-    glm::vec3 light_hit = glm::normalize(light.location - hitpoint.hit);
+    glm::vec3 light_dir = glm::normalize(light.location - hitpoint.hit);
 
-    for (auto shape : scene.objects){
-      no_light = shape->intersect(Ray{hitpoint.hit + 0.01f, light_hit});
+    for (auto shape : scene.objects) {
+      no_light = shape->intersect(Ray{hitpoint.hit * 0.01f, light_dir});
       if (no_light.cut){
-        //std::cout << ":)";
-        if (no_light.material->opacity > 0.1){
+        if (no_light.material->opacity < 0.1) {
           invisible_light = true;
-          break;
+          //goto?
         }
       }
     }
@@ -202,7 +201,7 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
     if (!invisible_light) {
       //std::cout << "buh";
       //glm::vec3 camera_hit = glm::normalize(camera_hit - hitpoint.hit);
-      glm::vec3 r = light_hit - 2*(glm::dot(light_hit, hitpoint.normal)) * hitpoint.normal;
+      glm::vec3 r = light_dir - 2 * (glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
       //float p = abs(glm::dot(r, camera_hit));
       //float cos = pow(p, hitpoint.material->m);
       //float m_pi = (hitpoint.material->m+ 2.0f) / (2 * M_PI);
