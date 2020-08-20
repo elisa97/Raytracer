@@ -79,10 +79,11 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color ambient = calc_ambient(hitpoint, current_scene);
   Color diffuse = calc_diffuse(hitpoint, current_scene);
   Color specular = calc_specular(hitpoint, current_scene);
-  Color phong = ambient + diffuse + specular;
+  Color phong = ambient + specular;
   Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
-  //final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  final = ambient + reflection;
+  final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
+  //final = ambient + reflection;
+  tone_mapping(final);
   //final = phong;
   return final;
 }
