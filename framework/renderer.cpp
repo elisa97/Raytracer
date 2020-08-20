@@ -42,7 +42,7 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
         //p.color.r = test_hp.normal.x;
         //p.color.g = test_hp.normal.y;
         //p.color.b = test_hp.normal.z;
-        p.color = calc_color(test_hp, current_scene, 20);
+        p.color = calc_color(test_hp, current_scene, 2);
 
         //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
