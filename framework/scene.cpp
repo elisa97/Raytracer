@@ -44,7 +44,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
     }
 
     //resetting the ifstream back to the beginning
-    
+
     line_count = 0;
     in_file.clear();
     in_file.seekg(0, std::ios::beg);
@@ -76,6 +76,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                         >> box_v2.x >> box_v2.y >> box_v2.z >> box_mat_name;
 
                     std::shared_ptr<Material> box_material = new_scene.materials.find(box_mat_name)->second;
+                    //checking if the returned pointer is a nullpointer
                     if (!box_material) {
                         std::cout << "!ERROR: Material " << box_mat_name << " for box " << box_name << " could not be found, reverting to the default material.\n";
                         box_material = (std::shared_ptr<Material>(new Material{}));
@@ -116,21 +117,27 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     }
                 }
                 else{
-                    std::cout << "Error! No valid shape." << std::endl;
+                    std::cout << "Error! " << class_name << " is not a valid shape." << std::endl;
                 }
             
              } else if("material" == class_name){
                 if (verbose) {
                     in_sstream >> class_name;
                     auto ptr = new_scene.materials.find(class_name)->second;
-                    auto mat = ptr.get();
-                    std::cout << "Material " << mat->name <<std::endl;
-                    std::cout << "ka " << mat->ka.r << " " << mat->ka.g << " " << mat->ka.b << std::endl;
-                    std::cout << "kd " << mat->kd.r << " " << mat->kd.g << " " << mat->kd.b << std::endl;
-                    std::cout << "ks " << mat->ks.r << " " << mat->ks.g << " " << mat->ks.b << std::endl;
-                    std::cout << "m " << mat->m << " opacity " << mat->opacity << " glossy " << mat->glossy << std::endl;
+                    if (!ptr) {
+                        std::cout << "The material " << class_name << " could not be found or successfully initialized";
+                    }
+                    else {
+                        auto mat = ptr.get();
+                        std::cout << "Material " << mat->name <<std::endl;
+                        std::cout << "ka " << mat->ka.r << " " << mat->ka.g << " " << mat->ka.b << std::endl;
+                        std::cout << "kd " << mat->kd.r << " " << mat->kd.g << " " << mat->kd.b << std::endl;
+                        std::cout << "ks " << mat->ks.r << " " << mat->ks.g << " " << mat->ks.b << std::endl;
+                        std::cout << "m " << mat->m << " opacity " << mat->opacity << " glossy " << mat->glossy << std::endl;
+                    }
                 }
-            } else if("light" == class_name) {
+            } 
+            else if("light" == class_name) {
                 std::string light_name;
                 glm::vec3 light_pos, light_color;
                 float light_brightness;

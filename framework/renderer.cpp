@@ -24,13 +24,11 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
-
       //setting up the rays
       glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
-      //glm::vec3 ray_norm = glm::normalize(ray_vec);
       //tried to implement fov, not quite ready yet
-      //float fov_dist = (width_ / 2.0f) / std::tan(cam.fov_x * M_PI / 360.0f);
-      //glm::vec3 dir{x - (width_ / 2.0f), y - (width_ / 2.0f), - fov_dist};
+      //float fov = (width_ / 2.0f) / std::tan(cam.fov_x / 2 * M_PI / 180.0f);
+      //glm::vec3 ray_vec {x - (width_ / 2.0f), y - (width_ / 2.0f), -1.0f};
       Ray current_eye_ray {{}, glm::normalize(ray_vec)};
 
       HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
@@ -79,10 +77,9 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color specular = calc_specular(hitpoint, current_scene);
   Color phong = ambient + specular;
   Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
-  final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  // final = ambient;
+  // final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
+  final = specular;
   tone_mapping(final);
-  // final = phong;
   return final;
 }
 
@@ -176,23 +173,18 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
   Color final {0.0f, 0.0f, 0.0f};
   std::vector<Color> calc_color;
 
-  for (auto light : scene.lights) {
-    bool invisible_light = false;
+  for (auto const& light : scene.lights) {
+    bool obstructed = false;
     HitPoint no_light;
     glm::vec3 light_dir = glm::normalize(light.location - hitpoint.hit);
-
-    for (auto shape : scene.objects) {
-      no_light = shape->intersect(Ray{hitpoint.hit * 0.01f, light_dir});
-      if (no_light.cut){
-        if (no_light.material->opacity < 0.1) {
-          invisible_light = true;
-          //goto?
-        }
+    no_light = closest_hit(scene, {hitpoint.hit + 0.01f * hitpoint.normal, light_dir});
+    if (no_light.cut) {
+      if (no_light.material->opacity > 0.01f) {
+        obstructed = true;
       }
     }
-
-    if (!invisible_light) {
-      //std::cout << "buh";
+    
+    if (!obstructed) {
       //glm::vec3 camera_hit = glm::normalize(camera_hit - hitpoint.hit);
       glm::vec3 r = light_dir - 2 * (glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
       //float p = abs(glm::dot(r, camera_hit));
@@ -202,36 +194,8 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
       Color i_p = light.color * light.brightness;
       Color k_s = hitpoint.material->ks;
       calc_color.push_back(k_s * m_pi *  i_p);
-    } else {
-    //std::cout << "hi";
-  }
+    } 
   } 
-//     Ray ray_to_light {hitpoint.hit + 0.1f * hitpoint.normal, light_hit};
-//     no_light = scene.objects[0]->intersect(ray_to_light);
-
-//     if(no_light.cut){
-//       invisible_light = true;
-//     }
-//     if(!invisible_light){
-//       float m = hitpoint.material->m;
-//       glm::vec3 r = 2.0f*glm::dot(hitpoint.normal,light_hit)*hitpoint.normal-light_hit;
-//       glm::vec3 v = glm::normalize(scene.camera.position - hitpoint.hit);
-
-//       float aux = glm::dot(r, v);
-
-//       if(aux < 0){
-//         aux = -aux;
-//       }
-
-//       float cos = pow(aux, m);
-//       float m2 = (m+2)/(2*M_PI);
-//       Color ip = light.color * light.brightness;
-//       Color ks = hitpoint.material->ks;
-
-//       calc_color.push_back(ip * ks * cos * m2);
-//     }
-//   }
-  
   for (auto color : calc_color){
     final += color;
   }
@@ -245,7 +209,6 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
   //glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
   glm::vec3 reflect_ray_dir = glm::reflect(incoming_direction, normal);
   Ray reflect_ray {hitpoint.hit + 0.1f * normal, glm::normalize(reflect_ray_dir)};
-  //Ray reflect_ray { (0.01f * hitpoint.normal) + hitpoint.hit, reflect_ray_dir};
   HitPoint next_hit = closest_hit(scene, reflect_ray);
 
   if (!next_hit.cut){
