@@ -11,6 +11,8 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
     std::string identifier;
     std::string class_name;
 
+    //first loop to get all of the materials
+
     while(std::getline(in_file, line_buffer)) {
         
         std::istringstream in_sstream(line_buffer);
@@ -40,9 +42,15 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
             }
         }
     }
+
+    //resetting the ifstream back to the beginning
+    
     line_count = 0;
     in_file.clear();
     in_file.seekg(0, std::ios::beg);
+
+    //second loop to get all the other objects, linking the materials and shapes directly
+
     while(std::getline(in_file, line_buffer)) {
         if (verbose) {
             std::cout << ++line_count << ":" << line_buffer << std::endl;

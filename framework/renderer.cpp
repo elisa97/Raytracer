@@ -38,7 +38,6 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
 
       Pixel p(x,y);
       if (test_hp.cut) {
-        //p.color = calc_ambient(test_hp.material, current_scene);
         //p.color.r = test_hp.normal.x;
         //p.color.g = test_hp.normal.y;
         //p.color.b = test_hp.normal.z;
@@ -52,7 +51,6 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
         p.color = Color{1.0f, 0.0f, float(y)/width_};
         //p.color = current_scene.background;
       }
-
       write(p);
     }
   }
@@ -82,9 +80,9 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color phong = ambient + specular;
   Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
   final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  //final = specular;
+  // final = ambient;
   tone_mapping(final);
-  //final = phong;
+  // final = phong;
   return final;
 }
 
@@ -100,20 +98,16 @@ void Renderer::write(Pixel const& p)
   } else {
     color_buffer_[buf_pos] = p.color;
   }
-
   ppm_.write(p);
 }
 
 
 
 Color Renderer::calc_ambient(HitPoint const& hp, Scene const& scene) const {
-  Color ambient{};
-  // ambient.r = material->ka.r * ambient.r;
-  // ambient.g = material->ka.g * ambient.g;
-  // ambient.b = material->ka.b * ambient.b;
+  Color ambient = scene.ambient.intensity * hp.material->ka;
   for (auto light: scene.lights){
     glm::vec3 light_hit = glm::normalize(light.location - hp.hit);
-    ambient = ambient + scene.ambient.intensity * hp.material->ka + light.intensity * hp.material->kd  * glm::dot(hp.normal, light_hit);
+    ambient = ambient + light.intensity * hp.material->kd  * glm::dot(hp.normal, light_hit);
   }
   return ambient;
 }
@@ -147,7 +141,6 @@ Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const
   for (auto color : light_color){
     final += color;
   }
-
   return final;
 }
 

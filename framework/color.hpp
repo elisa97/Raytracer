@@ -27,7 +27,7 @@ struct Color
       r = 1;
     }
     else if (r < 0){
-      r =0;
+      r = 0;
     }
     if (g > 1){
       g = 1;
@@ -71,8 +71,8 @@ struct Color
   Color& operator*=(float a)
   {
     r *= a;
-    g *= g;
-    b *= b;
+    g *= a;
+    b *= a;
     this->color_check();
     return *this;
   }
@@ -110,4 +110,4 @@ friend Color operator*(Color const& a, float const& b)
   float b;
 };
 
-#endif //#define BUW_COLOR_HPP
+#endif
