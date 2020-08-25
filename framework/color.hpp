@@ -48,6 +48,7 @@ struct Color
     r += other.r;
     g += other.g;
     b += other.b;
+    this->color_check();
     return *this;
   }
 
@@ -56,6 +57,7 @@ struct Color
     r -= other.r;
     g -= other.g;
     b -= other.b;
+    this->color_check();
     return *this;
   }
 
@@ -98,7 +100,7 @@ friend Color operator*(Color const& a, Color const& b)
   return tmp;
 }
 
-friend Color operator*(Color const& a, float const& b)
+friend Color operator*(Color const& a, float b)
 {
   auto tmp(a);
   tmp *= b;
