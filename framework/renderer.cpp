@@ -19,17 +19,19 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
 
 void Renderer::render(Scene const& current_scene, Camera const& cam)
 {
+  //const float fov_x = cam.fov_x;
   std::size_t const checker_pattern_size = 20;
   float aspect_ratio = height_ / (float)width_;
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       //setting up the rays
-      glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
+      //glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
       //tried to implement fov, not quite ready yet
       //float fov = (width_ / 2.0f) / std::tan(cam.fov_x / 2 * M_PI / 180.0f);
-      //glm::vec3 ray_vec {x - (width_ / 2.0f), y - (width_ / 2.0f), -1.0f};
-      Ray current_eye_ray {{}, glm::normalize(ray_vec)};
+      float fov_dst = (width_ / 2.0f) / std::tan(cam.fov_x * M_PI / 360.0f);
+      glm::vec3 ray_vec {x - (width_ / 2.0f), y - (height_ / 2.0f), -fov_dst};
+      Ray current_eye_ray {cam.position, glm::normalize(ray_vec)};
 
       HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
       
