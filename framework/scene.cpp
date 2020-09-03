@@ -54,7 +54,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
     while(std::getline(in_file, line_buffer)) {
         if (verbose) {
             std::cout << ++line_count << ":" << line_buffer << std::endl;
-            std::cout << "Identifiert content: " << identifier << std::endl;
+            std::cout << "Identifier content: " << identifier << std::endl;
         }
         //construct stringstream using line_buffer string
         std::istringstream in_sstream(line_buffer);
@@ -137,6 +137,21 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     }
                 }
             } 
+            else if("ambient" == class_name) {
+                std::string amb_name;
+                glm::vec3 amb_color;
+                float amb_brightness;
+
+                in_sstream >> amb_name >> amb_color.r >> amb_color.g >> amb_color.b >> amb_brightness;
+
+                new_scene.ambient = {amb_name, amb_brightness, {amb_color.r, amb_color.g, amb_color.b}, {}};
+
+                if (verbose) {
+                    std::cout << "Object: Ambient: " << amb_name << std::endl;
+                    std::cout << "Color: (" << amb_color.r << ", " << amb_color.g << ", " << amb_color.b << ")\n";
+                    std::cout << "Brightness: " << amb_brightness << std::endl;
+                }
+            }
             else if("light" == class_name) {
                 std::string light_name;
                 glm::vec3 light_pos, light_color;
@@ -150,8 +165,8 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                 
                 if(verbose) {
                     std::cout << "Object: Light: " << light_name << std::endl;
-                    std::cout << "Position: (" << light_pos.x << ", " << light_pos.y << ", " << light_pos.z << ")" << std::endl;
-                    std::cout << "Color: (" << light_color.r << " " << light_color.g << " " << light_color.b << ")" << std::endl;
+                    std::cout << "Position: (" << light_pos.x << ", " << light_pos.y << ", " << light_pos.z << ")\n";
+                    std::cout << "Color: (" << light_color.r << ", " << light_color.g << ", " << light_color.b << ")\n";
                     std::cout << "Brightness: " << light_brightness << std::endl;
                 }
             } else if("camera" == class_name) {
