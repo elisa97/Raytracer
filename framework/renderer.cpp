@@ -22,6 +22,8 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
   //const float fov_x = cam.fov_x;
   std::size_t const checker_pattern_size = 20;
   float aspect_ratio = height_ / (float)width_;
+  //bool to toggle the checkerboard pattern
+  bool chck = false;
 
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
@@ -45,11 +47,15 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
 
         //tone_mapping(p.color);
         //p.color = calc_reflection(test_hp, current_scene, 40);
-      } else if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
-        p.color = Color{0.0f, 1.0f, float(x)/height_};
-      } else {
-        p.color = Color{1.0f, 0.0f, float(y)/width_};
-        //p.color = current_scene.background;
+      } else if (chck) {
+         if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
+            p.color = Color{0.0f, 1.0f, float(x)/height_};
+        } else {
+          p.color = Color{1.0f, 0.0f, float(y)/width_};
+        }
+      }
+      else {
+        p.color = current_scene.ambient.intensity;
       }
       write(p);
     }
@@ -104,7 +110,7 @@ void Renderer::write(Pixel const& p)
 
 Color Renderer::calc_ambient(HitPoint const& hp, Scene const& scene) const {
   Color ambient = scene.ambient.intensity * hp.material->ka;
-  for (auto light: scene.lights){
+  for (auto light: scene.lights) {
     glm::vec3 light_hit = glm::normalize(light.location - hp.hit);
     ambient = ambient + light.intensity * hp.material->kd  * glm::dot(hp.normal, light_hit);
   }
@@ -114,7 +120,7 @@ Color Renderer::calc_ambient(HitPoint const& hp, Scene const& scene) const {
 Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const {
   Color final {0.0f, 0.0f, 0.0f};
   std::vector<Color> calc_color;
-  for (auto light: scene.lights){
+  for (auto light: scene.lights) {
     bool obstructed;
     HitPoint no_light;
     glm::vec3 light_dir = glm::normalize(hitpoint.hit - light.location);
@@ -122,11 +128,11 @@ Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const
 
     no_light = closest_hit(scene, ray_to_light);
 
-    if(no_light.cut){
+    if (no_light.cut) {
       obstructed = true;
     }
 
-    if(!obstructed){
+    if (!obstructed) {
       glm::vec3 r = light_dir - 2*(glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
       float aux = std::pow(glm::dot(r, glm::normalize(scene.camera.position - hitpoint.hit)), hitpoint.material->m);
       Color ip = light.intensity;
@@ -135,7 +141,7 @@ Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const
     }
   }
 
-  for (auto color : calc_color){
+  for (auto color : calc_color) {
     final += color;
   }
   return final;
@@ -144,7 +150,7 @@ Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const
 Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) const {
   Color final {0.0f, 0.0f, 0.0f};
   std::vector<Color> calc_color;
-  for (auto light: scene.lights){
+  for (auto light: scene.lights) {
     bool obstructed;
     HitPoint no_light;
     glm::vec3 light_dir = glm::normalize(hitpoint.hit - light.location);
@@ -152,11 +158,11 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
 
     no_light = closest_hit(scene, ray_to_light);
 
-    if(no_light.cut){
+    if (no_light.cut) {
       obstructed = true;
     }
 
-    if(!obstructed){
+    if (!obstructed) {
       glm::vec3 r = light_dir - 2*(glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
       float aux = std::pow(glm::dot(r, glm::normalize(scene.camera.position - hitpoint.hit)), hitpoint.material->m);
       Color ip = light.intensity;
@@ -165,7 +171,7 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
     }
   }
 
-  for (auto color : calc_color){
+  for (auto color : calc_color) {
     final += color;
   }
   return final;
@@ -180,7 +186,7 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
   Ray reflect_ray {hitpoint.hit + 0.1f * normal, glm::normalize(reflect_ray_dir)};
   HitPoint next_hit = closest_hit(scene, reflect_ray);
 
-  if (!next_hit.cut){
+  if (!next_hit.cut) {
     return scene.background;
     //return hitpoint.material->ka;
   }

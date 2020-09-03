@@ -52,13 +52,15 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
     //second loop to get all the other objects, linking the materials and shapes directly
 
     while(std::getline(in_file, line_buffer)) {
+        
+        //construct stringstream using line_buffer string
+        std::istringstream in_sstream(line_buffer);
+        in_sstream >> identifier;
+        
         if (verbose) {
             std::cout << ++line_count << ":" << line_buffer << std::endl;
             std::cout << "Identifier content: " << identifier << std::endl;
         }
-        //construct stringstream using line_buffer string
-        std::istringstream in_sstream(line_buffer);
-        in_sstream >> identifier;
 
         //check for shapes, lights
         if("define" == identifier) {
@@ -139,12 +141,12 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
             } 
             else if("ambient" == class_name) {
                 std::string amb_name;
-                glm::vec3 amb_color;
+                Color amb_color;
                 float amb_brightness;
 
                 in_sstream >> amb_name >> amb_color.r >> amb_color.g >> amb_color.b >> amb_brightness;
 
-                new_scene.ambient = {amb_name, amb_brightness, {amb_color.r, amb_color.g, amb_color.b}, {}};
+                new_scene.ambient = {amb_name, amb_brightness, amb_color, {}};
 
                 if (verbose) {
                     std::cout << "Object: Ambient: " << amb_name << std::endl;
@@ -172,11 +174,16 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
             } else if("camera" == class_name) {
                 std::string cam_name;
                 float cam_fov;
+                glm::vec3 cam_pos, cam_dir, cam_up;
 
-                in_sstream >> cam_name >> cam_fov;
+                in_sstream >> cam_name >> cam_fov >> cam_pos.x >> cam_pos.y >> cam_pos.z
+                >> cam_dir.x >> cam_dir.y >> cam_dir.z >> cam_up.x >> cam_up.y >> cam_up.z;
 
                 new_scene.camera.name = cam_name;
                 new_scene.camera.fov_x = cam_fov;
+                new_scene.camera.position = cam_pos;
+                new_scene.camera.direction = cam_dir;
+                new_scene.camera.up = cam_up;
 
             }
             else {

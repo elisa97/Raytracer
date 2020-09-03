@@ -1,8 +1,8 @@
 # materials
-# define material red     1 0 0   1 0 0   1 0 0   1       0   1 
-# define material blue    0 0 1   0 0 1   0 0 1   1       1   0
+# define material red     1 0 0   1 0 0   1 0 0   1       0   1  
+define material blue    0 0 1   0 0 1   0 0 1   1       1   0
 define material red     1 0 0   1 0 0   1 0 0   100     0   0
-define material blue    0 0 1   0 0 1   0 0 1   1000    0   0
+# define material blue    0 0 1   0 0 1   0 0 1   1000    0   0
 define material reflect 0 0 1   0 0 1   0 0 1   100     1   1
 define material green   0 1 0   0 1 0   0 1 0   100	    0   0 
 define material mirror  0.5 0.5 0.5   0.5 0.5 0.5   0.5 0.5 0.5     1000	0   0.9 
@@ -27,6 +27,6 @@ define light l2 0.7 0.7 0.7 0.6 3 0 2
 define ambient amb 0.9 0.9 0.9 0.2
 
 # camera
-define camera eye 65.0
+define camera eye 65.0 0 0 0 0 0 -1 0 1 0
 # ... and go
-render eye image.ppm 1000 800
+render eye test2.ppm 1000 800
