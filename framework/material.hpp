@@ -30,6 +30,31 @@ struct  Material
         glossy = glossy_c;
     }
     std::ostream& print(std::ostream& os);
+
+    void material_check(){
+        ka.color_check();
+        kd.color_check();
+        ks.color_check();
+
+        if (m > 1000){
+        m = 1000;
+        }
+        else if (m < 0){
+        m = 0;
+        }
+        if (opacity > 1){
+        opacity = 1;
+        }
+        else if (opacity < 0){
+        opacity = 0;
+        }
+        if (glossy > 1){
+        glossy = 1;
+        }
+        else if (glossy < 0){
+        glossy = 0;
+        }
+    }
 };
 
 std::ostream& operator<<(std::ostream& os, Material& material);
