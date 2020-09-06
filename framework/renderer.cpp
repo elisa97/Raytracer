@@ -154,14 +154,23 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
   for (auto light: scene.lights) {
     bool obstructed;
     HitPoint no_light;
-    glm::vec3 l = glm::normalize(light.location - hitpoint.hit);
-    //glm::vec3 r = glm::normalize(glm::reflect(hitpoint.normal, l));
-    glm::vec3 v = glm::normalize(scene.camera.position - hitpoint.hit);
-    glm::vec3 r = glm::normalize (l - 2*(glm::dot(l, hitpoint.normal)) * hitpoint.normal);
-    //float aux = std::pow(glm::dot(r, v), hitpoint.material->m);
-    Color ks = hitpoint.material->ks;
-    Color ip = light.intensity;
-    calc_color.push_back(ks * std::pow(glm::dot(r, v), hitpoint.material->m) * ip);
+    glm::vec3 l = -glm::normalize(light.location - hitpoint.hit);
+    Ray ray_to_light {hitpoint.hit + 0.2f * hitpoint.normal, l};
+
+    if (no_light.cut) {
+      obstructed = true;
+    }
+
+    if (!obstructed) {
+      no_light = closest_hit(scene, ray_to_light);
+      glm::vec3 v = glm::normalize(scene.camera.position - hitpoint.hit);
+      glm::vec3 r = glm::dot(hitpoint.normal, l) * 2.0f * hitpoint.normal - l;
+      //float aux = std::pow(glm::dot(r, v), hitpoint.material->m);
+      float dot = abs(glm::dot(r, v));
+      Color ks = hitpoint.material->ks;
+      Color ip = light.intensity;
+      calc_color.push_back(ks * std::pow(dot, hitpoint.material->m));
+    }
   }
 
   for (auto color : calc_color) {
