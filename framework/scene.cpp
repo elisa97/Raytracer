@@ -51,7 +51,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
 
     //second loop to get all the other objects, linking the materials and shapes directly
 
-    while(std::getline(in_file, line_buffer)) {
+    while (std::getline(in_file, line_buffer)) {
         
         //construct stringstream using line_buffer string
         std::istringstream in_sstream(line_buffer);
@@ -63,13 +63,13 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
         }
 
         //check for shapes, lights
-        if("define" == identifier) {
+        if ("define" == identifier) {
             in_sstream >> class_name;
 
-            if("shape" == class_name ) {
+            if ("shape" == class_name ) {
                 in_sstream >> class_name;
 
-                if("box" == class_name){
+                if ("box" == class_name){
                     std::string box_name;
                     glm::vec3 box_v1, box_v2;
                     std::string box_mat_name;
@@ -94,7 +94,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     }
                 }
 
-                else if("sphere" == class_name){
+                else if ("sphere" == class_name){
                     std::string sphere_name;
                     glm::vec3 sphere_m;
                     float sphere_r;
@@ -122,7 +122,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     std::cout << "Error! " << class_name << " is not a valid shape." << std::endl;
                 }
             
-             } else if("material" == class_name){
+             } else if ("material" == class_name){
                 if (verbose) {
                     in_sstream >> class_name;
                     auto ptr = new_scene.materials.find(class_name)->second;
@@ -139,7 +139,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     }
                 }
             } 
-            else if("ambient" == class_name) {
+            else if ("ambient" == class_name) {
                 std::string amb_name;
                 Color amb_color;
                 float amb_brightness;
@@ -154,7 +154,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     std::cout << "Brightness: " << amb_brightness << std::endl;
                 }
             }
-            else if("light" == class_name) {
+            else if ("light" == class_name) {
                 std::string light_name;
                 glm::vec3 light_pos, light_color;
                 float light_brightness;
@@ -171,7 +171,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                     std::cout << "Color: (" << light_color.r << ", " << light_color.g << ", " << light_color.b << ")\n";
                     std::cout << "Brightness: " << light_brightness << std::endl;
                 }
-            } else if("camera" == class_name) {
+            } else if ("camera" == class_name) {
                 std::string cam_name;
                 float cam_fov;
                 glm::vec3 cam_pos, cam_dir, cam_up;
@@ -185,9 +185,6 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
                 new_scene.camera.direction = cam_dir;
                 new_scene.camera.up = cam_up;
 
-            }
-            else {
-                std::cout << "Line " << line_count << " was not valid!" << std::endl;
             }
         }
         if ("render" == identifier) {

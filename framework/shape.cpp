@@ -3,7 +3,7 @@
 Shape::Shape():
   name_{"default name"},
   material_{}{
-  std::cout << "Cnst/Shape " << name_ << "\n";
+  //std::cout << "Cnst/Shape " << name_ << "\n";
 }
 
 Shape::Shape(std::shared_ptr<Material> material,std::string const& name):
@@ -13,7 +13,7 @@ name_{name}{
 }
 
 Shape::~Shape() {
-  std::cout << "Dstr/Shape " << name_ << "\n";
+  //std::cout << "Dstr/Shape " << name_ << "\n";
 }
 
 std::ostream& Shape::print(std::ostream & os) const {

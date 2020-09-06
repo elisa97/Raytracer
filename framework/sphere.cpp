@@ -13,7 +13,7 @@ Sphere::Sphere() {
 }
 
 Sphere::~Sphere() {
-  std::cout << "Dstr/Sphere " << name_ << "\n";
+  //std::cout << "Dstr/Sphere " << name_ << "\n";
 }
 
 Sphere::Sphere(glm::vec3 const& m , float r)  {
@@ -25,7 +25,7 @@ Sphere::Sphere(glm::vec3 const& m , float r)  {
 }
 
 Sphere::Sphere(glm::vec3 const& m , float r, std::string const& name, std::shared_ptr<Material> material)  {
-  std::cout << "Cnst/Sphere " << name_ << "\n";
+ // std::cout << "Cnst/Sphere " << name_ << "\n";
   mid_ = m;
   rad_ = abs(r);
   name_ = name;
