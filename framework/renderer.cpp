@@ -84,7 +84,7 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color phong = ambient + specular + diffuse;
   // Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
   //final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  final = specular;
+  final = diffuse;
   tone_mapping(final);
   //normals(final, hitpoint);
   return final;
@@ -109,10 +109,6 @@ void Renderer::write(Pixel const& p)
 
 Color Renderer::calc_ambient(HitPoint const& hp, Scene const& scene) const {
   Color ambient = scene.ambient.intensity * hp.material->ka;
-  // for (auto light: scene.lights) {
-  //   glm::vec3 light_hit = glm::normalize(light.location - hp.hit);
-  //   ambient = ambient + light.intensity * hp.material->kd  * glm::dot(hp.normal, light_hit);
-  // }
   return ambient;
 }
 
@@ -120,26 +116,22 @@ Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const
   Color final {0.0f, 0.0f, 0.0f};
   std::vector<Color> calc_color;
   for (auto light: scene.lights) {
-    // bool obstructed;
-    // HitPoint no_light;
-    glm::vec3 l = - glm::normalize(hitpoint.hit - light.location);
-    //Ray ray_to_light {hitpoint.hit + 0.2f * hitpoint.normal, l};
+    bool obstructed;
+    HitPoint no_light;
+    glm::vec3 l = glm::normalize(light.location - hitpoint.hit);
+    Ray ray_to_light {hitpoint.hit + 0.1f * hitpoint.normal, l};
+    no_light = closest_hit(scene, ray_to_light);
 
-    //no_light = closest_hit(scene, ray_to_light);
+    if (no_light.cut) {
+      obstructed = true;
+    }
 
-    // if (no_light.cut) {
-    //   obstructed = true;
-    // }
-
-    // if (!obstructed) {
-    //   glm::vec3 r = light_dir - 2*(glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
-    //   float aux = std::pow(glm::dot(r, glm::normalize(scene.camera.position - hitpoint.hit)), hitpoint.material->m);
-    //   Color in = light.intensity;
-    //   Color kd = hitpoint.material->kd;
-    //   calc_color.push_back(kd * aux * in);
-    // }
+    if (!obstructed) {
+    
     Color diffuse = light.intensity * hitpoint.material->kd * glm::dot(l, hitpoint.normal);
     calc_color.push_back(diffuse);
+    }
+
   }
 
   for (auto color : calc_color) {
