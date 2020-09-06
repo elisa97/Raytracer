@@ -40,9 +40,7 @@ void Renderer::render(Scene const& current_scene, Camera const& cam)
 
       Pixel p(x,y);
       if (test_hp.cut) {
-        //p.color.r = test_hp.normal.x;
-        //p.color.g = test_hp.normal.y;
-        //p.color.b = test_hp.normal.z;
+        
         p.color = calc_color(test_hp, current_scene, 10);
 
         //tone_mapping(p.color);
@@ -84,10 +82,11 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color diffuse = calc_diffuse(hitpoint, current_scene);
   Color specular = calc_specular(hitpoint, current_scene);
   Color phong = ambient + specular + diffuse;
-  Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
-  final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  //final = diffuse;
+  // Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
+  //final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
+  final = specular;
   tone_mapping(final);
+  //normals(final, hitpoint);
   return final;
 }
 
@@ -110,10 +109,10 @@ void Renderer::write(Pixel const& p)
 
 Color Renderer::calc_ambient(HitPoint const& hp, Scene const& scene) const {
   Color ambient = scene.ambient.intensity * hp.material->ka;
-  for (auto light: scene.lights) {
-    glm::vec3 light_hit = glm::normalize(light.location - hp.hit);
-    ambient = ambient + light.intensity * hp.material->kd  * glm::dot(hp.normal, light_hit);
-  }
+  // for (auto light: scene.lights) {
+  //   glm::vec3 light_hit = glm::normalize(light.location - hp.hit);
+  //   ambient = ambient + light.intensity * hp.material->kd  * glm::dot(hp.normal, light_hit);
+  // }
   return ambient;
 }
 
@@ -121,24 +120,26 @@ Color Renderer::calc_diffuse(HitPoint const& hitpoint, Scene const& scene) const
   Color final {0.0f, 0.0f, 0.0f};
   std::vector<Color> calc_color;
   for (auto light: scene.lights) {
-    bool obstructed;
-    HitPoint no_light;
-    glm::vec3 light_dir = glm::normalize(hitpoint.hit - light.location);
-    Ray ray_to_light {hitpoint.hit + 0.2f * hitpoint.normal, - light_dir};
+    // bool obstructed;
+    // HitPoint no_light;
+    glm::vec3 l = - glm::normalize(hitpoint.hit - light.location);
+    //Ray ray_to_light {hitpoint.hit + 0.2f * hitpoint.normal, l};
 
-    no_light = closest_hit(scene, ray_to_light);
+    //no_light = closest_hit(scene, ray_to_light);
 
-    if (no_light.cut) {
-      obstructed = true;
-    }
+    // if (no_light.cut) {
+    //   obstructed = true;
+    // }
 
-    if (!obstructed) {
-      glm::vec3 r = light_dir - 2*(glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
-      float aux = std::pow(glm::dot(r, glm::normalize(scene.camera.position - hitpoint.hit)), hitpoint.material->m);
-      Color ip = light.intensity;
-      Color kd = hitpoint.material->kd;
-      calc_color.push_back(kd * aux * ip);
-    }
+    // if (!obstructed) {
+    //   glm::vec3 r = light_dir - 2*(glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
+    //   float aux = std::pow(glm::dot(r, glm::normalize(scene.camera.position - hitpoint.hit)), hitpoint.material->m);
+    //   Color in = light.intensity;
+    //   Color kd = hitpoint.material->kd;
+    //   calc_color.push_back(kd * aux * in);
+    // }
+    Color diffuse = light.intensity * hitpoint.material->kd * glm::dot(l, hitpoint.normal);
+    calc_color.push_back(diffuse);
   }
 
   for (auto color : calc_color) {
@@ -153,22 +154,14 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
   for (auto light: scene.lights) {
     bool obstructed;
     HitPoint no_light;
-    glm::vec3 light_dir = glm::normalize(hitpoint.hit - light.location);
-    Ray ray_to_light {hitpoint.hit + 0.2f * hitpoint.normal, - light_dir};
-
-    no_light = closest_hit(scene, ray_to_light);
-
-    if (no_light.cut) {
-      obstructed = true;
-    }
-
-    if (!obstructed) {
-      glm::vec3 r = light_dir - 2*(glm::dot(light_dir, hitpoint.normal)) * hitpoint.normal;
-      float aux = std::pow(glm::dot(r, glm::normalize(scene.camera.position - hitpoint.hit)), hitpoint.material->m);
-      Color ip = light.intensity;
-      Color ks = hitpoint.material->ks;
-      calc_color.push_back(ks * aux * ip);
-    }
+    glm::vec3 l = glm::normalize(light.location - hitpoint.hit);
+    //glm::vec3 r = glm::normalize(glm::reflect(hitpoint.normal, l));
+    glm::vec3 v = glm::normalize(scene.camera.position - hitpoint.hit);
+    glm::vec3 r = glm::normalize (l - 2*(glm::dot(l, hitpoint.normal)) * hitpoint.normal);
+    //float aux = std::pow(glm::dot(r, v), hitpoint.material->m);
+    Color ks = hitpoint.material->ks;
+    Color ip = light.intensity;
+    calc_color.push_back(ks * std::pow(glm::dot(r, v), hitpoint.material->m) * ip);
   }
 
   for (auto color : calc_color) {
@@ -206,6 +199,12 @@ void Renderer::tone_mapping(Color &color) const {
   color.r = color.r / (color.r + 1);
   color.g = color.g / (color.g + 1);
   color.b = color.b / (color.b + 1);
+}
+
+void Renderer::normals(Color &color, HitPoint const& hp) const {
+  color.r = hp.normal.x;
+  color.g = hp.normal.y;
+  color.b = hp.normal.z;
 }
 
 

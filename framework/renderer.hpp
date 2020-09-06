@@ -39,7 +39,9 @@ public:
   Color calc_specular(HitPoint const& hitpoint, Scene const& scene) const;
   Color calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const; 
   HitPoint closest_hit(Scene const& current_scene, Ray const& current_eye_ray) const;
+
   void tone_mapping(Color & color) const;
+  void normals(Color& color, HitPoint const& hitpoint) const;
 
   inline std::vector<Color> const& color_buffer() const
   {
