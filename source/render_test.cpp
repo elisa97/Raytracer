@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
    
     
 
-    new_renderer.render(new_scene, new_scene.camera);
+    new_renderer.render(new_scene);
 
     return 0;
 }

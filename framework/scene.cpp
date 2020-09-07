@@ -194,7 +194,7 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
             in_sstream >> cam_name >> img_output >> img_x >> img_y;
 
             Renderer renderer{img_x, img_y, img_output};
-            renderer.render(new_scene, new_scene.camera);
+            renderer.render(new_scene);
         }
     }
 

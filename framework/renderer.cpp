@@ -17,9 +17,9 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   , ppm_(width_, height_)
 {}
 
-void Renderer::render(Scene const& current_scene, Camera const& cam)
+void Renderer::render(Scene const& current_scene)
 {
-  //const float fov_x = cam.fov_x;
+  Camera cam = current_scene.camera;
   std::size_t const checker_pattern_size = 20;
   float aspect_ratio = height_ / (float)width_;
   //bool to toggle the checkerboard pattern
