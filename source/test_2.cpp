@@ -1,5 +1,6 @@
 #include "../framework/renderer.hpp"
 #include "../framework/scene.hpp"
+#include "glm/gtx/string_cast.hpp"
 
 int main(int argc, char* argv[]){
     Scene new_scene;
@@ -24,7 +25,9 @@ int main(int argc, char* argv[]){
     new_scene.camera.fov_x = 110;
 
     //Rotation
+    std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
     box1_ptr->transformation({1.5f, 1.0f, 1.0f}, {}, 20.0f, {1, 0, 0});
+    std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
     //debug_sphere->transformation({1.0f, 1.0f, 0.7f}, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
     
 

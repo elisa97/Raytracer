@@ -29,10 +29,10 @@ class Shape {
     virtual std::ostream& print(std::ostream& os) const;
     std::string name_;
     virtual void transformation(glm::vec3 const& scale, glm::vec3 const& translation, float angle, glm::vec3 const& axis);
-    
+    glm::mat4 world_transformation_, world_transformation_inv_;
+
   protected:
     std::shared_ptr<Material> material_;
-    glm::mat4 world_transformation_, world_transformation_inv_;
 };
 
 Ray transformRay(Ray const& ray, glm::mat4 const& mat);
