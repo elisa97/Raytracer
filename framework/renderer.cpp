@@ -107,39 +107,36 @@ void Renderer::write(Pixel const& p)
 
 Color Renderer::calc_phong(HitPoint const& hitpoint, Scene const& scene) const {
 
+  std::vector<Color> final_colors{};
   Color final_diffuse {};
   Color final_specular {};
   Color final {};
 
   //ambient
   Color final_ambient = scene.ambient.intensity * hitpoint.material->ka;
-
-  std::vector<Color> final_colors{};
-
-  
+ 
   for (auto lights : scene.lights){
 
     glm::vec3 l = glm::normalize(lights.location - hitpoint.hit);
-    glm::vec3 n = glm::normalize(hitpoint.normal);
-    float m = hitpoint.material->m;
-    auto hit_light = Ray{hitpoint.hit, l};
-    auto i = hit_light.direction;
-    
-    glm::vec3 r = glm::normalize(glm::reflect(i, n));
-    //glm::vec3 r = glm::normalize(i - 2 * glm::dot(i, n) * n);
-    glm::vec3 v = glm::normalize(hitpoint.direction);
-
-    //diffuse
-    auto diff_prod = glm::clamp(glm::dot(n, i), 0.0f, 1.0f);
-    final_diffuse = hitpoint.material->kd * diff_prod * lights.intensity;
-
-    //specular
-    auto spec_prod = glm::clamp(glm::dot(r, v), 0.0f, 1.0f);
-    final_specular = hitpoint.material->ks * std::pow(spec_prod, m) * lights.intensity;
+    Ray hit_light = {hitpoint.hit + 0.1f * hitpoint.normal, l};
 
     //shadows
-    HitPoint shadow = closest_hit(scene, {hitpoint.hit + 0.1f * hitpoint.normal, hit_light.direction});
+    HitPoint shadow = closest_hit(scene, hit_light);
     if (!shadow.cut){
+
+      //diffuse
+      glm::vec3 n = glm::normalize(hitpoint.normal);
+      auto diff_prod = glm::clamp(glm::dot(n, l), 0.0f, 1.0f);
+      final_diffuse = hitpoint.material->kd * diff_prod * lights.intensity;
+
+      //specular
+      float m = hitpoint.material->m;
+      glm::vec3 r = glm::normalize(glm::reflect(l, n));
+      // glm::vec3 r = glm::normalize(i - 2 * glm::dot(i, n) * n);
+      glm::vec3 v = glm::normalize(hitpoint.direction);
+      auto spec_prod = glm::clamp(glm::dot(r, v), 0.0f, 1.0f);
+      final_specular = hitpoint.material->ks * std::pow(spec_prod, m) * lights.intensity;
+
       final_colors.push_back(final_diffuse + final_specular);
     }
   }
