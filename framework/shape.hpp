@@ -3,9 +3,13 @@
 
 // header, extzernal
 #include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtx/vector_angle.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 // header, system
 #include <memory>
+
 
 // header, project
 #include "color.hpp"
@@ -24,6 +28,7 @@ class Shape {
     virtual HitPoint intersect(Ray const& ray) const = 0;
     virtual std::ostream& print(std::ostream& os) const;
     std::string name_;
+    void transformation(glm::vec3 const& scale, glm::vec3 const& translation, float angle, glm::vec3 const& axis);
     
   protected:
     std::shared_ptr<Material> material_;

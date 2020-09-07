@@ -47,14 +47,13 @@ std::ostream& Sphere::print(std::ostream & os) const {
 }
 
 HitPoint Sphere::intersect(Ray const& r) const {
-
+  Ray transRay_ = transformRay(r, world_transformation_inv_);
   glm::vec3 pos, n;
-
-  bool res = glm::intersectRaySphere(r.origin, glm::normalize(r.direction), mid_, rad_ , pos, n);
+  bool res = glm::intersectRaySphere(transRay_.origin, glm::normalize(transRay_.direction), mid_, rad_ , pos, n);
 
   if (res) {
-    float d = glm::distance(r.origin, pos);
-    return{true, d, name_, material_, pos, n, r.direction};
+    float d = glm::distance(transRay_.origin, pos);
+    return{true, d, name_, material_, pos, n, transRay_.direction};
   }
   
   return{};
