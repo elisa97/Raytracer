@@ -1,6 +1,9 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
 
+// header, extzernal
+#include <glm/glm.hpp>
+
 // header, system
 #include <memory>
 
@@ -24,6 +27,7 @@ class Shape {
     
   protected:
     std::shared_ptr<Material> material_;
+    glm::mat4 world_transformation_, world_transformation_inv_;
 };
 std::ostream& operator<<(std::ostream& os, Shape const& s);
 

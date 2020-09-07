@@ -19,6 +19,11 @@ struct Camera {
     glm::vec3 position = {0.0f, 0.0f, 0.0f};
     glm::vec3 direction = {0.0f, 0.0f, -1.0f};
     glm::vec3 up = {0.0f, 1.0f, 0.0f};
+    glm::mat4 camera_transformation_ = { 1.0f, 0.0f, 0.0f, 0.0f, 
+                                        0.0f, 1.0f, 0.0f, 0.0f,
+                                        0.0f, 0.0f, 1.0f, 0.0f, 
+                                        0.0f, 0.0f, 0.0f, 1.0f };
+    glm::mat4  camera_transformation_inv_ = glm::inverse(camera_transformation_);
 };
 
 #endif
