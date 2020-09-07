@@ -75,6 +75,18 @@ void Shape::transformation(glm::vec3 const& scale, glm::vec3 const& translation,
   world_transformation_inv_ = glm::inverse(world_transformation_);
 
 }
+Ray transformRay(Ray const& ray, glm::mat4 const& mat) {
+        glm::vec4 p{ray.origin, 1.0f};
+        glm::vec4 v{ray.direction, 0.0f};
+        p = mat*p;
+        v = mat*v;
+        return {glm::vec3{p.x, p.y, p.z}, glm::vec3{v.x, v.y, v.z}};
+}
+
+void rev_trans(HitPoint & hitpoint, glm::mat4 const& world, glm::mat4 const& inv_world) {
+  hitpoint.hit = glm::vec3{world * glm::vec4{hitpoint.hit, 1.0f}};
+  hitpoint.normal = glm::normalize(glm::vec3{inv_world* glm::vec4{hitpoint.normal, 0.0f}});
+}
 
 Shape::~Shape() {
   //std::cout << "Dstr/Shape " << name_ << "\n";

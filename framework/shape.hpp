@@ -34,6 +34,9 @@ class Shape {
     std::shared_ptr<Material> material_;
     glm::mat4 world_transformation_, world_transformation_inv_;
 };
+
+Ray transformRay(Ray const& ray, glm::mat4 const& mat);
+void rev_trans(HitPoint & hitpoint, glm::mat4 const& world, glm::mat4 const& world_inv);
 std::ostream& operator<<(std::ostream& os, Shape const& s);
 
 #endif
