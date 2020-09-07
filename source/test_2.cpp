@@ -24,12 +24,12 @@ int main(int argc, char* argv[]){
     new_scene.camera.fov_x = 110;
 
     //Rotation
-    //box1_ptr->transformation({10.0f, 2.0f, 2.0f}, {}, 0.0f, {});
-    debug_sphere->transformation({1.0f, 1.0f, 0.7f}, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
+    box1_ptr->transformation({1.5f, 1.0f, 1.0f}, {}, 20.0f, {1, 0, 0});
+    //debug_sphere->transformation({1.0f, 1.0f, 0.7f}, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
     
 
-    //new_scene.objects.push_back(box1_ptr);
-    new_scene.objects.push_back(debug_sphere);
+    new_scene.objects.push_back(box1_ptr);
+    //new_scene.objects.push_back(debug_sphere);
     new_scene.ambient = {"ambi", 0.2f, {0.9f, 0.9f, 0.9f}, {}};
     new_scene.lights.push_back(light1);
     new_scene.lights.push_back(light2);

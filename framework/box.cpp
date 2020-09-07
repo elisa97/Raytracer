@@ -83,9 +83,9 @@ HitPoint Box::intersect(Ray const& ray) const {
       HitPoint hitpoint{};
       Ray transform = transformRay(ray, world_transformation_inv_);
       if (side == 0) {
-        this->intersectPlane(hitpoint, ray, dim, true, min_[dim]+ epsilon);
+        this->intersectPlane(hitpoint, transform, dim, true, min_[dim]+ epsilon);
       } else {
-        this->intersectPlane(hitpoint, ray, dim, false, max_[dim]- epsilon);
+        this->intersectPlane(hitpoint, transform, dim, false, max_[dim]- epsilon);
       }
       
       if (hitpoint.cut) {

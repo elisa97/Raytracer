@@ -5,7 +5,7 @@ int main(int argc, char* argv[]){
     Scene new_scene;
     new_scene.background = {0.0f, 0.0f, 0.0f};
     Renderer new_renderer{800, 600, "output.ppm"};
-    new_scene.camera.fov_x = 110;
+    new_scene.camera.fov_x = 90;
     //Materials
     std::shared_ptr<Material> mat1_ptr (new Material{"red", {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, 10.0f, 0.3f, 0.7f});
     std::shared_ptr<Material> mat2_ptr (new Material{"green", {0.0, 0.8f, 0.0f}, {0.0f, 0.8f, 0.0f}, {0.0f, 0.8f, 0.0f}, 3.0f, 0.0f, 0.2f});
