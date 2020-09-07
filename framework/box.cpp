@@ -81,18 +81,19 @@ HitPoint Box::intersect(Ray const& ray) const {
   for (int side = 0; side < 2; side++) {
     for (int dim = 0; dim < 3; dim++) {
       HitPoint hitpoint{};
-      Ray transform = transformRay(ray, world_transformation_);
+      Ray transform = transformRay(ray, world_transformation_inv_);
       if (side == 0) {
         this->intersectPlane(hitpoint, ray, dim, true, min_[dim]+ epsilon);
       } else {
         this->intersectPlane(hitpoint, ray, dim, false, max_[dim]- epsilon);
       }
-      rev_trans(hitpoint, world_transformation_, glm::transpose(world_transformation_inv_));
+      
       if (hitpoint.cut) {
         if (!result.cut || hitpoint.cdist < result.cdist) {
           result = hitpoint;
         }
       }
+      rev_trans(hitpoint, world_transformation_, glm::transpose(world_transformation_inv_));
     }
   }
   return result;

@@ -28,7 +28,7 @@ class Shape {
     virtual HitPoint intersect(Ray const& ray) const = 0;
     virtual std::ostream& print(std::ostream& os) const;
     std::string name_;
-    void transformation(glm::vec3 const& scale, glm::vec3 const& translation, float angle, glm::vec3 const& axis);
+    virtual void transformation(glm::vec3 const& scale, glm::vec3 const& translation, float angle, glm::vec3 const& axis);
     
   protected:
     std::shared_ptr<Material> material_;

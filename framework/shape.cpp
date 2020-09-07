@@ -25,10 +25,11 @@ world_transformation_{1.0f, 0.0f, 0.0f, 0.0f,
 
 void Shape::transformation(glm::vec3 const& scale, glm::vec3 const& translation, float angle, glm::vec3 const& axis){
   //scalation
-  glm::mat4 scaled_mat = { scale.x, 0.0f, 0.0f, 0.0f,
-                           0.0f, scale.y, 0.0f, 0.0f, 
-                           0.0f, 0.0f, scale.z, 0.0f,
-                           0.0f, 0.0f, 0.0f, 1.0f };
+  // glm::mat4 scaled_mat = { scale.x, 0.0f, 0.0f, 0.0f,
+  //                          0.0f, scale.y, 0.0f, 0.0f, 
+  //                          0.0f, 0.0f, scale.z, 0.0f,
+  //                          0.0f, 0.0f, 0.0f, 1.0f };
+  glm::mat4 scaled_mat = glm::scale(world_transformation_, scale);
 
 
   //translation

@@ -52,9 +52,13 @@ HitPoint Sphere::intersect(Ray const& r) const {
   bool res = glm::intersectRaySphere(transRay_.origin, glm::normalize(transRay_.direction), mid_, rad_ , pos, n);
 
   if (res) {
+    glm::vec4 trans_n = glm::normalize(glm::transpose(world_transformation_inv_) * glm::vec4(n,0));
+    glm::vec4 trans_hp = world_transformation_ * glm::vec4(pos,1);
+    n = {trans_n.x, trans_n.y, trans_n.z};
+    pos = {trans_hp.x, trans_hp.y, trans_hp.z};
     float d = glm::distance(transRay_.origin, pos);
     HitPoint hit{true, d, name_, material_, pos, n, transRay_.direction};
-    rev_trans(hit, world_transformation_, glm::transpose(world_transformation_inv_));
+    //rev_trans(hit, world_transformation_, glm::transpose(world_transformation_inv_));
     return hit;
   }
   
