@@ -1,17 +1,17 @@
 define shape sphere sphear 0 0 -100 5 green
 define shape sphere shear 0 7.5 -100 5 orange
 define shape box boccs -10 -10 -150 5 5 -96 random
-
+#
 define light sun 800 1500 -100 1 .5 .5 2
 define light sun2 100 -100 -100 .5 1 .5 2
 define light another_sun -200 130 100 .2 .5 .8 1.5
-
+#
 define ambient amb 1 0.2 1.4 0.5
-
+#
 define camera eye 30 0 0 -70 0 0 -1 0 1 0
-
+#
 render eye test3.ppm 1280 720
-
+#
 define material green 0 1 0 0 1 0 0 1 0 20 1 0
 define material orange 1 0.65 0 1 0.65 0 1 0.65 0 20 1 0
 define material random 0.815 0.815 0.815 0.815 0.815 0.815 0.815 0.815 0.815 20 1 0

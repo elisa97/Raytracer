@@ -41,6 +41,8 @@ public:
   void tone_mapping(Color & color) const;
   void normals(Color& color, HitPoint const& hitpoint) const;
 
+  void progress(float const line) const;
+
   inline std::vector<Color> const& color_buffer() const
   {
     return color_buffer_;

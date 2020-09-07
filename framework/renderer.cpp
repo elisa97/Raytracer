@@ -52,8 +52,25 @@ void Renderer::render(Scene const& current_scene)
       }
       write(p);
     }
+    progress(y);
   }
+  std::cout << std::endl;
   ppm_.save(filename_);
+}
+
+void Renderer::progress(float const y) const {
+
+  float bar = 26.0f; 
+  float prog = bar / height_;
+  int pos = prog * y;
+  std::cout << "[";
+  for (int i = 0; i < bar-1; ++i) {
+    if (i < pos) std::cout << "=";
+    else std::cout << " "; 
+  }
+  std::cout << "] " << pos * 4 << "%  \r";
+  if (y == height_) std::cout << std::endl;
+  else std::cout.flush();
 }
 
 HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_eye_ray) const {
