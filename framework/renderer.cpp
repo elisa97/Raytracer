@@ -78,15 +78,15 @@ HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_ey
 
 Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene, unsigned int reflection_steps) const{
   Color final{0.0f, 0.0f, 0.0f};
-  Color ambient = calc_ambient(hitpoint, current_scene);
-  Color diffuse = calc_diffuse(hitpoint, current_scene);
-  Color specular = calc_specular(hitpoint, current_scene);
-  Color phong = ambient + specular + diffuse;
+  // Color ambient = calc_ambient(hitpoint, current_scene);
+  // Color diffuse = calc_diffuse(hitpoint, current_scene);
+  // Color specular = calc_specular(hitpoint, current_scene);
+  // Color phong = ambient + specular + diffuse;
   // Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
-  //final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
-  final = diffuse;
-  tone_mapping(final);
-  //normals(final, hitpoint);
+  // final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
+  // final = diffuse;
+  // tone_mapping(final);
+  // normals(final, hitpoint);
   return final;
 }
 
@@ -170,6 +170,7 @@ Color Renderer::calc_specular(HitPoint const& hitpoint, Scene const& scene) cons
   }
   return final;
 }
+
 
 Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const {
   Color final {0.0f, 0.0f, 0.0f};
