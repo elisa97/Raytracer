@@ -1,6 +1,9 @@
 #ifndef MATERIAL_HPP
 #define MATERIAL_HPP
 
+// header, extern
+#include <glm/glm.hpp>
+
 // header, system
 #include <iostream>
 #include <string>
@@ -31,30 +34,16 @@ struct  Material
     }
     std::ostream& print(std::ostream& os);
 
-    void material_check(){
+    void material_check() {
         ka.color_check();
         kd.color_check();
         ks.color_check();
-
-        if (m > 1000){
-        m = 1000;
-        }
-        else if (m < 0){
-        m = 0;
-        }
-        if (opacity > 1){
-        opacity = 1;
-        }
-        else if (opacity < 0){
-        opacity = 0;
-        }
-        if (glossy > 1){
-        glossy = 1;
-        }
-        else if (glossy < 0){
-        glossy = 0;
-        }
+        if (m < 0) m = 0;
+        glm::clamp(opacity, 0.0f, 1.0f);
+        glm::clamp(glossy, 0.0f, 1.0f);
     }
+    
+    
 };
 
 std::ostream& operator<<(std::ostream& os, Material& material);
