@@ -1,29 +1,25 @@
 #include "box.hpp"
 
-Box::Box() {
-  min_ = {0.0f, 0.0f, 0.0f};
-  max_ = {0.0f, 0.0f, 0.0f};
-  name_ = "default";
-  std::shared_ptr<Material> mat1(new Material{});
-  material_ = mat1;
+Box::Box():
+  min_{},
+  max_{} {
 }
 
-Box::Box(glm::vec3 const& lhs, glm::vec3 const& rhs) {
-  min_ = lhs;
-  max_ = rhs;
+Box::Box(glm::vec3 const& lhs, glm::vec3 const& rhs):
+  min_{lhs},
+  max_{rhs} {
+
   minMax();
-  name_ = "default";
-  std::shared_ptr<Material> mat1(new Material{});
-  material_ = mat1;
 }
 
 Box::Box(glm::vec3 const& lhs, glm::vec3 const& rhs, 
-        std::string const& name, std::shared_ptr<Material> material) {
-  min_ = lhs;
-  max_ = rhs;
-  minMax();
-  name_ = name;
-  material_ = material;
+        std::string const& name, std::shared_ptr<Material> material):
+  min_{lhs},
+  max_{rhs} {
+    
+    minMax();
+    name_ = name;
+    material_ = material;
 }
 
 float Box::area() const {

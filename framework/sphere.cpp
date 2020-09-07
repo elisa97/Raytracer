@@ -4,32 +4,25 @@
 
 #include <cmath>
 
-Sphere::Sphere() {
-  mid_ = {0.0f, 0.0f, 0.0f};
-  rad_ = 10.0f;
-  name_ = "default";
-  std::shared_ptr<Material> mat1(new Material{});
-  material_ = mat1;
+Sphere::Sphere():
+  mid_{},
+  rad_{10.0f} {
 }
 
 Sphere::~Sphere() {
   //std::cout << "Dstr/Sphere " << name_ << "\n";
 }
 
-Sphere::Sphere(glm::vec3 const& m , float r)  {
-  mid_ = m;
-  rad_ = abs(r);
-  name_ = "default";
-  std::shared_ptr<Material> mat1(new Material{});
-  material_ = mat1;
+Sphere::Sphere(glm::vec3 const& m , float r):
+  mid_{m},
+  rad_{abs(r)} {
 }
 
-Sphere::Sphere(glm::vec3 const& m , float r, std::string const& name, std::shared_ptr<Material> material)  {
- // std::cout << "Cnst/Sphere " << name_ << "\n";
-  mid_ = m;
-  rad_ = abs(r);
-  name_ = name;
-  material_ = material;
+Sphere::Sphere(glm::vec3 const& m , float r, std::string const& name, std::shared_ptr<Material> material):
+  mid_{m},
+  rad_{abs(r)} {
+    name_ = name;
+    material_ = material;
 }
 
 float Sphere::area() const {

@@ -28,9 +28,6 @@ void Renderer::render(Scene const& current_scene)
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       //setting up the rays
-      //glm::vec3 ray_vec = {{x / float(width_) -0.5f}, {aspect_ratio * (y / float(height_) -0.5f)}, {-1.0f}};
-      //tried to implement fov, not quite ready yet
-      //float fov = (width_ / 2.0f) / std::tan(cam.fov_x / 2 * M_PI / 180.0f);
       float fov_dst = (width_ / 2.0f) / std::tan(cam.fov_x * M_PI / 360.0f);
       glm::vec3 ray_vec {x - (width_ / 2.0f), y - (height_ / 2.0f), -fov_dst};
       Ray current_eye_ray {cam.position, glm::normalize(ray_vec)};
@@ -42,9 +39,7 @@ void Renderer::render(Scene const& current_scene)
       if (test_hp.cut) {
         
         p.color = calc_color(test_hp, current_scene, 10);
-        //p.color = calc_phong(test_hp, current_scene);
-        //p.color = calc_reflection(test_hp, current_scene, 40);
-        //tone_mapping(p.color);
+        //normals(p.color, test_hp);
       } else if (chck) {
          if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
             p.color = Color{0.0f, 1.0f, float(x)/height_};
@@ -82,7 +77,6 @@ Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene,
   Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
   final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
   tone_mapping(final);
-  // normals(final, hitpoint);
   return final;
 }
 
@@ -157,7 +151,6 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
 
   if (!next_hit.cut) {
     return scene.background;
-    //return hitpoint.material->ka;
   }
   else {
     if (recursive_boundary > 0 && next_hit.cut) {
