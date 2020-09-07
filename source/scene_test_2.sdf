@@ -18,14 +18,14 @@ define shape box box1 -1.5 -4.4 -5 -0.9 -0.2 -3.0 green
 define shape box box2 -1.5 -1 -1 1 -3 -10 mirror
 define shape box box3 -1.5 -4.4 -15 -1 -0.3 -2 grey
 define shape box box4 1.5 -4.4 -15 1 -0.3 -2 yellow
-
+#
 # lights
 # define light sun 1000 700 0 .2 .2 .2 1000
 define light l1 3 1 -3 0.8 0.8 0.8 3
 define light l2 0.6 3 0 0.7 0.7 0.7 2
-
+#
 define ambient amb 0.9 0.9 0.9 0.2
-
+#
 # camera
 define camera eye 65.0 0 0 0 0 0 -1 0 1 0
 # ... and go
