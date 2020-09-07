@@ -2,15 +2,27 @@
 
 Shape::Shape():
   name_{"default name"},
-  material_{}{
+  material_{},
+  world_transformation_{1.0f, 0.0f, 0.0f, 0.0f, 
+                        0.0f, 1.0f, 0.0f, 0.0f,
+                        0.0f, 0.0f, 1.0f, 0.0f, 
+                        0.0f, 0.0f, 0.0f, 1.0f},
+  world_transformation_inv_ {glm::inverse(world_transformation_)} {
   //std::cout << "Cnst/Shape " << name_ << "\n";
 }
 
 Shape::Shape(std::shared_ptr<Material> material,std::string const& name):
 material_{material},
-name_{name}{
+name_{name},
+world_transformation_{1.0f, 0.0f, 0.0f, 0.0f, 
+                      0.0f, 1.0f, 0.0f, 0.0f,
+                      0.0f, 0.0f, 1.0f, 0.0f, 
+                      0.0f, 0.0f, 0.0f, 1.0f},
+  world_transformation_inv_ {glm::inverse(world_transformation_)}{
 
 }
+
+
 
 Shape::~Shape() {
   //std::cout << "Dstr/Shape " << name_ << "\n";
