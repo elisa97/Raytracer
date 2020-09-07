@@ -121,18 +121,27 @@ Color Renderer::calc_phong(HitPoint const& hitpoint, Scene const& scene) const {
 
     glm::vec3 l = glm::normalize(lights.location - hitpoint.hit);
     glm::vec3 n = glm::normalize(hitpoint.normal);
-    glm::vec3 r = glm::normalize(glm::reflect(l, n));
-    glm::vec3 v = glm::normalize(scene.camera.position - hitpoint.hit);
-    float m = hitpoint.material->m; 
+    float m = hitpoint.material->m;
+    auto hit_light = Ray{hitpoint.hit, l};
+    auto i = hit_light.direction;
+    
+    glm::vec3 r = glm::normalize(glm::reflect(i, n));
+    //glm::vec3 r = glm::normalize(i - 2 * glm::dot(i, n) * n);
+    glm::vec3 v = glm::normalize(hitpoint.direction);
 
     //diffuse
-    final_diffuse = hitpoint.material->kd * glm::dot(l, n) * lights.intensity;
+    auto diff_prod = glm::clamp(glm::dot(n, i), 0.0f, 1.0f);
+    final_diffuse = hitpoint.material->kd * diff_prod * lights.intensity;
 
     //specular
-    final_specular = hitpoint.material->ks * std::pow(glm::dot(r, v), m) * lights.intensity;
+    auto spec_prod = glm::clamp(glm::dot(r, v), 0.0f, 1.0f);
+    final_specular = hitpoint.material->ks * std::pow(spec_prod, m) * lights.intensity;
 
-    final_colors.push_back(final_diffuse + final_specular);
-
+    //shadows
+    HitPoint shadow = closest_hit(scene, {hitpoint.hit + 0.1f * hitpoint.normal, hit_light.direction});
+    if (!shadow.cut){
+      final_colors.push_back(final_diffuse + final_specular);
+    }
   }
   final = final_ambient;
 
