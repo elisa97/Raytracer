@@ -13,12 +13,12 @@ Shape::Shape():
 }
 
 Shape::Shape(std::shared_ptr<Material> material,std::string const& name):
-material_{material},
-name_{name},
-world_transformation_{1.0f, 0.0f, 0.0f, 0.0f, 
-                      0.0f, 1.0f, 0.0f, 0.0f,
-                      0.0f, 0.0f, 1.0f, 0.0f, 
-                      0.0f, 0.0f, 0.0f, 1.0f},
+  material_{material},
+  name_{name},
+  world_transformation_{1.0f, 0.0f, 0.0f, 0.0f, 
+                        0.0f, 1.0f, 0.0f, 0.0f,
+                        0.0f, 0.0f, 1.0f, 0.0f, 
+                        0.0f, 0.0f, 0.0f, 1.0f},
   world_transformation_inv_ {glm::inverse(world_transformation_)}{
 
 }
@@ -33,10 +33,11 @@ void Shape::transformation(glm::vec3 const& scale, glm::vec3 const& translation,
 
 
   //translation
-  glm::mat4 translated_mat = { 1.0f, 0.0f, 0.0f, translation.x,
-                               0.0f, 1.0f, 0.0f, translation.y,
-                               0.0f, 0.0f, 1.0f, translation.z,
-                               0.0f, 0.0f, 0.0f, 1.0f };
+  // glm::mat4 translated_mat = { 1.0f, 0.0f, 0.0f, translation.x,
+  //                              0.0f, 1.0f, 0.0f, translation.y,
+  //                              0.0f, 0.0f, 1.0f, translation.z,
+  //                              0.0f, 0.0f, 0.0f, 1.0f };
+  glm::mat4 translated_mat = glm::translate(world_transformation_, translation);
 
   if (angle == 0.0f){
     world_transformation_ = world_transformation_ * translated_mat * scaled_mat;

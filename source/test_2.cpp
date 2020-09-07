@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
 
     //Rotation
     std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
-    box1_ptr->transformation({1.5f, 1.0f, 1.0f}, {}, 20.0f, {1, 0, 0});
+    box1_ptr->transformation({1.5f, 0.5f, 1.0f}, {2.0f, 1.0f, 0.0f}, 700, {1, 0, 1});
     std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
     //debug_sphere->transformation({1.0f, 1.0f, 0.7f}, {0.0f, 0.0f, 0.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
     
