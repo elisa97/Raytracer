@@ -7,7 +7,6 @@ Scene importScene(std::string const& sdf_file, bool verbose) {
     std::string line_buffer;
     int32_t line_count = 0;
     Scene new_scene;
-
     std::string identifier;
     std::string class_name;
 
