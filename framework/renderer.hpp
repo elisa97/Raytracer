@@ -30,7 +30,8 @@ class Renderer
 public:
   Renderer(unsigned w, unsigned h, std::string const& file);
 
-  void render(Scene const& current_scene);
+  void render(Scene const& current_scene, unsigned int ref_step, 
+              unsigned int aa_step);
   void write(Pixel const& p);
 
   Color calc_color(HitPoint const& hp, Scene const& current_scene,

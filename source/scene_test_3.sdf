@@ -10,7 +10,7 @@ define ambient amb 1 0.2 1.4 0.5
 #
 define camera eye 30 0 0 -70 0 0 -1 0 1 0
 #
-render eye test3.ppm 1280 720
+render eye test3.ppm 1280 720 5 1
 #
 define material green 0 1 0 0 1 0 0 1 0 20 1 0
 define material orange 1 0.65 0 1 0.65 0 1 0.65 0 20 1 0
