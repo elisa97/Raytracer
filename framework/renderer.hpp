@@ -33,7 +33,7 @@ public:
   void render(Scene const& current_scene);
   void write(Pixel const& p);
 
-  Color calc_color(HitPoint const& hitpoint, Scene const& current_scene,
+  Color calc_color(HitPoint const& hp, Scene const& current_scene,
                    unsigned int reflection_steps) const;
   Color calc_phong(HitPoint const& hitpoint, Scene const& scene) const;
   Color calc_reflection(HitPoint const& hitpoint, Scene const& scene, 

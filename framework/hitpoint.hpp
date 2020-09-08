@@ -1,21 +1,22 @@
 #ifndef HITPOINT_HPP
 #define HITPOINT_HPP
 
-//header, external
-#include <glm/vec3.hpp>
-
 // header, project
 #include "material.hpp"
 
+//header, external
+#include <glm/vec3.hpp>
+#include <memory>
+
 struct HitPoint
 {
-  bool cut = false;                      // 1
-  float cdist = -1.0f;                   // 2
-  std::string name = "default";          // 3
-  std::shared_ptr<Material> material{};  // 4
-  glm::vec3 hit{};                       // 5
-  glm::vec3 normal{};                    // 6
-  glm::vec3 direction{};                 // 7
+  bool                      cut = false;  
+  float                     cdist = -1.0f;
+  std::string               name = "default";
+  std::shared_ptr<Material> material{};
+  glm::vec3                 hit {};
+  glm::vec3                 normal {};
+  glm::vec3                 direction {};
 };
 
 #endif

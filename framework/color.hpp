@@ -28,7 +28,8 @@ struct Color
     return os;
   }
 
-  void color_check(){
+  void color_check()
+  {
     glm::clamp(r, 0.0f, 1.0f);
     glm::clamp(g, 0.0f, 1.0f);
     glm::clamp(b, 0.0f, 1.0f);
@@ -84,19 +85,19 @@ struct Color
     return tmp;
   }
 
-friend Color operator*(Color const& a, Color const& b)
-{
-  auto tmp(a);
-  tmp *= b;
-  return tmp;
-}
+  friend Color operator*(Color const& a, Color const& b)
+  {
+    auto tmp(a);
+    tmp *= b;
+    return tmp;
+  }
 
-friend Color operator*(Color const& a, float b)
-{
-  auto tmp(a);
-  tmp *= b;
-  return tmp;
-}
+  friend Color operator*(Color const& a, float b)
+  {
+    auto tmp(a);
+    tmp *= b;
+    return tmp;
+  }
 
 };
 

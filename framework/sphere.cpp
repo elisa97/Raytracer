@@ -52,7 +52,7 @@ std::ostream& Sphere::print(std::ostream & os) const {
 }
 
 HitPoint Sphere::intersect(Ray const& r) const {
-  Ray transRay_ = transformRay(r, world_transformation_inv_);
+  Ray transRay_ = transform_ray(r, world_transformation_inv_);
   glm::vec3 pos, n;
   bool res = glm::intersectRaySphere(transRay_.origin, glm::normalize(transRay_.direction), mid_, rad_ , pos, n);
 
