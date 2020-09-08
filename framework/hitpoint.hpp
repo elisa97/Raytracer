@@ -12,10 +12,10 @@ struct HitPoint
   bool                      cut = false;  
   float                     cdist = -1.0f;
   std::string               name = "default";
-  std::shared_ptr<Material> material{};
-  glm::vec3                 hit{};
-  glm::vec3                 normal{};
-  glm::vec3                 direction{};
+  std::shared_ptr<Material> material {};
+  glm::vec3                 hit {};
+  glm::vec3                 normal {};
+  glm::vec3                 direction {};
 };
 
 #endif
