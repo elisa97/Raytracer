@@ -31,7 +31,7 @@ int main(int argc, char* argv[]){
     box1_ptr->print(info);
     std::vector<glm::vec3> position = box1_ptr->mv_mid();
     box1_ptr->print(info);
-    box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, 0.0f, {0.0f, 1.0f, 0.0f});
+    box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, 30.0f, {1.0f, 0.0f, 0.0f});
     box1_ptr->print(info);
     box1_ptr->mv_back(position);
     box1_ptr->print(info);
