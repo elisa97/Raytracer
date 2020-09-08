@@ -73,7 +73,8 @@ void Renderer::progress(float const y) const {
   else std::cout.flush();
 }
 
-HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_eye_ray) const {
+HitPoint Renderer::closest_hit(Scene const& current_scene, 
+                               Ray const& current_eye_ray) const {
   HitPoint test_hp {};
   test_hp.cdist = MAXFLOAT;
   HitPoint tmp_hp{};
@@ -88,11 +89,13 @@ HitPoint Renderer::closest_hit(Scene const& current_scene, Ray const& current_ey
   return test_hp;
 }
 
-Color Renderer::calc_color(HitPoint const& hitpoint, Scene const& current_scene, unsigned int reflection_steps) const{
+Color Renderer::calc_color(HitPoint const& hp, Scene const& current_scene,
+                           unsigned int reflection_steps) const{
   Color final{0.0f, 0.0f, 0.0f};
-  Color phong = calc_phong(hitpoint, current_scene);
-  Color reflection = calc_reflection(hitpoint, current_scene, reflection_steps);
-  final = (phong * (1 - hitpoint.material->glossy) + reflection * hitpoint.material->glossy);
+  Color phong = calc_phong(hp, current_scene);
+  Color reflection = calc_reflection(hp, current_scene, reflection_steps);
+  final = (phong * (1 - hp.material->glossy) + reflection 
+           * hp.material->glossy);
   tone_mapping(final);
   return final;
 }

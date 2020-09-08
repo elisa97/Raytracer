@@ -18,6 +18,9 @@
 
 struct Color
 {
+  float r;
+  float g;
+  float b;
 
   friend std::ostream& operator<<(std::ostream& os, Color const& c)
   {
@@ -95,9 +98,6 @@ friend Color operator*(Color const& a, float b)
   return tmp;
 }
 
-  float r;
-  float g;
-  float b;
 };
 
 #endif
