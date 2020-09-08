@@ -4,12 +4,7 @@
 // header, project
 #include "shape.hpp"
 
-// header, external
-#include <glm/glm.hpp>
-
 // header, system
-#include <cmath>
-#include <vector>
 #include <algorithm>
 
 class Box : public Shape {

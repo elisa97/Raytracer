@@ -1,6 +1,13 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
+// header, project
+#include "material.hpp"
+#include "sphere.hpp"
+#include "box.hpp"
+#include "camera.hpp"
+#include "light.hpp"
+
 // header, external
 #include <glm/vec3.hpp>
 
@@ -15,22 +22,17 @@
 #include <memory>
 #include <algorithm>
 
-// header, project
-#include "material.hpp"
-#include "sphere.hpp"
-#include "box.hpp"
-#include "camera.hpp"
-#include "light.hpp"
+
 
 struct Scene
 {
-    std::string name = "default_name";
     std::map<std::string, std::shared_ptr<Material>> materials{};
     std::vector<std::shared_ptr<Shape>> objects{};
     std::vector<Light> lights{};
-    Camera camera;
-    Color background {0.0f, 0.0f, 0.0f};
-    Light ambient {};
+    std::string name = "default";
+    Camera      camera;
+    Color       background {};
+    Light       ambient {};
 };
 
 Scene importScene(std::string const& path, bool verbose);

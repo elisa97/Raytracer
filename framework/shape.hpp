@@ -16,6 +16,7 @@
 // header, system
 #include <memory>
 #include <vector>
+#include <cmath>
 
 class Shape {
   public:
