@@ -1,20 +1,20 @@
 #include "box.hpp"
 
 Box::Box():
-  min_{},
-  max_{} {}
+  min_ {},
+  max_ {} {}
 
 Box::Box(glm::vec3 const& lhs, glm::vec3 const& rhs):
-  min_{lhs},
-  max_{rhs} 
+  min_ {lhs},
+  max_ {rhs} 
 {
   min_max();
 }
 
 Box::Box(glm::vec3 const& lhs, glm::vec3 const& rhs, 
         std::string const& name, std::shared_ptr<Material> material):
-  min_{lhs},
-  max_{rhs} 
+  min_ {lhs},
+  max_ {rhs}
 {
   min_max();
   name_ = name;
@@ -107,7 +107,7 @@ HitPoint Box::intersect(Ray const& ray) const
   for (int side = 0; side < 2; side++) {
     for (int dim = 0; dim < 3; dim++) {
       HitPoint hp{};
-      Ray transform = transformRay(ray, world_transformation_inv_);
+      Ray transform = transform_ray(ray, world_transformation_inv_);
       if (side == 0) {
         this->intersect_plane(hp, transform, dim, true, min_[dim]+ epsilon);
       } else {
