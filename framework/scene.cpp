@@ -270,15 +270,16 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 		if ("render" == identifier) {
 
 			std::string cam_name, img_output;
-			unsigned int img_x, img_y;
+			unsigned int img_x, img_y, ref_step, aa_step;
 
 			in_sstream 
 			>> cam_name 
 			>> img_output 
-			>> img_x >> img_y;
+			>> img_x >> img_y
+			>> ref_step >> aa_step;
 
 			Renderer renderer{img_x, img_y, img_output};
-			renderer.render(new_scene);
+			renderer.render(new_scene, ref_step, aa_step);
 		}
   }
 

@@ -19,11 +19,14 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   , ppm_(width_, height_)
 {}
 
-void Renderer::render(Scene const& current_scene)
+void Renderer::render(Scene const& current_scene, unsigned int ref_step, 
+                      unsigned int aa_step)
 {
   std::chrono::steady_clock::time_point beg = std::chrono::steady_clock::now();
-  //tmp
-  int aa_step = 4;
+  if (aa_step == 0) aa_step = 1;
+  else if (aa_step == 1) aa_step = 2;
+  else aa_step = pow(aa_step, 2);
+  
   Camera cam = current_scene.camera;
   std::size_t const checker_pattern_size = 20;
   float aspect_ratio = height_ / (float)width_;

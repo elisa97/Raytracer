@@ -16,4 +16,4 @@ define light test_lt_1 5.0 0.0 0.0 0.5 0.5 0.5 20.0
 #
 define camera eye 90 0 0 0 0 0 -1 0 1 0
 #
-render eye test1.ppm 1280 720
+render eye test1.ppm 1280 720 3 0

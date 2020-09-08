@@ -29,4 +29,4 @@ define ambient amb 0.9 0.9 0.9 0.2
 # camera
 define camera eye 65.0 0 0 0 0 0 -1 0 1 0
 # ... and go
-render eye test2.ppm 1000 800
+render eye test2.ppm 1000 800 5 1

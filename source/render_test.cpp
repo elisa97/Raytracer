@@ -104,7 +104,7 @@ int main(int argc, char* argv[]){
 	new_scene.lights.push_back(light2);
 
 	//Renderer
-	new_renderer.render(new_scene);
+	new_renderer.render(new_scene, 5, 2);
 
 	return 0;
 }
