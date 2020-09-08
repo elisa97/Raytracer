@@ -4,9 +4,6 @@
 // header, project
 #include "shape.hpp"
 
-// header, external
-#include <glm/gtx/intersect.hpp>
-
 class Sphere : public Shape {
   public:
     Sphere();

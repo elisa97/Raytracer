@@ -7,6 +7,7 @@
 #include "box.hpp"
 #include "camera.hpp"
 #include "light.hpp"
+#include "triangle.hpp"
 
 // header, external
 #include <glm/vec3.hpp>

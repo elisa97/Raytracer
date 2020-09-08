@@ -17,6 +17,9 @@ int main(int argc, char* argv[]){
     //Boxes
     std::shared_ptr<Box> box1_ptr (new Box{{-2.0f, -0.9f, -1.5f}, {-0.5f,-0.3f,-1.0f}, "box1", mat4_ptr});
 
+    //Triangle
+    std::shared_ptr<Triangle> tirangle (new Triangle{{0.5f, 0.5f, -0.5f}, {0.3f, 0.3f, -0.3f}, {1.0f, 1.0f, -1.0f}, "tri", mat3_ptr});
+
     //Lights
     Light light1{"light1", 2.0f, {0.8f, 0.8f, 0.8f}, {3.0f, 1.0f, -3.0f}};
     Light light2{"light2", 5.0f, {0.7f, 0.7f, 0.7f}, {0.6f, 3.0f, 0.0f}};
@@ -48,8 +51,9 @@ int main(int argc, char* argv[]){
     std::cout << info.rdbuf();
     // std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
 
-    new_scene.objects.push_back(box1_ptr);
-    new_scene.objects.push_back(debug_sphere);
+    //new_scene.objects.push_back(box1_ptr);
+    //new_scene.objects.push_back(debug_sphere);
+    new_scene.objects.push_back(tirangle);
     new_scene.ambient = {"ambi", 0.2f, {0.6f, 0.7f, 0.9f}, {}};
     new_scene.lights.push_back(light1);
     new_scene.lights.push_back(light2);

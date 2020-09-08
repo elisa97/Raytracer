@@ -6,6 +6,7 @@ add_executable(render_test
         #../framework/material.cpp
         ../framework/scene.cpp
         ../framework/renderer.cpp
+        ../framework/triangle.cpp
         )
 
 target_link_libraries(render_test ${FRAMEWORK_NAME} ${LIBRARIES}
@@ -24,6 +25,7 @@ add_executable(test_2
         #../framework/material.cpp
         ../framework/scene.cpp
         ../framework/renderer.cpp
+        ../framework/triangle.cpp
         )
 
 target_link_libraries(test_2 ${FRAMEWORK_NAME} ${LIBRARIES}

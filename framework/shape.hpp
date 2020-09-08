@@ -12,6 +12,7 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/vector_angle.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/intersect.hpp>
 
 // header, system
 #include <memory>
@@ -36,9 +37,9 @@ class Shape {
 
   protected:
     std::shared_ptr<Material> material_;
-    std::string name_;
-    glm::mat4 world_transformation_;
-    glm::mat4 world_transformation_inv_;
+    std::string               name_;
+    glm::mat4                 world_transformation_;
+    glm::mat4                 world_transformation_inv_;
 };
 
 Ray transform_ray(Ray const& ray, glm::mat4 const& mat);
