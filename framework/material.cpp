@@ -2,13 +2,13 @@
 
 std::ostream& Material::print(std::ostream& os)
 {
-os  << "name: "      << name    << "\n" 
-    << "ka: "        << ka      << "\n"
-    << "kd: "        << kd      << "\n"
-    << "ks: "        << ks      << "\n"
-    << "spectular: " << m       << "\n"
-    << "opacity: "   << opacity << "\n"
-    << "glossy: "    << glossy  << "\n";
+  os  << "name: "      << name    << "\n" 
+      << "ka: "        << ka      << "\n"
+      << "kd: "        << kd      << "\n"
+      << "ks: "        << ks      << "\n"
+      << "spectular: " << m       << "\n"
+      << "opacity: "   << opacity << "\n"
+      << "glossy: "    << glossy  << "\n";
   return os;
 }
 
