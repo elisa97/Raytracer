@@ -31,19 +31,18 @@ float Triangle::volume() const
 
 HitPoint Triangle::intersect(Ray const& ray) const 
 {
-  Ray trans_ray = transform_ray(ray, world_transformation_inv_);
-  trans_ray.direction = glm::normalize(trans_ray.direction);
+  //Ray trans_ray = transform_ray(ray, world_transformation_inv_);
+  Ray trans_ray = ray;
+  //trans_ray.direction = glm::normalize(trans_ray.direction);
   glm::vec3 pos;
   HitPoint hp;
-  float d = 0.0f;
   hp.cut = glm::intersectRayTriangle(trans_ray.origin, trans_ray.direction, a_, b_, c_, pos);
 
   if (hp.cut) {
     glm::vec3 trans_vec = trans_ray.direction - trans_ray.origin;
     glm::vec3 vec (trans_vec / glm::length(trans_vec));
 
-    //hp.cdist = glm::distance(trans_ray.origin, pos);
-    hp.cdist = d;
+    hp.cdist = glm::distance(trans_ray.origin, pos);
     hp.name = name_;
     hp.material = material_;
     hp.direction = trans_ray.direction;
@@ -53,4 +52,20 @@ HitPoint Triangle::intersect(Ray const& ray) const
   }
   
   return{};
+}
+
+std::ostream& Triangle::print(std::ostream & os) const
+{
+   return os
+   << "Triangle "  << name_           << "\n"
+   << "Material "  << material_->name << "\n"
+   << "Points ("   << a_.x 
+   << ", "         << a_.y 
+   << ", "         << a_.z 
+   << ") \n ("     << b_.x 
+   << ", "         << b_.y 
+   << ", "         << b_.z
+   << ") \n ("     << c_.x 
+   << ", "         << c_.y 
+   << ", "         << c_.z            << ")\n";
 }

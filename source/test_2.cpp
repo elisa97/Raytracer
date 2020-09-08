@@ -48,9 +48,11 @@ int main(int argc, char* argv[]){
     debug_sphere->transformation({1.0f, 3.0f, 1.0f}, {-3.0f, 1.0f, -10.0f}, 60.0f, {0.0f, 1.0f, 0.0f});
     debug_sphere->mv_back(position);
     debug_sphere->print(info);
-    std::cout << info.rdbuf();
+
     // std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
 
+    tirangle->print(info);
+    std::cout << info.rdbuf();
     //new_scene.objects.push_back(box1_ptr);
     //new_scene.objects.push_back(debug_sphere);
     new_scene.objects.push_back(tirangle);
