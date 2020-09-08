@@ -9,6 +9,7 @@
 
 #include "renderer.hpp"
 #include <omp.h>
+#include <chrono>
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
@@ -20,44 +21,50 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
 
 void Renderer::render(Scene const& current_scene)
 {
+  std::chrono::steady_clock::time_point beg = std::chrono::steady_clock::now();
   Camera cam = current_scene.camera;
   std::size_t const checker_pattern_size = 20;
   float aspect_ratio = height_ / (float)width_;
   //bool to toggle the checkerboard pattern
+  std::cout << "\nRendering to " << filename_ 
+            << " using " << omp_get_max_threads()
+            << " Threads\n\n";
   bool chck = false;
     for (unsigned y = 0; y < height_; ++y) {
       #pragma omp parallel for
-        for (unsigned x = 0; x < width_; ++x) {
-        //setting up the rays
-        float fov_dst = (width_ / 2.0f) / std::tan(cam.fov_x * M_PI / 360.0f);
-        glm::vec3 ray_vec {x - (width_ / 2.0f), y - (height_ / 2.0f), -fov_dst};
-        Ray current_eye_ray {cam.position, glm::normalize(ray_vec)};
+      for (unsigned x = 0; x < width_; ++x) {
+      //setting up the rays
+      float fov_dst = (width_ / 2.0f) / std::tan(cam.fov_x * M_PI / 360.0f);
+      glm::vec3 ray_vec {x - (width_ / 2.0f), y - (height_ / 2.0f), -fov_dst};
+      Ray current_eye_ray {cam.position, glm::normalize(ray_vec)};
 
-        HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
+      HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
+      
+
+      Pixel p(x,y);
+      if (test_hp.cut) {
         
-
-        Pixel p(x,y);
-        if (test_hp.cut) {
-          
-          p.color = calc_color(test_hp, current_scene, 10);
-          //normals(p.color, test_hp);
-        } else if (chck) {
-          if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
-              p.color = Color{0.0f, 1.0f, float(x)/height_};
-          } else {
-            p.color = Color{1.0f, 0.0f, float(y)/width_};
-          }
+        p.color = calc_color(test_hp, current_scene, 10);
+        //normals(p.color, test_hp);
+      } else if (chck) {
+        if (((x/checker_pattern_size)%2) != ((y/checker_pattern_size)%2)) {
+            p.color = Color{0.0f, 1.0f, float(x)/height_};
+        } else {
+          p.color = Color{1.0f, 0.0f, float(y)/width_};
         }
-        else {
-          p.color = current_scene.ambient.intensity;
-        }
-        write(p);
       }
-      progress(y);
+      else {
+        p.color = current_scene.ambient.intensity;
+      }
+      write(p);
+    }
+    progress(y);
   }
-  std::cout <<std::endl;
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+  int t = std::chrono::duration_cast<std::chrono::seconds>(end - beg).count();
+  std::cout << "\t\t\t\t [" << t << "s]\n";
+
   ppm_.save(filename_);
-  
 }
 
 void Renderer::progress(float const y) const {
