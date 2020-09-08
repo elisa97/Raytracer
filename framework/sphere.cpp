@@ -48,9 +48,9 @@ std::ostream& Sphere::print(std::ostream & os) const
    << "Sphere "   << name_           << "\n"
    << "Material " << material_->name << "\n"
    << "Middle ("  << mid_.x
-   << "|"         << mid_.y
-   << "|"         << mid_.z 
-   << ") Radian " << rad_            << "\n";
+   << ", "        << mid_.y
+   << ", "        << mid_.z 
+   << ") \n Radian " << rad_         << "\n";
 }
 
 HitPoint Sphere::intersect(Ray const& r) const 

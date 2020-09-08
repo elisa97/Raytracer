@@ -65,10 +65,10 @@ TEST_CASE("outputstream test", "[os]") {
   std::shared_ptr<Material> mat1(new Material{});
   Box b1;
   Box b2 {{12,5,10}, {10,1,5}};
-  Box b3 {{0,-2,8}, {-3,-7,3}, "Guntram", mat1};
+  Box b3 {{0,-2,8}, {-3,-7,3}, "test_1", mat1};
   Sphere s1;
   Sphere s2{{1.5f,5.3f,2.7f},4.51f};
-  Sphere s3{{3,1,5}, 21.0f, "Kurt", mat1};
+  Sphere s3{{3,1,5}, 21.0f, "test_2", mat1};
 
   std::cout << b1;
   std::cout << b2;
@@ -79,27 +79,33 @@ TEST_CASE("outputstream test", "[os]") {
 
   std::ostringstream str1;
   str1 << b1;
-  std::string cstr1 = "Box default\nMaterial: def material\nPoints: (0|0|0) (0|0|0)\n\n";
+  std::string cstr1 = 
+  "Box default \n Material default \n Points (0, 0, 0) \n (0, 0, 0)\n";
   REQUIRE(str1.str() == cstr1);
   std::ostringstream str2;
   str2 << b2;
-  std::string cstr2 = "Box default\nMaterial: def material\nPoints: (10|1|5) (12|5|10)\n\n";
+  std::string cstr2 = 
+  "Box default\nMaterial default\nPoints (10, 1, 5) \n (12, 5, 10)\n";
   REQUIRE(str2.str() == cstr2);
   std::ostringstream str3;
   str3 << b3;
-  std::string cstr3 = "Box Guntram\nMaterial: def material\nPoints: (-3|-7|3) (0|-2|8)\n\n";
+  std::string cstr3 = 
+  "Box test_1\nMaterial default\nPoints (-3, -7, 3) \n (0, -2, 8)\n";
   REQUIRE(str3.str() == cstr3);
   std::ostringstream str4;
   str4 << s1;
-  std::string cstr4 = "Sphere default\nMaterial name: def material\nMiddle: (0|0|0) Radian: 10\n\n";
+  std::string cstr4 = 
+  "Sphere default\nMaterial default\nMiddle (0, 0, 0) \n Radian 10\n";
   REQUIRE(str4.str() == cstr4);
   std::ostringstream str5;
   str5 << s2;
-  std::string cstr5 = "Sphere default\nMaterial name: def material\nMiddle: (1.5|5.3|2.7) Radian: 4.51\n\n";
+  std::string cstr5 = 
+  "Sphere default\nMaterial default\nMiddle (1.5, 5.3, 2.7) \n Radian 4.51\n";
   REQUIRE(str5.str() == cstr5);
   std::ostringstream str6;
   str6 << s3;
-  std::string cstr6 = "Sphere Kurt\nMaterial name: def material\nMiddle: (3|1|5) Radian: 21\n\n";
+  std::string cstr6 = 
+  "Sphere test_2\nMaterial default\nMiddle (3, 1, 5) \n Radian 21\n";
   REQUIRE(str6.str() == cstr6);
 }
 
