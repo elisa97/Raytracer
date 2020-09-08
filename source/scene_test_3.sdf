@@ -14,4 +14,4 @@ render eye test3.ppm 1280 720
 #
 define material green 0 1 0 0 1 0 0 1 0 20 1 0
 define material orange 1 0.65 0 1 0.65 0 1 0.65 0 20 1 0
-define material random 0.815 0.815 0.815 0.815 0.815 0.815 0.815 0.815 0.815 20 1 0
+define material random 0.8 0.8 0.8 0.8 0.8 0.8 0.8 0.8 0.8 20 1 0

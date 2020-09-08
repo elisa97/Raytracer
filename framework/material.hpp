@@ -13,7 +13,7 @@
 
 struct  Material
 {
-	std::string name = "def material";
+	std::string name = "default";
 	Color       ka {0.0f,0.0f,0.0f};
 	Color       kd {0.0f,0.0f,0.0f};
 	Color       ks {0.0f,0.0f,0.0f};
@@ -21,20 +21,20 @@ struct  Material
 	float       opacity = 0.0f;
 	float       glossy = 0.0f;
 
-	Material(){}
+	// Material(){}
 
-	Material(std::string name_c, Color ka_c, Color kd_c, Color ks_c,
-						float m_c, float opacity_c, float glossy_c):
-						name {name_c},
-						ka {ka_c},
-						kd {kd_c},
-						ks {ks_c},
-						m {m_c},
-						opacity {opacity_c},
-						glossy {glossy_c} 
-	{
-							material_check();
-	}
+	// Material(std::string name_c, Color ka_c, Color kd_c, Color ks_c,
+	// 					float m_c, float opacity_c, float glossy_c):
+	// 					name {name_c},
+	// 					ka {ka_c},
+	// 					kd {kd_c},
+	// 					ks {ks_c},
+	// 					m {m_c},
+	// 					opacity {opacity_c},
+	// 					glossy {glossy_c} 
+	// {
+	// 						material_check();
+	// }
 
 	std::ostream& print(std::ostream& os);
 

@@ -2,7 +2,7 @@
 
 
 Shape::Shape():
-  name_ {"default name"},
+  name_ {"default"},
   material_ {},
   world_transformation_ { 1.0f, 0.0f, 0.0f, 0.0f, 
                           0.0f, 1.0f, 0.0f, 0.0f,

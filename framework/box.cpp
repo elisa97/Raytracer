@@ -67,13 +67,13 @@ std::ostream& Box::print(std::ostream & os) const
 {
    return os
    << "Box "       << name_           << "\n"
-   << "Material: " << material_->name << "\n"
-   << "Points: ("  << min_.x 
-   << "|"          << min_.y 
-   << "|"          << min_.z          << "\n"
-   << ") ("        << max_.x 
-   << "|"          << max_.y 
-   << "|"          << max_.z          << ")\n";
+   << "Material "  << material_->name << "\n"
+   << "Points ("   << min_.x 
+   << ", "         << min_.y 
+   << ", "         << min_.z 
+   << ") \n ("     << max_.x 
+   << ", "         << max_.y 
+   << ", "         << max_.z          << ")\n";
 }
 
 void Box::intersect_plane(HitPoint& hitpoint, Ray const& ray, 
