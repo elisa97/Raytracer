@@ -33,6 +33,18 @@ float Sphere::volume() const {
   return (4.0f / 3.0f * M_PI * pow(rad_, 3.0f));
 }
 
+std::vector<glm::vec3> Sphere::mv_mid() {
+  std::vector<glm::vec3> point;
+  auto mid_old = mid_;
+  point.push_back(mid_old);
+  mid_ = {0.0f, 0.0f, 0.0f};
+  return point;
+}
+
+void Sphere::mv_back(std::vector<glm::vec3> const& v) {
+  mid_ = v[0];
+}
+
 std::ostream& Sphere::print(std::ostream & os) const {
    return os << "Sphere " << name_ << "\nMaterial name: " 
    << material_->name << "\nMiddle: (" << mid_.x << "|" 
