@@ -10,6 +10,7 @@
 
 // header, system
 #include <memory>
+#include <vector>
 
 
 // header, project
@@ -30,6 +31,8 @@ class Shape {
     virtual std::ostream& print(std::ostream& os) const;
     std::string name_;
     virtual void transformation(glm::vec3 const& scale, glm::vec3 const& translation, float angle, glm::vec3 const& axis);
+    virtual std::vector<glm::vec3> mv_mid();
+    virtual void mv_back(std::vector<glm::vec3> const& v);
     glm::mat4 world_transformation_, world_transformation_inv_;
 
   protected:

@@ -21,6 +21,8 @@ class Box : public Shape {
     void intersectPlane(HitPoint& hitpoint, Ray const& ray, int dim, bool side, float plane_value) const;
     float area() const override;
     float volume() const override;
+    std::vector<glm::vec3> mv_mid() override;
+    void mv_back(std::vector<glm::vec3> const& v) override;
     std::ostream& print(std::ostream & os) const override;
     HitPoint intersect(Ray const& ray) const override;
     void minMax();
