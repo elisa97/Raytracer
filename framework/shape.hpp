@@ -1,5 +1,6 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP
+#define GLM_FORCE_RADIANS
 
 // header, extzernal
 #include <glm/glm.hpp>

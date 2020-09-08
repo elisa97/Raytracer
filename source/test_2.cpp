@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
     //Spheres
     std::shared_ptr<Sphere> debug_sphere (new Sphere{{3.0f, 0.0f, -3.0f}, 1.0f, "debug sphere", mat1_ptr});
     //Boxes
-    std::shared_ptr<Box> box1_ptr (new Box{{-1.5f,-4.4f,-5.0f}, {-0.9f,-0.2f,-3.0f}, "box1", mat4_ptr});
+    std::shared_ptr<Box> box1_ptr (new Box{{0.0f, 0.0f, 0.0f}, {-0.5f,-0.2f,-0.5f}, "box1", mat4_ptr});
 
     //Lights
     Light light1{"light1", 2.0f, {0.8f, 0.8f, 0.8f}, {3.0f, 1.0f, -3.0f}};
@@ -25,12 +25,17 @@ int main(int argc, char* argv[]){
     new_scene.camera.fov_x = 90;
 
     //Rotation
-    std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
-    box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, 1600, {1, 1, 1});
-    std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
-    std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
-    debug_sphere->transformation({1.0f, 3.0f, 1.0f}, {0.0f, 1.0f, -10.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
-    std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
+    // std::stringstream box_info;
+    // box1_ptr->print(box_info);
+    // std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
+    box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, 45.0f, {0, 1, 0});
+    box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 5.0f, 0.0f}, 0.0f, {0, 0, 0});
+    // box1_ptr->print(box_info);
+    // std::cout << box_info.rdbuf();
+    // std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
+    // std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
+    debug_sphere->transformation({1.0f, 3.0f, 1.0f}, {-4.0f, 1.0f, -10.0f}, 50.0f, {1.0f, 0.0f, 0.0f});
+    // std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
 
     new_scene.objects.push_back(box1_ptr);
     new_scene.objects.push_back(debug_sphere);
