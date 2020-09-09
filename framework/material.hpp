@@ -20,6 +20,7 @@ struct  Material
 	float       m = 1.0f;
 	float       opacity = 0.0f;
 	float       glossy = 0.0f;
+	float		eta = 1.0f;
 
 	// Material(){}
 
@@ -46,6 +47,7 @@ struct  Material
 				if (m < 0) m = 0;
 				glm::clamp(opacity, 0.0f, 1.0f);
 				glm::clamp(glossy, 0.0f, 1.0f);
+				glm::clamp(eta, 0.0f, 3.0f);
 	}   
 };
 

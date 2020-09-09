@@ -38,7 +38,10 @@ public:
                    unsigned int reflection_steps) const;
   Color calc_phong(HitPoint const& hitpoint, Scene const& scene) const;
   Color calc_reflection(HitPoint const& hitpoint, Scene const& scene, 
-                        unsigned int recursive_boundary) const; 
+                        unsigned int recursive_boundary) const;
+  Color calc_refraction(HitPoint const& hitpoint, Scene const& scene, 
+                        unsigned int recursive_boundary) const;
+ 
   HitPoint closest_hit(Scene const& current_scene, 
                        Ray const& current_eye_ray) const;
 
