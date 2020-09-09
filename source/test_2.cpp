@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
     std::shared_ptr<Material> mat1_ptr (new Material{"red", {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}, 10.0f, 0.0f, 0.0f});
     std::shared_ptr<Material> mat2_ptr (new Material{"green", {0.0, 0.8f, 0.0f}, {0.0f, 0.8f, 0.0f}, {0.0f, 0.8f, 0.0f}, 3.0f, 0.0f, 0.2f});
     std::shared_ptr<Material> mat3_ptr (new Material{"blue", {0.0, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}, 100.0f, 0.9f, 0.7f});
-    std::shared_ptr<Material> mat4_ptr (new Material{"orange", {0.5, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, 20.0f, 0.5f, 0.5f});
+    std::shared_ptr<Material> mat4_ptr (new Material{"orange", {0.5, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, 20.0f, 0.9f, 1.0f});
     std::shared_ptr<Material> mat5_ptr (new Material{"white", {0.5f, 0.5f, 0.5f}, {0.5f, 0.5f, 0.5f}, {0.7f, 0.7f, 0.7f}, 3.0f, 0.3f, 0.7f});
     //Spheres
     std::shared_ptr<Sphere> debug_sphere (new Sphere{{3.0f, 0.0f, -3.0f}, 1.0f, "debug sphere", mat1_ptr});
@@ -53,7 +53,7 @@ int main(int argc, char* argv[]){
 
     tirangle->print(info);
     std::cout << info.rdbuf();
-    //new_scene.objects.push_back(box1_ptr);
+    new_scene.objects.push_back(box1_ptr);
     new_scene.objects.push_back(debug_sphere);
     //new_scene.objects.push_back(tirangle);
     new_scene.ambient = {"ambi", 0.2f, {0.6f, 0.7f, 0.9f}, {}};

@@ -34,7 +34,7 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
   std::cout << "\nRendering to " << filename_ 
             << " using " << omp_get_max_threads()
             << " Threads\n\n";
-  bool chck = true;
+  bool chck = false;
     for (unsigned y = 0; y < height_; ++y) {
       #pragma omp parallel for
       for (unsigned x = 0; x < width_; ++x) {
@@ -114,11 +114,11 @@ Color Renderer::calc_color(HitPoint const& hp, Scene const& current_scene,
   Color final {};
   Color phong = calc_phong(hp, current_scene);
   Color reflection = calc_reflection(hp, current_scene, reflection_steps);
-  Color refraction = calc_refraction(hp, current_scene, reflection_steps);
-  Color with_reflection = (phong * (1 - hp.material->glossy) + reflection * hp.material->glossy);
-  final = with_reflection * hp.material->opacity + refraction * (1.0f - hp.material->opacity);
-  //final = (phong * (1 - hp.material->glossy) + reflection 
-   //        * hp.material->glossy);
+  // Color refraction = calc_refraction(hp, current_scene, reflection_steps);
+  // Color with_reflection = (phong * (1 - hp.material->glossy) + reflection * hp.material->glossy);
+  //final = with_reflection * hp.material->opacity + refraction * (1.0f - hp.material->opacity);
+  final = (phong * (1 - hp.material->glossy) + reflection 
+           * hp.material->glossy);
   tone_mapping(final);
   return final;
 }
@@ -192,19 +192,14 @@ Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, un
   Ray reflect_ray {hitpoint.hit + 0.1f * normal, glm::normalize(reflect_ray_dir)};
   HitPoint next_hit = closest_hit(scene, reflect_ray);
 
-  if (!next_hit.cut) {
-    return scene.background;
-  }
-  else {
-    if (recursive_boundary > 0 && next_hit.cut) {
-      Color reflect_color = calc_color(next_hit, scene, recursive_boundary -1) * 0.8f;
-      return reflect_color;
+
+  if (recursive_boundary > 0 && next_hit.cut) {
+    if (next_hit.material->glossy == 0.0f) {
+      return calc_color(next_hit, scene, 0) * 0.8f;
     }
-    else
-    {
-      return {};
-    }
+    return calc_color(next_hit, scene, recursive_boundary-1) * 0.8f;
   }
+  return scene.background;
 }
 
 Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary) const 
@@ -217,19 +212,17 @@ Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene, un
   Ray refract_ray {hitpoint.hit + 0.1f * normal, glm::normalize(refract_dir)};
   HitPoint next_hit = closest_hit(scene, refract_ray);
 
-  if (!next_hit.cut) {
-    return scene.background;
-  }
-  else {
-    if (opacity > 0 && next_hit.cut) {
-      Color refract_color = calc_color(next_hit, scene, recursive_boundary -1);
-      return refract_color;
-    }
-    else
-    {
-      return {};
+  if (next_hit.cut) {
+    Ray refract_ray_new {next_hit.hit + 0.1f * normal, incoming_direction};
+    HitPoint hp_out = closest_hit(scene, refract_ray_new);
+    if (hp_out.cut) {
+      if (hp_out.material->opacity == 1) {
+        return calc_color(hp_out, scene, 0);
+      }
+    return calc_color(hp_out, scene, recursive_boundary -1);
     }
   }
+  return scene.background;
 }
 
 void Renderer::tone_mapping(Color &color) const 
