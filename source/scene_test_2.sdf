@@ -1,10 +1,10 @@
 # materials
-# define material red   1 0 0   1 0 0   1 0 0   1       0   1  
-define material blue    0 0 1   0 0 1   0 0 1   1       1   0
-define material red     1 0 0   1 0 0   1 0 0   100     0   0
-# define material blue  0 0 1   0 0 1   0 0 1   1000    0   0
-define material reflect 0 0 1   0 0 1   0 0 1   100     1   1
-define material green   0 1 0   0 1 0   0 1 0   100	    0   0 
+# define material red   1 0 0   1 0 0   1 0 0   1       0   0  
+define material blue    0 0 1   0 0 1   0 0 1   1       1     0.3
+define material red     1 0 0   1 0 0   1 0 0   100     0.7   0.9
+# define material blue  0 0 1   0 0 1   0 0 1   1000    0.3   0.3
+define material reflect 0 0 1   0 0 1   0 0 1   100     1     1
+define material green   0 1 0   0 1 0   0 1 0   100	    1     0.9 
 define material mirror  0.5 0.5 0.5  0.5 0.5 0.5  0.5 0.5 0.5  1000  0  0.9
 define material yellow  0.5 0.75 0.5  0.7  0.9  0   0.2 0.2 0.2  100  0  0
 define material grey    0.5 0.5  0.5  0.75 0.75 0.75  0.9 0.9 0.9  100  0  0

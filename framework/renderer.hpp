@@ -35,12 +35,12 @@ public:
   void write(Pixel const& p);
 
   Color calc_color(HitPoint const& hp, Scene const& current_scene,
-                   unsigned int reflection_steps) const;
+                   unsigned int reflection_steps, unsigned int refraction_steps) const;
   Color calc_phong(HitPoint const& hitpoint, Scene const& scene) const;
   Color calc_reflection(HitPoint const& hitpoint, Scene const& scene, 
-                        unsigned int recursive_boundary) const;
+                        unsigned int recursive_boundary, unsigned int refraction_steps) const;
   Color calc_refraction(HitPoint const& hitpoint, Scene const& scene, 
-                        unsigned int recursive_boundary) const;
+                        unsigned int recursive_boundary, unsigned int refraction_steps) const;
  
   HitPoint closest_hit(Scene const& current_scene, 
                        Ray const& current_eye_ray) const;

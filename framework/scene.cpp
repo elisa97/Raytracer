@@ -131,7 +131,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 
 					std::shared_ptr<Box> sp_ptr (new Box{box_v1, box_v2, 
 																							 box_name, box_material});
-					sp_ptr->transformation({1.0f, 1.0f, 1.0f}, translate, 20.0f,{0.0f, 1.0f, 0.0f});
+					sp_ptr->transformation({1.0f, 1.0f, 1.0f}, translate, 0.0f,{0.0f, 1.0f, 0.0f});
 					new_scene.objects.push_back(sp_ptr);
                     
 					if (verbose) {
