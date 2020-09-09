@@ -128,7 +128,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 
 					std::shared_ptr<Box> sp_ptr (new Box{box_v1, box_v2, 
 																							 box_name, box_material});
-					sp_ptr->transformation({1.0f, 1.0f, 1.0f},translate, 0.0f, {0.0f, 1.0f, 0.0f});
+					sp_ptr->transformation({1.0f, 1.0f, 1.0f}, translate, 0.0f,{});
 					new_scene.objects.push_back(sp_ptr);
                     
 					if (verbose) {
@@ -164,9 +164,13 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 												<< " reverting to the default material.\n";
 							sphere_material = (std::shared_ptr<Material>(new Material{}));
 					}
-					std::shared_ptr<Sphere> sp_ptr (new Sphere{sphere_m, sphere_r, 
+					std::shared_ptr<Sphere> sp_ptr (new Sphere{{0.0f, 0.0f, 0.0f}, sphere_r, 
 																										 sphere_name, 
 																										 sphere_material});
+					sp_ptr->transformation({1.0f, 1.0f, 1.0f},sphere_m, 0.0f, {});	
+					// std::shared_ptr<Sphere> sp_ptr (new Sphere{sphere_m, sphere_r, 
+					// 																					 sphere_name, 
+					// 																					 sphere_material});																		 
 					new_scene.objects.push_back(sp_ptr);
 
 					if (verbose) {

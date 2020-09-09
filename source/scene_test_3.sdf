@@ -8,7 +8,7 @@ define light another_sun -200 130 100 .2 .5 .8 1.5
 #
 define ambient amb 1 0.2 1.4 0.5
 #
-define camera eye 30 0 0 -70 0 0 -1 0 1 0
+define camera eye 60 0 0 -70 0 0 -1 0 1 0
 #
 render eye test3.ppm 1280 720 5 1
 #

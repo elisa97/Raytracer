@@ -86,15 +86,15 @@ void Box::intersect_plane(HitPoint& hitpoint, Ray const& ray,
 HitPoint Box::intersect(Ray const& ray) const 
 {
   HitPoint result{};
+  Ray transform = transform_ray(ray, world_transformation_inv_);
   float epsilon= -0.0001f;
   for (int side = 0; side < 2; side++) {
     for (int dim = 0; dim < 3; dim++) {
       HitPoint hp{};
-      Ray transform = transform_ray(ray, world_transformation_inv_);
       if (side == 0) {
-        this->intersect_plane(hp, transform, dim, true, min_[dim]+ epsilon);
+        intersect_plane(hp, transform, dim, true, min_[dim]+ epsilon);
       } else {
-        this->intersect_plane(hp, transform, dim, false, max_[dim]- epsilon);
+        intersect_plane(hp, transform, dim, false, max_[dim]- epsilon);
       }
       
       if (hp.cut) {
@@ -104,6 +104,7 @@ HitPoint Box::intersect(Ray const& ray) const
       }
     }
   }
+  
   rev_trans(result, world_transformation_, 
             glm::transpose(world_transformation_inv_));
   return result;

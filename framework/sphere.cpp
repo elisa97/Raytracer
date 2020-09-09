@@ -48,15 +48,15 @@ HitPoint Sphere::intersect(Ray const& r) const
                                         mid_, rad_ , pos, n);
 
   if (result) {
-    glm::vec4 trans_n;
-    trans_n = glm::normalize(glm::transpose(world_transformation_inv_)
-                             * glm::vec4(n, 0));
-    glm::vec4 trans_hp = world_transformation_ * glm::vec4(pos, 1);
-    n = {trans_n.x, trans_n.y, trans_n.z};
-    pos = {trans_hp.x, trans_hp.y, trans_hp.z};
+    // glm::vec4 trans_n;
+    // trans_n = glm::normalize(glm::transpose(world_transformation_inv_)
+    //                          * glm::vec4(n, 0));
+    // glm::vec4 trans_hp = world_transformation_ * glm::vec4(pos, 1);
+    // n = {trans_n.x, trans_n.y, trans_n.z};
+    // pos = {trans_hp.x, trans_hp.y, trans_hp.z};
     float d = glm::distance(trans_ray.origin, pos);
     HitPoint hp {true, d, name_, material_, pos, n, trans_ray.direction};
-    //rev_trans(hp, world_transformation_, glm::transpose(world_transformation_inv_));
+    rev_trans(hp, world_transformation_, glm::transpose(world_transformation_inv_));
     return hp;
   }
   

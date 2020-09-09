@@ -40,7 +40,8 @@ class Shape {
 };
 
 Ray transform_ray(Ray const& ray, glm::mat4 const& mat);
-void rev_trans(HitPoint & hitpoint, glm::mat4 const& world, glm::mat4 const& world_inv);
+void rev_trans(HitPoint & hitpoint, glm::mat4 const& world, 
+               glm::mat4 const& world_inv);
 std::ostream& operator<<(std::ostream& os, Shape const& s);
 
 #endif

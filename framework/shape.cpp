@@ -97,6 +97,9 @@ void rev_trans(HitPoint & hitpoint, glm::mat4 const& world,
   hitpoint.hit = glm::vec3{world * glm::vec4{hitpoint.hit, 1.0f}};
   hitpoint.normal = glm::normalize(glm::vec3{inv_world * 
                     glm::vec4{hitpoint.normal, 0.0f}});
+  hitpoint.direction = glm::normalize(glm::vec3{inv_world * 
+                    glm::vec4{hitpoint.direction, 0.0f}});
+ 
 }
 
 Shape::~Shape() 
