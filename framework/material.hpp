@@ -20,7 +20,7 @@ struct  Material
 	float       m = 1.0f;
 	float       opacity = 0.0f;
 	float       glossy = 0.0f;
-	float		eta = 1.0f;
+	float				eta = 1.0f;
 
 	// Material(){}
 

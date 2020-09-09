@@ -37,7 +37,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 			if ("material" == class_name) {
 				std::string material_name;
 				glm::vec3 ka, kd, ks;
-				float m, opacity, glossy;
+				float m, opacity, glossy, eta;
 
 				in_sstream 
 				>> material_name 
@@ -46,13 +46,15 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 				>> ks.r >> ks.g >> ks.b 
 				>> m 
 				>> opacity 
-				>> glossy;
+				>> glossy
+				>> eta;
 
 				std::shared_ptr<Material> mt_ptr (new Material{material_name,
 																											{ka.r, ka.g, ka.b},
 																											{kd.r, kd.g, kd.b},
 																											{ks.r, ks.g, ks.g},
-																											 m, opacity, glossy});
+																											 m, opacity, glossy,
+																											 eta});
 
 				new_scene.materials.emplace(material_name, mt_ptr);
 
@@ -67,9 +69,10 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 										<< "ks (" 		 << ks.r 
 										<< " " 				 << ks.g 
 										<< " " 				 << ks.b 					 << ")\n"
-										<< "m" 				 << m 	
+										<< " m " 			 << m 	
 										<< " opacity " << opacity 
-										<< " glossy "  << glossy 				 << "\n";
+										<< " glossy "  << glossy
+										<< " eta " 		 <<	eta			 			 << "\n";
 				}
 			}
 		}
@@ -128,7 +131,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 
 					std::shared_ptr<Box> sp_ptr (new Box{box_v1, box_v2, 
 																							 box_name, box_material});
-					sp_ptr->transformation({1.0f, 1.0f, 1.0f}, translate, 0.0f,{});
+					sp_ptr->transformation({1.0f, 1.0f, 1.0f}, translate, 20.0f,{0.0f, 1.0f, 0.0f});
 					new_scene.objects.push_back(sp_ptr);
                     
 					if (verbose) {
@@ -211,7 +214,8 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 											<< " " 				 << mat->ks.b 	 << "\n"
 											<< "m " 			 << mat->m 
 											<< " opacity " << mat->opacity 
-											<< " glossy "  << mat->glossy  << "\n";
+											<< " glossy "  << mat->glossy
+											<< " eta "		 << mat->eta		 << "\n";
 					}
         }
 
