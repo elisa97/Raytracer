@@ -102,10 +102,10 @@ HitPoint Box::intersect(Ray const& ray) const
           result = hp;
         }
       }
-      // rev_trans(hp, world_transformation_, 
-      //          glm::transpose(world_transformation_inv_));
     }
   }
+  rev_trans(result, world_transformation_, 
+            glm::transpose(world_transformation_inv_));
   return result;
 }
 
