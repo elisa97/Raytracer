@@ -36,6 +36,7 @@ struct Scene
     Light       ambient {};
 };
 
+glm::vec3 mv_mid(glm::vec3 & v1, glm::vec3 & v2);
 Scene importScene(std::string const& path, bool verbose);
 
 #endif

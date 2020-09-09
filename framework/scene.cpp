@@ -1,6 +1,20 @@
 #include "scene.hpp"
 #include "renderer.hpp"
 
+
+glm::vec3 mv_mid(glm::vec3 & v1 ,glm::vec3 & v2)
+{
+	//check v1 & v2
+	if (v1.x > v2.x) std::swap(v1.x, v2.x);
+	if (v1.y > v2.y) std::swap(v1.y, v2.y);
+	if (v1.z > v2.z) std::swap(v1.z, v2.z);
+  glm::vec3 vec2mid = (v2 - v1) / 2.0f;
+	glm::vec3 translate = v1 + vec2mid;
+  v2 = vec2mid;
+  v1 = -vec2mid;
+	return translate;
+}
+
 Scene importScene(std::string const& sdf_file, bool verbose) 
 {   
 	std::ifstream in_file(sdf_file, std::ios::in);
@@ -110,9 +124,11 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 											<< " reverting to the default material.\n";
 						box_material = (std::shared_ptr<Material>(new Material{}));
 					}
+					glm::vec3 translate = mv_mid(box_v1, box_v2);
 
 					std::shared_ptr<Box> sp_ptr (new Box{box_v1, box_v2, 
 																							 box_name, box_material});
+					sp_ptr->transformation({1.0f, 1.0f, 1.0f},translate, 0.0f, {0.0f, 1.0f, 0.0f});
 					new_scene.objects.push_back(sp_ptr);
                     
 					if (verbose) {

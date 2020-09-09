@@ -28,20 +28,6 @@ float Sphere::volume() const
   return (4.0f / 3.0f * M_PI * pow(rad_, 3.0f));
 }
 
-std::vector<glm::vec3> Sphere::mv_mid() 
-{
-  std::vector<glm::vec3> point;
-  auto mid_old = mid_;
-  point.push_back(mid_old);
-  mid_ = {};
-  return point;
-}
-
-void Sphere::mv_back(std::vector<glm::vec3> const& v) 
-{
-  mid_ = v[0];
-}
-
 std::ostream& Sphere::print(std::ostream & os) const 
 {
    return os 
@@ -70,7 +56,7 @@ HitPoint Sphere::intersect(Ray const& r) const
     pos = {trans_hp.x, trans_hp.y, trans_hp.z};
     float d = glm::distance(trans_ray.origin, pos);
     HitPoint hp {true, d, name_, material_, pos, n, trans_ray.direction};
-    //rev_trans(hit, world_transformation_, glm::transpose(world_transformation_inv_));
+    //rev_trans(hp, world_transformation_, glm::transpose(world_transformation_inv_));
     return hp;
   }
   

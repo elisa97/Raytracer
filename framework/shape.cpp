@@ -99,17 +99,6 @@ void rev_trans(HitPoint & hitpoint, glm::mat4 const& world,
                     glm::vec4{hitpoint.normal, 0.0f}});
 }
 
-std::vector<glm::vec3> Shape::mv_mid()
-{
-  std::cout << "implementation missing\n";
-  return std::vector<glm::vec3>{};
-}
-
-void Shape::mv_back (std::vector<glm::vec3> const& v)
-{
-  std::cout << "implementation missing\n";
-}
-
 Shape::~Shape() 
 {
   //std::cout << "Dstr/Shape " << name_ << "\n";

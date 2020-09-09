@@ -13,9 +13,9 @@ int main(int argc, char* argv[]){
     std::shared_ptr<Material> mat4_ptr (new Material{"orange", {0.5, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, {0.4f, 0.2f, 0.0f}, 20.0f, 0.9f, 1.0f});
     std::shared_ptr<Material> mat5_ptr (new Material{"white", {0.5f, 0.5f, 0.5f}, {0.5f, 0.5f, 0.5f}, {0.7f, 0.7f, 0.7f}, 3.0f, 0.3f, 0.7f});
     //Spheres
-    std::shared_ptr<Sphere> debug_sphere (new Sphere{{3.0f, 0.0f, -3.0f}, 1.0f, "debug sphere", mat1_ptr});
+    std::shared_ptr<Sphere> debug_sphere (new Sphere{{0.0f, 0.0f, 0.0f}, 1.0f, "debug sphere", mat1_ptr});
     //Boxes
-    std::shared_ptr<Box> box1_ptr (new Box{{-2.0f, -0.9f, -1.5f}, {-0.5f,-0.3f,-1.0f}, "box1", mat4_ptr});
+    std::shared_ptr<Box> box1_ptr (new Box{{-0.5f, -0.5f, -0.5f}, {0.5f,0.5f,0.5f}, "box1", mat4_ptr});
 
     //Triangle
     std::shared_ptr<Triangle> tirangle (new Triangle{{0.5f, 0.5f, -0.5f}, {0.3f, 0.3f, -0.3f}, {1.0f, 1.0f, -1.0f}, "tri", mat3_ptr});
@@ -32,29 +32,30 @@ int main(int argc, char* argv[]){
     
     // std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
     box1_ptr->print(info);
-    std::vector<glm::vec3> position = box1_ptr->mv_mid();
-    box1_ptr->print(info);
-    box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, 30.0f, {1.0f, 0.0f, 0.0f});
-    box1_ptr->print(info);
-    box1_ptr->mv_back(position);
-    box1_ptr->print(info);
-    //box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 5.0f, 0.0f}, 0.0f, {0, 0, 0});
+    //std::vector<glm::vec3> position = box1_ptr->mv_mid();
+    // box1_ptr->print(info);
+    box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, -5.0f}, 30.0f, {0.0f, 1.0f, 0.0f});
+    // box1_ptr->print(info);
+    // box1_ptr->mv_back(position);
+    // box1_ptr->print(info);
+    // box1_ptr->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, 45.0f, {0, 0, 0});
     // box1_ptr->print(box_info);
     // std::cout << box_info.rdbuf();
     // std::cout << glm::to_string(box1_ptr->world_transformation_) << std::endl;
     // std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
-    position = debug_sphere->mv_mid();
-    debug_sphere->print(info);
-    debug_sphere->transformation({1.0f, 3.0f, 1.0f}, {-3.0f, 1.0f, -10.0f}, 60.0f, {0.0f, 1.0f, 0.0f});
-    debug_sphere->mv_back(position);
-    debug_sphere->print(info);
+   // position = debug_sphere->mv_mid();
+    // debug_sphere->print(info);
+    // debug_sphere->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, -10.0f}, 180.0f, {0.0f, 1.0f, 0.0f});
+    //debug_sphere->transformation({1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 10.0f}, 0.0f, {0.0f, 0.0f, 0.0f});
+    //debug_sphere->mv_back(position);
+    // debug_sphere->print(info);
 
     // std::cout << glm::to_string(debug_sphere->world_transformation_) << std::endl;
 
     tirangle->print(info);
     std::cout << info.rdbuf();
     new_scene.objects.push_back(box1_ptr);
-    new_scene.objects.push_back(debug_sphere);
+    //new_scene.objects.push_back(debug_sphere);
     //new_scene.objects.push_back(tirangle);
     new_scene.ambient = {"ambi", 0.2f, {0.6f, 0.7f, 0.9f}, {}};
     new_scene.lights.push_back(light1);

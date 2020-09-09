@@ -13,8 +13,6 @@ class Sphere : public Shape {
            std::shared_ptr<Material> material);
     float area() const override;
     float volume() const override;
-    void mv_back(std::vector<glm::vec3> const& v) override;
-    std::vector<glm::vec3> mv_mid() override;
     std::ostream& print(std::ostream & os) const override;
     HitPoint intersect(Ray const& r) const override;
 

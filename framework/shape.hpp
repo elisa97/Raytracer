@@ -31,9 +31,6 @@ class Shape {
     virtual void transformation(glm::vec3 const& scale, 
                                 glm::vec3 const& translation, 
                                 float angle, glm::vec3 const& axis);
-    virtual std::vector<glm::vec3> mv_mid();
-    virtual void mv_back(std::vector<glm::vec3> const& v);
-
 
   protected:
     std::shared_ptr<Material> material_;

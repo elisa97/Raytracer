@@ -51,7 +51,6 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
           HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
 
           if (test_hp.cut) {
-            
             p.color += calc_color(test_hp, current_scene, 5) * (aa / aa_step);
             //normals(p.color, test_hp);
           } 
@@ -93,6 +92,7 @@ void Renderer::progress(float const y) const {
   else std::cout.flush();
 }
 
+//includes transformation bc of intersect
 HitPoint Renderer::closest_hit(Scene const& current_scene, 
                                Ray const& current_eye_ray) const {
   HitPoint test_hp {};

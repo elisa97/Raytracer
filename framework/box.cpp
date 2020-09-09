@@ -36,23 +36,6 @@ float Box::volume() const
   return abs(tmp.x * tmp.y * tmp.z);
 }
 
-std::vector<glm::vec3> Box::mv_mid() 
-{
-  std::vector<glm::vec3> points;
-  points.push_back(min_);
-  points.push_back(max_);
-  glm::vec3 vec2mid = (max_ - min_) / 2.0f;
-  max_ = vec2mid;
-  min_ = -vec2mid;
-  return points;
-}
-
-void Box::mv_back(std::vector<glm::vec3> const& v) 
-{
-  min_ = v[0];
-  max_ = v[1];
-}
-
 //function to correctly set the values for min and max
 void Box::min_max() 
 {
@@ -119,8 +102,8 @@ HitPoint Box::intersect(Ray const& ray) const
           result = hp;
         }
       }
-      rev_trans(hp, world_transformation_, 
-                glm::transpose(world_transformation_inv_));
+      // rev_trans(hp, world_transformation_, 
+      //          glm::transpose(world_transformation_inv_));
     }
   }
   return result;
