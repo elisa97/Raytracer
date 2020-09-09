@@ -1,8 +1,9 @@
 # simple test to see if the parser works
 #
 # Materials
-define material test_mat_1 0.7 0.7 0.7 0.9 0.9 0.9 0.8 0.2 0.5 10.0 0.9 0.0
-define material test_mat_2 0.7 0.7 0.7 0.8 0.5 0.8 0.2 0.4 0.5 100.0 1.0 0.0
+#                               kd          ks            km          m    tra  glo   fre
+define material test_mat_1 0.7 0.7 0.7  0.9 0.9 0.9   0.8 0.2 0.5   10.0   0.2  0.8   1.4
+define material test_mat_2 0.7 0.7 0.7  0.8 0.5 0.8   0.2 0.4 0.5   100.0  1.0  0.0   0.5
 #
 # Shapes
 define shape sphere test_sp_1 0.0 -0.5 -4.0 0.4 test_mat_1
