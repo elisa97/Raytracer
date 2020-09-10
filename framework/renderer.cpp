@@ -101,7 +101,7 @@ HitPoint Renderer::closest_hit(Scene const& current_scene,
   test_hp.cdist = MAXFLOAT;
   HitPoint tmp_hp{};
   for (auto const& i : current_scene.objects) {
-    tmp_hp = i->intersect(current_eye_ray);
+    tmp_hp = i.second->intersect(current_eye_ray);
     if (tmp_hp.cut) {
       if ((tmp_hp.cdist < test_hp.cdist) && (tmp_hp.cdist >= 0)) {
         test_hp = tmp_hp;

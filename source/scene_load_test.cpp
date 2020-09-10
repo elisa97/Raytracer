@@ -7,8 +7,8 @@ int main(int argc, char* argv[]){
   std::string path3 = "../source/scene_test_3.sdf";
 
   Scene test = importScene(path, false);
-  // Scene test2 = importScene(path2, false);
-  // Scene test3 = importScene(path3, false);
+  Scene test2 = importScene(path2, false);
+  Scene test3 = importScene(path3, false);
 
   return 0;
 }

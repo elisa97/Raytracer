@@ -91,14 +91,14 @@ int main(int argc, char* argv[]){
 															{});
 
 	//pushback objects
-	new_scene.objects.push_back(sphere1_ptr);
-	new_scene.objects.push_back(sphere2_ptr);
+	new_scene.objects.emplace("sp1",sphere1_ptr);
+	new_scene.objects.emplace("sp2",sphere2_ptr);
 	//new_scene.objects.push_back(debug_sphere);
 
-	new_scene.objects.push_back(box1_ptr);
-	new_scene.objects.push_back(box2_ptr);
-	new_scene.objects.push_back(box3_ptr);
-	new_scene.objects.push_back(box4_ptr);
+	new_scene.objects.emplace("b1",box1_ptr);
+	new_scene.objects.emplace("b2",box2_ptr);
+	new_scene.objects.emplace("b3",box3_ptr);
+	new_scene.objects.emplace("b4",box4_ptr);
 
 	new_scene.lights.push_back(light1);
 	new_scene.lights.push_back(light2);

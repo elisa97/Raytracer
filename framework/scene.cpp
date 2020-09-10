@@ -132,7 +132,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 					std::shared_ptr<Box> sp_ptr (new Box{box_v1, box_v2, 
 																							 box_name, box_material});
 					sp_ptr->transformation({1.0f, 1.0f, 1.0f}, translate, 0.0f,{0.0f, 1.0f, 0.0f});
-					new_scene.objects.push_back(sp_ptr);
+					new_scene.objects.emplace(box_name, sp_ptr);
                     
 					if (verbose) {
 							std::cout << "Box " 		 << box_name 		 << "\n"
@@ -174,7 +174,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 					// std::shared_ptr<Sphere> sp_ptr (new Sphere{sphere_m, sphere_r, 
 					// 																					 sphere_name, 
 					// 																					 sphere_material});																		 
-					new_scene.objects.push_back(sp_ptr);
+					new_scene.objects.emplace(sphere_name, sp_ptr);
 
 					if (verbose) {
 						std::cout << "Sphere " 	 << sphere_name 		<< "\n"
@@ -292,6 +292,45 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 
 			}
     }
+  }
+	line_count = 0;
+	in_file.clear();
+	in_file.seekg(0, std::ios::beg);
+
+  //second loop to get all the other objects, linking the materials and shapes directly
+
+  while (std::getline(in_file, line_buffer)) {
+
+		//construct stringstream using line_buffer string
+		std::istringstream in_sstream(line_buffer);
+		in_sstream >> identifier;
+		if ("transform" == identifier) {
+			in_sstream >> class_name;
+			auto shp = new_scene.objects.find(class_name)->second;
+			if (!shp) {
+				std::cout << "The shape " << class_name << " could not be found\n";
+			}
+			else {
+				in_sstream >> class_name;
+				float x, y, z, angle;
+				if ("translate" == class_name) {
+					in_sstream >> x >> y >> z;
+					shp->transformation({1.0f, 1.0f, 1.0f}, {x, y, z}, 0.0f, {});
+				}
+				else if ("rotate" == class_name) {
+					in_sstream >> angle >> y >> z >> z;
+					shp->transformation({1.0f, 1.0f, 1.0f}, {}, angle, {x, y, z});
+				}
+				else if ("scale" == class_name) {
+					in_sstream >> x >> y >> z;
+					shp->transformation({x, y, z}, {}, 0.0f, {});
+				}
+				else {
+					std::cout << "The operation " << class_name << " is no supported\n";
+				}
+			}
+		}
+
 		if ("render" == identifier) {
 
 			std::string cam_name, img_output;
@@ -306,7 +345,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 			Renderer renderer{img_x, img_y, img_output};
 			renderer.render(new_scene, ref_step, aa_step);
 		}
-  }
+	}
 
 	in_file.close();
 

@@ -54,7 +54,7 @@ int main(int argc, char* argv[]){
 
     tirangle->print(info);
     std::cout << info.rdbuf();
-    new_scene.objects.push_back(box1_ptr);
+    new_scene.objects.emplace("b1", box1_ptr);
     //new_scene.objects.push_back(debug_sphere);
     //new_scene.objects.push_back(tirangle);
     new_scene.ambient = {"ambi", 0.2f, {0.6f, 0.7f, 0.9f}, {}};
