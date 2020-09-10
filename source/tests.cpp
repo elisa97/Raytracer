@@ -63,14 +63,16 @@ TEST_CASE("area and vol for box", "[Box]") {
 
 TEST_CASE("outputstream test", "[os]") {
   std::shared_ptr<Material> mat1(new Material{});
-  Box b1;
+  Box b1 {};
   Box b2 {{12,5,10}, {10,1,5}};
   Box b3 {{0,-2,8}, {-3,-7,3}, "test_1", mat1};
-  Sphere s1;
+  Sphere s1 {};
   Sphere s2{{1.5f,5.3f,2.7f},4.51f};
   Sphere s3{{3,1,5}, 21.0f, "test_2", mat1};
 
+  std::cout << "1\n";
   std::cout << b1;
+  std::cout << "2\n";
   std::cout << b2;
   std::cout << b3;
   std::cout << s1;
@@ -80,17 +82,17 @@ TEST_CASE("outputstream test", "[os]") {
   std::ostringstream str1;
   str1 << b1;
   std::string cstr1 = 
-  "Box default \n Material default \n Points (0, 0, 0) \n (0, 0, 0)\n";
+  "Box default\nMaterial default\nPoints (0, 0, 0)\n\t\t (0, 0, 0)\n";
   REQUIRE(str1.str() == cstr1);
   std::ostringstream str2;
   str2 << b2;
   std::string cstr2 = 
-  "Box default\nMaterial default\nPoints (10, 1, 5) \n (12, 5, 10)\n";
+  "Box default\nMaterial default\nPoints (10, 1, 5)\n\t\t (12, 5, 10)\n";
   REQUIRE(str2.str() == cstr2);
   std::ostringstream str3;
   str3 << b3;
   std::string cstr3 = 
-  "Box test_1\nMaterial default\nPoints (-3, -7, 3) \n (0, -2, 8)\n";
+  "Box test_1\nMaterial default\nPoints (-3, -7, 3)\n\t\t (0, -2, 8)\n";
   REQUIRE(str3.str() == cstr3);
   std::ostringstream str4;
   str4 << s1;
