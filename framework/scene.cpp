@@ -131,7 +131,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 
 					std::shared_ptr<Box> sp_ptr (new Box{box_v1, box_v2, 
 																							 box_name, box_material});
-					sp_ptr->transformation({1.0f, 1.0f, 1.0f}, translate, 0.0f,{0.0f, 1.0f, 0.0f});
+					sp_ptr->transform_translation(translate);
 					new_scene.objects.emplace(box_name, sp_ptr);
                     
 					if (verbose) {
@@ -170,7 +170,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 					std::shared_ptr<Sphere> sp_ptr (new Sphere{{0.0f, 0.0f, 0.0f}, sphere_r, 
 																										 sphere_name, 
 																										 sphere_material});
-					sp_ptr->transformation({1.0f, 1.0f, 1.0f},sphere_m, 0.0f, {});	
+					sp_ptr->transform_translation(sphere_m);	
 					// std::shared_ptr<Sphere> sp_ptr (new Sphere{sphere_m, sphere_r, 
 					// 																					 sphere_name, 
 					// 																					 sphere_material});																		 
@@ -308,7 +308,28 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 			in_sstream >> class_name;
 			auto shp = new_scene.objects.find(class_name)->second;
 			if (!shp) {
-				std::cout << "The shape " << class_name << " could not be found\n";
+				if (class_name != new_scene.camera.name) {
+					std::cout << "The shape " << class_name << " could not be found\n";
+				}
+				else {
+					in_sstream >> class_name;
+					float x, y, z, angle;
+					if ("translate" == class_name) {
+						in_sstream >> x >> y >> z;
+						new_scene.camera.translate({x, y, z});
+					}
+					else if ("rotate" == class_name) {
+						in_sstream >> angle >> y >> z >> z;
+						new_scene.camera.rotate(angle, {x, y, z});
+					}
+					else if ("scale" == class_name) {
+						in_sstream >> x >> y >> z;
+						new_scene.camera.scale({x, y, z});
+					}
+					else {
+						std::cout << "The operation " << class_name << " is no supported\n";
+					}
+				}
 			}
 			else {
 				in_sstream >> class_name;

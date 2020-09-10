@@ -23,17 +23,25 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
                       unsigned int aa_step)
 {
   std::chrono::steady_clock::time_point beg = std::chrono::steady_clock::now();
-  if (aa_step == 0) aa_step = 1;
-  else if (aa_step == 1) aa_step = 2;
-  else aa_step = pow(aa_step, 2);
+  if (aa_step > 4){
+    aa_step = 4;
+  }
+  aa_step = pow(2, aa_step);
   
   Camera cam = current_scene.camera;
   std::size_t const checker_pattern_size = 20;
   float aspect_ratio = height_ / (float)width_;
   //bool to toggle the checkerboard pattern
-  std::cout << "\nRendering to " << filename_ 
-            << " using " << omp_get_max_threads()
-            << " Threads\n\n";
+  std::cout << "\nRendering to " << filename_  << "\n";
+  bool debug = false;
+  if (debug){
+    std::cout << "threads = " << omp_get_max_threads() << "\n"
+              << "aa      = " << aa_step << "\n"
+              << "depth   = " << ref_step << "\n"
+              << "objects = " << current_scene.objects.size() << "\n"
+              << "lights  = " << current_scene.lights.size() << "\n\n";
+  }
+  
   bool chck = false;
     for (unsigned y = 0; y < height_; ++y) {
       #pragma omp parallel for
@@ -48,6 +56,7 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
           glm::vec3 ray_vec {fl_x - (width_ / 2.0f), 
                              fl_y - (height_ / 2.0f), -fov_dst};
           Ray current_eye_ray {cam.position, glm::normalize(ray_vec)};
+          current_eye_ray = transform_ray(current_eye_ray, cam.camera_transformation);
           //intersection test
           HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
 
