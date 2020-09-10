@@ -64,7 +64,7 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
             }
           }
           else {
-            p.color += current_scene.ambient.intensity * (aa / aa_step);
+            p.color += current_scene.background * (aa / aa_step);
           }
         }
       }
@@ -220,7 +220,7 @@ Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene,
   glm::vec3 incoming_direction = glm::normalize(hitpoint.direction);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
   float opacity = hitpoint.material->opacity;
-  float eta = hitpoint.material->eta;
+  float eta = 1.0f / hitpoint.material->eta;
   glm::vec3 refract_dir = glm::refract(incoming_direction, normal, eta);
   Ray refract_ray {hitpoint.hit - 0.001f * normal,
                   glm::normalize(refract_dir)};
