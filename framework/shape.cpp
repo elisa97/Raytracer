@@ -25,18 +25,12 @@ void Shape::transformation(glm::vec3 const& scale,
                            glm::vec3 const& translation, float angle, 
                            glm::vec3 const& axis)
 {
-  //scalation
-  // glm::mat4 scaled_mat = { scale.x, 0.0f, 0.0f, 0.0f,
-  //                          0.0f, scale.y, 0.0f, 0.0f, 
-  //                          0.0f, 0.0f, scale.z, 0.0f,
-  //                          0.0f, 0.0f, 0.0f, 1.0f };
+  //scaling
+  
   glm::mat4 scaled_mat = glm::scale(world_transformation_, scale);
 
   //translation
-  // glm::mat4 translated_mat = { 1.0f, 0.0f, 0.0f, translation.x,
-  //                              0.0f, 1.0f, 0.0f, translation.y,
-  //                              0.0f, 0.0f, 1.0f, translation.z,
-  //                              0.0f, 0.0f, 0.0f, 1.0f };
+
   glm::mat4 translated_mat = 
             glm::translate(world_transformation_, translation);
 
@@ -48,29 +42,6 @@ void Shape::transformation(glm::vec3 const& scale,
   //rotation
   else{
 
-    //rotation x-axis
-    // if (axis.x == 1.0f){
-    //   glm::mat4 rotated_mat_x = { 1.0f, 0.0f, 0.0f, 0.0f,
-    //                               0.0f, std::cos(-angle.x), -std::sin(-angle.x), 0.0f,
-    //                               0.0f, std::sin(-angle.x), std::cos(-angle.x), 0.0f,
-    //                               0.0f, 0.0f, 0.0f, 1.0f };
-    // }
-    // //rotation y-axis
-    // if (axis.y == 1.0f){
-    //   glm::mat4 rotated_mat_y = { std::cos(-angle.y), 0.0f, std::sin(-angle.y), 0.0f,
-    //                               0.0f, 1.0f, 0.0f, 0.0f,
-    //                               -std::sin(-angle.y), 0.0f, std::cos(-angle.y), 0.0f,
-    //                               0.0f, 0.0f, 0.0f, 1.0f };
-
-    // }
-    // //rotation z-axis
-    // if (axis.z == 1.0f){
-    //   glm::mat4 rotated_mat_z = { std::cos(-angle.z), -std::sin(-angle.z), 0.0f, 0.0f,
-    //                               std::sin(-angle.z), std::cos(-angle.z), 0.0f, 0.0f,
-    //                               0.0f, 0.0f, 1.0f, 0.0f,
-    //                               0.0f, 0.0f, 0.0f, 1.0f };
-    // }
-
     glm::mat4 rotated_mat = glm::rotate(world_transformation_, 
                                         glm::radians(angle), axis);
     
@@ -81,6 +52,25 @@ void Shape::transformation(glm::vec3 const& scale,
   world_transformation_inv_ = glm::inverse(world_transformation_);
 
 }
+
+void Shape::transform_rotation(float angle, glm::vec3 const& v) {
+  if (angle != 0.0f) {
+    world_transformation_ = glm::rotate(world_transformation_, 
+                                        glm::radians(angle), v);
+    world_transformation_inv_ = glm::inverse(world_transformation_);
+  }
+}
+
+void Shape::transform_scale(glm::vec3 const& v) {
+  world_transformation_ = glm::scale(world_transformation_, v);
+  world_transformation_inv_ = glm::inverse(world_transformation_);
+}
+
+void Shape::transform_translation(glm::vec3 const& v) {
+  world_transformation_ = glm::translate(world_transformation_, v);
+  world_transformation_inv_ = glm::inverse(world_transformation_);
+}
+
 
 Ray transform_ray(Ray const& ray, glm::mat4 const& mat) 
 {

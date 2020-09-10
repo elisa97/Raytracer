@@ -31,6 +31,9 @@ class Shape {
     virtual void transformation(glm::vec3 const& scale, 
                                 glm::vec3 const& translation, 
                                 float angle, glm::vec3 const& axis);
+    virtual void transform_scale(glm::vec3 const& v);
+    virtual void transform_translation(glm::vec3 const& v);
+    virtual void transform_rotation(float angle, glm::vec3 const& v);
 
   protected:
     std::shared_ptr<Material> material_;
