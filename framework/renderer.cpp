@@ -227,15 +227,25 @@ Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene,
   HitPoint next_hit = closest_hit(scene, refract_ray);
 
   if (recursive_boundary2 > 0 && next_hit.cut) {
-    Ray refract_ray_new {next_hit.hit + 0.001f * normal, incoming_direction};
-    HitPoint hp_out = closest_hit(scene, refract_ray_new);
-    if (hp_out.cut) {
-      if (hp_out.material->opacity == 1) {
-        return calc_color(hp_out, scene, recursive_boundary1, 0);
+    if(hitpoint.material->m == next_hit.material->m) {
+      Ray refract_ray_new {next_hit.hit + 0.001f * normal, incoming_direction};
+      HitPoint hp_out = closest_hit(scene, refract_ray_new);
+      if (hp_out.cut) {
+        if (hp_out.material->opacity == 1) {
+          return calc_color(hp_out, scene, recursive_boundary1, 0);
+        }
+      return calc_color(hp_out, scene, recursive_boundary1,
+                        recursive_boundary2-1);
       }
-    return calc_color(hp_out, scene, recursive_boundary1,
-                      recursive_boundary2-1);
     }
+    else {
+      if (next_hit.material->opacity == 1) {
+          return calc_color(next_hit, scene, recursive_boundary1, 0);
+        }
+      return calc_color(next_hit, scene, recursive_boundary1,
+                        recursive_boundary2-1);
+    }
+    
   }
   return scene.background;
 }
