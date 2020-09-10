@@ -315,15 +315,15 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 				float x, y, z, angle;
 				if ("translate" == class_name) {
 					in_sstream >> x >> y >> z;
-					shp->transformation({1.0f, 1.0f, 1.0f}, {x, y, z}, 0.0f, {});
+					shp->transformation({1.0f, 1.0f, 1.0f}, {x, y, z}, 0.0f, {0.0f,0.0f, 0.0f});
 				}
 				else if ("rotate" == class_name) {
 					in_sstream >> angle >> y >> z >> z;
-					shp->transformation({1.0f, 1.0f, 1.0f}, {}, angle, {x, y, z});
+					shp->transformation({1.0f, 1.0f, 1.0f}, {0.0f,0.0f, 0.0f}, angle, {x, y, z});
 				}
 				else if ("scale" == class_name) {
 					in_sstream >> x >> y >> z;
-					shp->transformation({x, y, z}, {}, 0.0f, {});
+					shp->transformation({x, y, z}, {0.0f,0.0f, 0.0f}, 0.0f, {0.0f,0.0f, 0.0f});
 				}
 				else {
 					std::cout << "The operation " << class_name << " is no supported\n";
