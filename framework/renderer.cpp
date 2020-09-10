@@ -45,13 +45,15 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
       for (float fl_x = x; fl_x < x+1; fl_x += aa) {
         for (float fl_y = y; fl_y < y+1; fl_y += aa) {
           //fov
-          glm::vec3 ray_vec {fl_x - (width_ / 2.0f), fl_y - (height_ / 2.0f), -fov_dst};
+          glm::vec3 ray_vec {fl_x - (width_ / 2.0f), 
+                             fl_y - (height_ / 2.0f), -fov_dst};
           Ray current_eye_ray {cam.position, glm::normalize(ray_vec)};
           //intersection test
           HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
 
           if (test_hp.cut) {
-            p.color += calc_color(test_hp, current_scene, ref_step, ref_step) * (aa / aa_step);
+            p.color += calc_color(test_hp, current_scene, ref_step, ref_step)
+                               * (aa / aa_step);
             //normals(p.color, test_hp);
           } 
           else if (chck) {
@@ -110,14 +112,20 @@ HitPoint Renderer::closest_hit(Scene const& current_scene,
 }
 
 Color Renderer::calc_color(HitPoint const& hp, Scene const& current_scene,
-                           unsigned int reflection_steps, unsigned int refraction_steps) const{
+                           unsigned int reflection_steps, 
+                           unsigned int refraction_steps) const{
   Color final {};
   Color phong = calc_phong(hp, current_scene);
-  Color reflection = calc_reflection(hp, current_scene, reflection_steps, refraction_steps);
-  Color refraction = calc_refraction(hp, current_scene, reflection_steps, refraction_steps);
-  Color with_reflection = (phong * (1 - hp.material->glossy) + reflection * hp.material->glossy);
-  final = with_reflection * hp.material->opacity + refraction * (1.0f - hp.material->opacity);
-  //final = (phong * (1 - hp.material->glossy) + reflection * hp.material->glossy);
+  Color reflection = calc_reflection(hp, current_scene, reflection_steps,
+                                     refraction_steps);
+  Color refraction = calc_refraction(hp, current_scene, reflection_steps,
+                                     refraction_steps);
+  Color with_reflection = (phong * (1 - hp.material->glossy) 
+                          + reflection * hp.material->glossy);
+  final = with_reflection * hp.material->opacity 
+                          + refraction * (1.0f - hp.material->opacity);
+  //final = (phong * (1 - hp.material->glossy) 
+  //        + reflection * hp.material->glossy);
   tone_mapping(final);
   return final;
 }
@@ -137,7 +145,7 @@ void Renderer::write(Pixel const& p)
   ppm_.write(p);
 }
 
-Color Renderer::calc_phong(HitPoint const& hitpoint, Scene const& scene) const 
+Color Renderer::calc_phong(HitPoint const& hitpoint, Scene const& scene) const
 {
   std::vector<Color> final_colors{};
   Color final_diffuse, final_specular, final;
@@ -182,32 +190,40 @@ Color Renderer::calc_phong(HitPoint const& hitpoint, Scene const& scene) const
 }
 
 
-Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary1, unsigned int recursive_boundary2) const 
+Color Renderer::calc_reflection(HitPoint const& hitpoint, Scene const& scene,
+                                unsigned int recursive_boundary1,
+                                unsigned int recursive_boundary2) const 
 {
   glm::vec3 incoming_direction = glm::normalize(hitpoint.direction);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
-  //glm::vec3 reflect_ray_dir = incoming_direction - 2 * (glm::dot(normal, incoming_direction)) * normal;
+  // glm::vec3 reflect_ray_dir = incoming_direction - 2 * 
+  //           (glm::dot(normal, incoming_direction)) * normal;
   glm::vec3 reflect_ray_dir = glm::reflect(incoming_direction, normal);
-  Ray reflect_ray {hitpoint.hit + 0.1f * normal, glm::normalize(reflect_ray_dir)};
+  Ray reflect_ray {hitpoint.hit + 0.1f * normal,
+                   glm::normalize(reflect_ray_dir)};
   HitPoint next_hit = closest_hit(scene, reflect_ray);
 
   if (recursive_boundary1 > 0 && next_hit.cut) {
     if (next_hit.material->glossy == 0.0f) {
       return calc_color(next_hit, scene, 0, recursive_boundary2) * 0.8f;
     }
-    return calc_color(next_hit, scene, recursive_boundary1-1, recursive_boundary2) * 0.8f;
+    return calc_color(next_hit, scene, recursive_boundary1-1,
+                      recursive_boundary2) * 0.8f;
   }
   return scene.background;
 }
 
-Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene, unsigned int recursive_boundary1, unsigned int recursive_boundary2) const 
+Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene,
+                                unsigned int recursive_boundary1, 
+                                unsigned int recursive_boundary2) const 
 {
   glm::vec3 incoming_direction = glm::normalize(hitpoint.direction);
   glm::vec3 normal = glm::normalize(hitpoint.normal);
   float opacity = hitpoint.material->opacity;
   float eta = hitpoint.material->eta;
   glm::vec3 refract_dir = glm::refract(incoming_direction, normal, eta);
-  Ray refract_ray {hitpoint.hit - 0.001f * normal, glm::normalize(refract_dir)};
+  Ray refract_ray {hitpoint.hit - 0.001f * normal,
+                  glm::normalize(refract_dir)};
   HitPoint next_hit = closest_hit(scene, refract_ray);
 
   if (recursive_boundary2 > 0 && next_hit.cut) {
@@ -217,7 +233,8 @@ Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene, un
       if (hp_out.material->opacity == 1) {
         return calc_color(hp_out, scene, recursive_boundary1, 0);
       }
-    return calc_color(hp_out, scene, recursive_boundary1, recursive_boundary2-1);
+    return calc_color(hp_out, scene, recursive_boundary1,
+                      recursive_boundary2-1);
     }
   }
   return scene.background;
