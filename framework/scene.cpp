@@ -233,7 +233,6 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 
 				new_scene.ambient = {amb_name, amb_brightness, amb_color, {}};
 				new_scene.background = new_scene.ambient.intensity;
-				std::cout << new_scene.background.r << " " << new_scene.background.r << " " << new_scene.background.g << " " << new_scene.background.b << "\n";
 
 				if (verbose) {
 					std::cout << "Ambient "		 << amb_name 			 << "\n"

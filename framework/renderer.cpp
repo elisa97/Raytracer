@@ -151,7 +151,7 @@ Color Renderer::calc_phong(HitPoint const& hitpoint, Scene const& scene) const
   Color final_diffuse, final_specular, final;
 
   //ambient
-  Color final_ambient = scene.ambient.intensity * hitpoint.material->ka;
+  Color final_ambient = scene.background * hitpoint.material->ka;
  
   for (auto lights : scene.lights){
 
@@ -160,7 +160,7 @@ Color Renderer::calc_phong(HitPoint const& hitpoint, Scene const& scene) const
 
     //shadows
     HitPoint shadow = closest_hit(scene, hit_light);
-    if (!shadow.cut){
+    if (!shadow.cut || shadow.material->opacity < 0.001f){
 
       //diffuse
       Color kd = hitpoint.material->kd;
@@ -228,7 +228,8 @@ Color Renderer::calc_refraction(HitPoint const& hitpoint, Scene const& scene,
 
   if (recursive_boundary2 > 0 && next_hit.cut) {
     if(hitpoint.material->m == next_hit.material->m) {
-      Ray refract_ray_new {next_hit.hit + 0.001f * normal, incoming_direction};
+      //refract_dir = glm::refract(glm::normalize(next_hit.direction), normal, -eta);
+      Ray refract_ray_new {next_hit.hit + 0.001f * next_hit.normal, incoming_direction};
       HitPoint hp_out = closest_hit(scene, refract_ray_new);
       if (hp_out.cut) {
         if (hp_out.material->opacity == 1) {
