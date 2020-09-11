@@ -1,13 +1,6 @@
 add_executable(render_test
-        render_test.cpp
-        #../framework/sphere.cpp
-        ../framework/box.cpp
-        #../framework/shape.cpp
-        #../framework/material.cpp
-        ../framework/scene.cpp
-        ../framework/renderer.cpp
-        ../framework/triangle.cpp
-        )
+  render_test.cpp
+  )
 
 target_link_libraries(render_test ${FRAMEWORK_NAME} ${LIBRARIES}
   glfw
@@ -18,15 +11,8 @@ add_dependencies(render_test glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 install(TARGETS render_test DESTINATION .)
 
 add_executable(test_2
-        test_2.cpp
-        #../framework/sphere.cpp
-        ../framework/box.cpp
-        #../framework/shape.cpp
-        #../framework/material.cpp
-        ../framework/scene.cpp
-        ../framework/renderer.cpp
-        ../framework/triangle.cpp
-        )
+  test_2.cpp
+  )
 
 target_link_libraries(test_2 ${FRAMEWORK_NAME} ${LIBRARIES}
   glfw
