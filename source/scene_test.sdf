@@ -22,7 +22,7 @@ define camera eye 90 0 0 5 0 0 -1 0 1 0
 #transform test_bx_2 translate 0 0.0 -4.05
 #transform test_bx_2 scale 1 1 1 
 #transform eye scale 1 1 1
-#transform eye rotate 20 0 0 1
-transform eye translate 0 0 10
+transform eye rotate 0 0 1 0
+#transform eye translate 0 0 186
 #
 render eye test1.ppm 1280 720 3 0
