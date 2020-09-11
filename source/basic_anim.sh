@@ -3,7 +3,7 @@
 #path to the sdf
 file="../source/scene_test.sdf"
 
-cap=120
+cap=360
 i=0
 ch=1
 
@@ -11,11 +11,18 @@ cd ../build
 make
 clear
 
-if [ ! -d "$anim" ]; then
+#setting up directories
+if [ ! -d "frms/" ]; then
+  echo 'created folder frms'
+  mkdir frms
+fi
+
+if [ ! -d "anim/" ]; then
   echo 'created folder anim'
   mkdir anim
 fi
 
+#important part
 while [ $i -le $cap ]
 do
   new_ch=$(($i * $ch))
@@ -28,13 +35,15 @@ do
   ./source/scene_load_test
 
   #padding for ffmpeg
-  convert test1.ppm 'anim/frame'`printf "%04d" $i`'.png'
+  convert test1.ppm 'frms/frame'`printf "%04d" $i`'.png'
   
   ((i++))
 done
 
 #generating the video
-ffmpeg -r 30 -i anim/'frame%04d.png' anim_$cap.mp4
+ffmpeg -r 30 -i frms/'frame%04d.png' anim/anim_$cap.mp4
 
 #cleanup if needed
+#rm -rf frms
+#careful with stored videos
 #rm anim
