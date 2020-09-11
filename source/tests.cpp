@@ -1,11 +1,17 @@
 #define CATCH_CONFIG_RUNNER
-#include <catch.hpp>
+
+// header, project
 #include "../framework/box.hpp"
 #include "../framework/sphere.hpp"
+
+// header, external
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 
-TEST_CASE("area and vol for sphere", "[Sphere]") {
+// header, system
+#include <catch.hpp>
+
+TEST_CASE("area and volume for sphere", "[Sphere]") {
   Sphere t1;
   float area = t1.area();
   float vol = t1.volume();
@@ -33,7 +39,7 @@ TEST_CASE("area and vol for sphere", "[Sphere]") {
   REQUIRE(vol == Approx(129.879f));
 }
 
-TEST_CASE("area and vol for box", "[Box]") {
+TEST_CASE("area and volume for box", "[Box]") {
   Box b1;
   float area = b1.area();
   float vol = b1.volume();
@@ -70,9 +76,7 @@ TEST_CASE("outputstream test", "[os]") {
   Sphere s2{{1.5f,5.3f,2.7f},4.51f};
   Sphere s3{{3,1,5}, 21.0f, "test_2", mat1};
 
-  std::cout << "1\n";
   std::cout << b1;
-  std::cout << "2\n";
   std::cout << b2;
   std::cout << b3;
   std::cout << s1;
@@ -112,59 +116,56 @@ TEST_CASE("outputstream test", "[os]") {
 }
 
 TEST_CASE("intersect_ray_sphere", "[intersect_s]") {
-  //Ray
+  // Ray
   glm::vec3 ray_origin{0.0f, 0.0f, 0.0f};
-  //ray direction has to be normalized
-  //you can use:
-  //v = glm::normalize(some_vector);
   glm::vec3 ray_direction{0.0f, 0.0f, 1.0f};
 
-  //Sphere
+  // Sphere
   glm::vec3 sphere_center{0.0f, 0.0f, 5.0f};
   float sphere_radius{1.0f};
 
   float distance = 0.0f;
-  auto result = glm::intersectRaySphere(
-  ray_origin, ray_direction, sphere_center,
-  sphere_radius * sphere_radius, distance); 
+  auto result = glm::intersectRaySphere(ray_origin, ray_direction, 
+                                        sphere_center,sphere_radius 
+                                        * sphere_radius, distance); 
   REQUIRE(distance == Approx(4.0f)); 
   
-  //same test as above but more compact
+  // same test as above but more compact
   Ray r1 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c1 {{0.0f, 0.0f, 5.0f}, 1.0f};
   auto hp = c1.intersect(r1);
-  REQUIRE(hp.cdist == Approx(4.0f));
+  REQUIRE(hp.cdist == Approx(4.0f)); 
   REQUIRE(hp.cut == true);
 
-  //if radian is equal to zero
+  // if radian is equal to zero
   Ray r2 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c2 {{0.0f, 0.0f, 1.0f}, 0.0f};
   hp = c2.intersect(r2);
   REQUIRE(hp.cdist== Approx(1.0f)); 
   REQUIRE(hp.cut== true);
 
-  //not intersecting
+  // not intersecting
   Ray r3 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c3 {{0.0f, 0.1f, 1.0f}, 0.0f};
   hp = c3.intersect(r3);
   REQUIRE(hp.cdist == Approx(-1.0f));
   REQUIRE(hp.cut == false);
 
-  //negative radian
+  // negative radian
   Ray r4 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, 1.0f}};
   Sphere c4 {{0.0f, 0.0f, 5.0f}, -1.0f};
   hp = c4.intersect(r4);
   REQUIRE(hp.cdist == Approx(4.0f));
   REQUIRE(hp.cut == true);
 
-  //ray in opposite direction
+  // ray in opposite direction
   Ray r5 {{0.0f, 0.0f, 0.0f},{0.0f, 0.0f, -1.0f}};
   Sphere c5 {{0.0f, 0.0f, 5.0f}, 1.0f};
   hp = c5.intersect(r5);
   REQUIRE(hp.cdist == Approx(-1.0f));
   REQUIRE(hp.cut == false);
 
-  //ray starts somwhere inside the circle
+  // ray starts somewhere inside the circle
   Ray r6 {{0.0f, 2.0f, 1.0f},{0.0f, 3.0f, -2.0f}};
   Sphere c6 {{5.0f, 2.0f, 2.0f}, 10.0f};
   hp = c6.intersect(r6);
@@ -178,7 +179,7 @@ TEST_CASE("intersect_ray_sphere", "[intersect_s]") {
   REQUIRE(hp.cdist == Approx(15.848f));
   REQUIRE(hp.cut == true);
 
-  //ray touches the sphere
+  // ray touches the sphere
   Ray r8 {{-4.0f, 2.0f, 9.0f},{0.0f, 0.3f, 1.7f}};
   Sphere c8 {{-6.29999f, 3.89f, 19.71f}, 2.3f};
   hp = c8.intersect(r8);
@@ -186,7 +187,7 @@ TEST_CASE("intersect_ray_sphere", "[intersect_s]") {
   REQUIRE(hp.cut == true);
   REQUIRE(hp.name == "default");
 
-  //ray almost touches the sphere bc 6.3f != 6.3
+  // ray almost touches the sphere bc 6.3f != 6.3
   Ray r9 {{-4.0f, 2.0f, 9.0f},{0.0f, 0.3f, 1.7f}};
   Sphere c9 {{-6.3f, 3.89f, 19.71f}, 2.3f};
   hp = c9.intersect(r9);
@@ -201,7 +202,7 @@ TEST_CASE("intersect_ray_box", "[intersect_b]") {
   Box b1 {};
   Box b2 {{3.0f, 2.0f, 3.0f}, {2.0f, -3.0f, 1.0f}, "Box 2", {}};
   auto hp = b1.intersect(r1);
-  REQUIRE(hp.cdist == Approx(-0.0001f)); //?
+  REQUIRE(hp.cdist == Approx(-0.0001f));
   REQUIRE(hp.cut == true);
 }
 
