@@ -12,9 +12,7 @@ while [ $i -le $cap ]
 do
   #navigatig to the sdf
   new_ch=$(($i * $ch))
-  replace="s/transform eye translate./*/transform eye translate 0 0 "$new_ch"/"
-  echo $replace
-  sed -i replace $file
+  sed -i 's/transform eye translate.*/transform eye translate 0 0 '$new_ch'/' $file
   echo 'rendering' $i ' from ' $cap
   ./source/scene_load_test
   if [ $i -ge 1000 ]; then
