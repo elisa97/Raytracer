@@ -82,32 +82,32 @@ TEST_CASE("outputstream test", "[os]") {
   std::ostringstream str1;
   str1 << b1;
   std::string cstr1 = 
-  "Box default\nMaterial default\nPoints (0, 0, 0)\n\t\t (0, 0, 0)\n";
+  "Box name: default\nmaterial: default\nmin: (0, 0, 0)\nmax: (0, 0, 0)\n";
   REQUIRE(str1.str() == cstr1);
   std::ostringstream str2;
   str2 << b2;
   std::string cstr2 = 
-  "Box default\nMaterial default\nPoints (10, 1, 5)\n\t\t (12, 5, 10)\n";
+  "Box name: default\nmaterial: default\nmin: (10, 1, 5)\nmax: (12, 5, 10)\n";
   REQUIRE(str2.str() == cstr2);
   std::ostringstream str3;
   str3 << b3;
   std::string cstr3 = 
-  "Box test_1\nMaterial default\nPoints (-3, -7, 3)\n\t\t (0, -2, 8)\n";
+  "Box name: test_1\nmaterial: default\nmin: (-3, -7, 3)\nmax: (0, -2, 8)\n";
   REQUIRE(str3.str() == cstr3);
   std::ostringstream str4;
   str4 << s1;
   std::string cstr4 = 
-  "Sphere default\nMaterial default\nMiddle (0, 0, 0) \n Radian 10\n";
+  "Sphere name: default\nmaterial: default\nmiddle: (0, 0, 0)\nradian: 10\n";
   REQUIRE(str4.str() == cstr4);
   std::ostringstream str5;
   str5 << s2;
   std::string cstr5 = 
-  "Sphere default\nMaterial default\nMiddle (1.5, 5.3, 2.7) \n Radian 4.51\n";
+  "Sphere name: default\nmaterial: default\nmiddle: (1.5, 5.3, 2.7)\nradian: 4.51\n";
   REQUIRE(str5.str() == cstr5);
   std::ostringstream str6;
   str6 << s3;
   std::string cstr6 = 
-  "Sphere test_2\nMaterial default\nMiddle (3, 1, 5) \n Radian 21\n";
+  "Sphere name: test_2\nmaterial: default\nmiddle: (3, 1, 5)\nradian: 21\n";
   REQUIRE(str6.str() == cstr6);
 }
 

@@ -9,7 +9,7 @@ Shape::Shape():
                           0.0f, 0.0f, 1.0f, 0.0f, 
                           0.0f, 0.0f, 0.0f, 1.0f },
   world_transformation_inv_ {glm::inverse(world_transformation_)} {
-  //std::cout << "Cnst/Shape " << name_ << "\n";
+  // debug: std::cout << "Cnst/Shape " << name_ << "\n";
 }
 
 Shape::Shape(std::shared_ptr<Material> material,std::string const& name):
@@ -22,15 +22,14 @@ Shape::Shape(std::shared_ptr<Material> material,std::string const& name):
   world_transformation_inv_ {glm::inverse(world_transformation_)} {}
 
 void Shape::transformation(glm::vec3 const& scale, 
-                           glm::vec3 const& translation, float angle, 
+                           glm::vec3 const& translation,
+                           float angle, 
                            glm::vec3 const& axis)
 {
-  //scaling
-  
+  // scaling
   glm::mat4 scaled_mat = glm::scale(world_transformation_, scale);
 
-  //translation
-
+  // translation
   glm::mat4 translated_mat = 
             glm::translate(world_transformation_, translation);
 
@@ -39,9 +38,8 @@ void Shape::transformation(glm::vec3 const& scale,
                             * scaled_mat;
   }
 
-  //rotation
+  // rotation
   else{
-
     glm::mat4 rotated_mat = glm::rotate(world_transformation_, 
                                         glm::radians(angle), axis);
     
@@ -50,7 +48,6 @@ void Shape::transformation(glm::vec3 const& scale,
   }
 
   world_transformation_inv_ = glm::inverse(world_transformation_);
-
 }
 
 void Shape::transform_rotation(float angle, glm::vec3 const& v) {
@@ -88,20 +85,20 @@ void rev_trans(HitPoint & hitpoint, glm::mat4 const& world,
   hitpoint.normal = glm::normalize(glm::vec3{inv_world * 
                     glm::vec4{hitpoint.normal, 0.0f}});
   hitpoint.direction = glm::normalize(glm::vec3{inv_world * 
-                    glm::vec4{hitpoint.direction, 0.0f}});
+                       glm::vec4{hitpoint.direction, 0.0f}});
  
 }
 
 Shape::~Shape() 
 {
-  //std::cout << "Dstr/Shape " << name_ << "\n";
+  // debug: std::cout << "Dstr/Shape " << name_ << "\n";
 }
 
 std::ostream& Shape::print(std::ostream & os) const 
 {
   return os 
-  << "Shape "    << name_           << "\n"
-  << "Material " << material_->name << "\n";
+  << "Shape name: "    << name_           << "\n"
+  << "material: "      << material_->name << "\n";
 }
 
 std::ostream& operator<<(std::ostream& os, Shape const& s) 

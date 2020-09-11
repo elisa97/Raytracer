@@ -29,11 +29,12 @@ float Triangle::volume() const
   return 0;
 }
 
+// Triangle Intersection not working yet
 HitPoint Triangle::intersect(Ray const& ray) const 
 {
-  //Ray trans_ray = transform_ray(ray, world_transformation_inv_);
+  // Ray trans_ray = transform_ray(ray, world_transformation_inv_);
   Ray trans_ray = ray;
-  //trans_ray.direction = glm::normalize(trans_ray.direction);
+  // trans_ray.direction = glm::normalize(trans_ray.direction);
   glm::vec3 pos;
   HitPoint hp;
   hp.cut = glm::intersectRayTriangle(trans_ray.origin, trans_ray.direction, a_, b_, c_, pos);
@@ -56,16 +57,16 @@ HitPoint Triangle::intersect(Ray const& ray) const
 
 std::ostream& Triangle::print(std::ostream & os) const
 {
-   return os
-   << "Triangle "  << name_           << "\n"
-   << "Material "  << material_->name << "\n"
-   << "Points ("   << a_.x 
-   << ", "         << a_.y 
-   << ", "         << a_.z 
-   << ") \n ("     << b_.x 
-   << ", "         << b_.y 
-   << ", "         << b_.z
-   << ") \n ("     << c_.x 
-   << ", "         << c_.y 
-   << ", "         << c_.z            << ")\n";
+  return os
+  << "Triangle name: " << name_           << "\n"
+  << "material: "      << material_->name << "\n"
+  << "vec1: ("         << a_.x 
+  << ", "              << a_.y 
+  << ", "              << a_.z            << ")\n"     
+  << "vec2: ("         << b_.x 
+  << ", "              << b_.y 
+  << ", "              << b_.z            << ")\n"
+  << "vec3: ("         << c_.x 
+  << ", "              << c_.y 
+  << ", "              << c_.z            << ")\n";
 }

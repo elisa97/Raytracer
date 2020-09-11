@@ -2,7 +2,7 @@
 #define CAMERA_HPP
 #define GLM_FORCE_RADIANS
 
-//header, project
+// header, project
 #include "ray.hpp"
 
 // header, external
