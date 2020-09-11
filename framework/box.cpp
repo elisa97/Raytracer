@@ -36,7 +36,7 @@ float Box::volume() const
   return abs(tmp.x * tmp.y * tmp.z);
 }
 
-//function to correctly set the values for min and max
+// function to correctly set the values for min and max
 void Box::min_max() 
 {
   for (int i = 0; i < 3; ++i) {
@@ -49,12 +49,12 @@ void Box::min_max()
 std::ostream& Box::print(std::ostream & os) const 
 {
   return os
-  << "Box "       << name_           << "\n"
-  << "Material "  << material_->name << "\n"
-  << "Points ("   << min_.x 
+  << "Box name: " << name_           << "\n"
+  << "material: " << material_->name << "\n"
+  << "min: ("     << min_.x 
   << ", "         << min_.y 
-  << ", "         << min_.z 
-  << ")\n\t\t ("  << max_.x 
+  << ", "         << min_.z          << ")\n"
+  << "max: ("     << max_.x 
   << ", "         << max_.y 
   << ", "         << max_.z          << ")\n";
 }
@@ -91,6 +91,7 @@ HitPoint Box::intersect(Ray const& ray) const
   for (int side = 0; side < 2; side++) {
     for (int dim = 0; dim < 3; dim++) {
       HitPoint hp{};
+
       if (side == 0) {
         intersect_plane(hp, transform, dim, true, min_[dim]+ epsilon);
       } else {
@@ -104,7 +105,6 @@ HitPoint Box::intersect(Ray const& ray) const
       }
     }
   }
-  
   rev_trans(result, world_transformation_, 
             glm::transpose(world_transformation_inv_));
   return result;

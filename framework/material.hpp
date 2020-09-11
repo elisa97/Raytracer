@@ -22,32 +22,17 @@ struct  Material
 	float       glossy = 0.0f;
 	float				eta = 1.0f;
 
-	// Material(){}
-
-	// Material(std::string name_c, Color ka_c, Color kd_c, Color ks_c,
-	// 					float m_c, float opacity_c, float glossy_c):
-	// 					name {name_c},
-	// 					ka {ka_c},
-	// 					kd {kd_c},
-	// 					ks {ks_c},
-	// 					m {m_c},
-	// 					opacity {opacity_c},
-	// 					glossy {glossy_c} 
-	// {
-	// 						material_check();
-	// }
-
 	std::ostream& print(std::ostream& os);
 
 	void material_check()
 	{
-				ka.color_check();
-				kd.color_check();
-				ks.color_check();
-				if (m < 0) m = 0;
-				glm::clamp(opacity, 0.0f, 1.0f);
-				glm::clamp(glossy, 0.0f, 1.0f);
-				glm::clamp(eta, 0.0f, 3.0f);
+		ka.color_check();
+		kd.color_check();
+		ks.color_check();
+		if (m < 0) m = 0;
+		glm::clamp(opacity, 0.0f, 1.0f);
+		glm::clamp(glossy, 0.0f, 1.0f);
+		glm::clamp(eta, 0.0f, 3.0f);
 	}   
 };
 

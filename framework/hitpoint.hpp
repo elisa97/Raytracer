@@ -4,7 +4,7 @@
 // header, project
 #include "material.hpp"
 
-//header, external
+// header, external
 #include <glm/vec3.hpp>
 #include <memory>
 

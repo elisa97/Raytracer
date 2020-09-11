@@ -16,7 +16,8 @@ class Box : public Shape {
     float area() const override;
     float volume() const override;
     void  min_max();
-    void  intersect_plane(HitPoint& hitpoint, Ray const& ray, int dim, bool side, float plane_value) const;
+    void  intersect_plane(HitPoint& hitpoint, Ray const& ray, int dim,
+                          bool side, float plane_value) const;
     HitPoint intersect(Ray const& ray) const override;
     std::ostream& print(std::ostream & os) const override;
 

@@ -15,7 +15,7 @@ class Triangle : public Shape {
              std::string const& name, std::shared_ptr<Material> material);
     float area() const override;
     float volume() const override;
-    HitPoint intersect(Ray const& ray) const override;
+    HitPoint intersect(Ray const& ray) const override;      // not working
     std::ostream& print(std::ostream & os) const override;
 
   private:
