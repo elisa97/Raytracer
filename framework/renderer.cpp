@@ -41,7 +41,6 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
               << "objects = " << current_scene.objects.size() << "\n"
               << "lights  = " << current_scene.lights.size() << "\n\n";
   }
-  
   bool chck = false;
     for (unsigned y = 0; y < height_; ++y) {
       #pragma omp parallel for

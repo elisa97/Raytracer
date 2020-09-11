@@ -269,7 +269,6 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 										<< " " 					 << light_color.b 	 << ")\n"
 					 					<< "Brightness " << light_brightness << "\n";
 				}
-
 			} 
 			else if ("camera" == class_name) {
 
@@ -292,26 +291,10 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 
 			}
     }
-  }
-	line_count = 0;
-	in_file.clear();
-	in_file.seekg(0, std::ios::beg);
-
-  //second loop to get all the other objects, linking the materials and shapes directly
-
-  while (std::getline(in_file, line_buffer)) {
-
 		//construct stringstream using line_buffer string
-		std::istringstream in_sstream(line_buffer);
-		in_sstream >> identifier;
-		if ("transform" == identifier) {
+		else if ("transform" == identifier) {
 			in_sstream >> class_name;
-			auto shp = new_scene.objects.find(class_name)->second;
-			if (!shp) {
-				if (class_name != new_scene.camera.name) {
-					std::cout << "The shape " << class_name << " could not be found\n";
-				}
-				else {
+			if (new_scene.camera.name == class_name) {
 					in_sstream >> class_name;
 					float x, y, z, angle;
 					if ("translate" == class_name) {
@@ -330,24 +313,29 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 						std::cout << "The operation " << class_name << " is no supported\n";
 					}
 				}
-			}
-			else {
-				in_sstream >> class_name;
-				float x, y, z, angle;
-				if ("translate" == class_name) {
-					in_sstream >> x >> y >> z;
-					shp->transform_translation({x, y, z});
-				}
-				else if ("rotate" == class_name) {
-					in_sstream >> angle >> y >> z >> z;
-					shp->transform_rotation(angle, {x, y, z});
-				}
-				else if ("scale" == class_name) {
-					in_sstream >> x >> y >> z;
-					shp->transform_scale({x, y, z});
+				else {
+				auto shp = new_scene.objects.find(class_name)->second;
+				if (!shp) {
+					std::cout << "The shape " << class_name << " could not be found\n";
 				}
 				else {
-					std::cout << "The operation " << class_name << " is no supported\n";
+					in_sstream >> class_name;
+					float x, y, z, angle;
+					if ("translate" == class_name) {
+						in_sstream >> x >> y >> z;
+						shp->transform_translation({x, y, z});
+					}
+					else if ("rotate" == class_name) {
+						in_sstream >> angle >> y >> z >> z;
+						shp->transform_rotation(angle, {x, y, z});
+					}
+					else if ("scale" == class_name) {
+						in_sstream >> x >> y >> z;
+						shp->transform_scale({x, y, z});
+					}
+					else {
+						std::cout << "The operation " << class_name << " is no supported\n";
+					}
 				}
 			}
 		}
