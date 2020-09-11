@@ -283,12 +283,8 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 				>> cam_dir.x >> cam_dir.y >> cam_dir.z 
 				>> cam_up.x >> cam_up.y >> cam_up.z;
 
-				new_scene.camera.name = cam_name;
-				new_scene.camera.fov_x = cam_fov;
-				new_scene.camera.position = cam_pos;
-				new_scene.camera.direction = cam_dir;
-				new_scene.camera.up = cam_up;
-
+				new_scene.camera = {cam_name, cam_fov, {0, 0 ,0}, {0, 0, 0}, {0, 0, 0}};
+				new_scene.camera.setup(cam_pos, cam_dir, cam_up);
 			}
     }
 		//construct stringstream using line_buffer string

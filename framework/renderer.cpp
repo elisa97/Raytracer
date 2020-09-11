@@ -55,7 +55,7 @@ void Renderer::render(Scene const& current_scene, unsigned int ref_step,
           glm::vec3 ray_vec {fl_x - (width_ / 2.0f), 
                              fl_y - (height_ / 2.0f), -fov_dst};
           Ray current_eye_ray {cam.position, glm::normalize(ray_vec)};
-          current_eye_ray = transform_ray(current_eye_ray, cam.camera_transformation);
+          current_eye_ray = transform_ray(current_eye_ray, cam.camera_transformation_inv);
           //intersection test
           HitPoint test_hp = closest_hit(current_scene, current_eye_ray);
 

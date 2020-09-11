@@ -6,7 +6,8 @@
 #include "ray.hpp"
 
 // header, external
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 // header, system
@@ -41,6 +42,18 @@ struct Camera {
 	void scale(glm::vec3 const& v) {
 		camera_transformation = glm::scale(camera_transformation, v);
 		camera_transformation_inv = glm::inverse(camera_transformation); 
+	}
+	void setup(glm::vec3 const& pos, glm::vec3 const& dir, glm::vec3 const& up) {
+		std::cout << glm::to_string(camera_transformation);
+		camera_transformation = glm::translate(camera_transformation, pos);
+		std::cout << glm::to_string(camera_transformation);
+		camera_transformation *= glm::vec4{dir, 1.0f};
+		std::cout << glm::to_string(camera_transformation);
+		camera_transformation *= glm::vec4{up, 1.0f};
+		camera_transformation_inv = glm::inverse(camera_transformation);
+		std::cout << glm::to_string(camera_transformation);
+		glm::vec3 u;
+
 	}
 };
 
