@@ -127,11 +127,11 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 											<< " reverting to the default material.\n";
 						box_material = (std::shared_ptr<Material>(new Material{}));
 					}
-					//glm::vec3 translate = mv_mid(box_v1, box_v2);
+					glm::vec3 translate = mv_mid(box_v1, box_v2);
 
 					std::shared_ptr<Box> sp_ptr (new Box{box_v1, box_v2, 
 																							 box_name, box_material});
-					//sp_ptr->transform_translation(translate);
+					sp_ptr->transform_translation(translate);
 					new_scene.objects.emplace(box_name, sp_ptr);
                     
 					if (verbose) {
@@ -167,10 +167,10 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 												<< " reverting to the default material.\n";
 							sphere_material = (std::shared_ptr<Material>(new Material{}));
 					}
-					std::shared_ptr<Sphere> sp_ptr (new Sphere{sphere_m, sphere_r, 
+					std::shared_ptr<Sphere> sp_ptr (new Sphere{{0, 0, 0}, sphere_r, 
 																										 sphere_name, 
 																										 sphere_material});
-					// sp_ptr->transform_translation(sphere_m);	
+					sp_ptr->transform_translation(sphere_m);	
 					// std::shared_ptr<Sphere> sp_ptr (new Sphere{sphere_m, sphere_r, 
 					// 																					 sphere_name, 
 					// 																					 sphere_material});																		 
@@ -302,7 +302,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 						new_scene.camera.translate({x, y, z});
 					}
 					else if ("rotate" == class_name) {
-						in_sstream >> angle >> y >> z >> z;
+						in_sstream >> angle >> x >> y >> z;
 						new_scene.camera.rotate(angle, {x, y, z});
 					}
 					else if ("scale" == class_name) {
