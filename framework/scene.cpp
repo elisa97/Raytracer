@@ -283,7 +283,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 				>> cam_dir.x >> cam_dir.y >> cam_dir.z 
 				>> cam_up.x >> cam_up.y >> cam_up.z;
 
-				new_scene.camera = {cam_name, cam_fov, {0, 0 ,0}, {0, 0, 0}, {0, 0, 0}};
+				new_scene.camera = {cam_name, cam_fov, cam_pos, {0, 0, 0}, {0, 0, 0}};
 				new_scene.camera.setup(cam_pos, cam_dir, cam_up);
 			}
     }
