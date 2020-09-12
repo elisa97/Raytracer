@@ -30,10 +30,13 @@ target_link_libraries(tests
   ${FRAMEWORK_NAME}
   )
 
-add_executable(scene_load_test
-  scene_load_test.cpp
+add_executable(load_scene
+  load_scene.cpp
 )
-target_link_libraries(scene_load_test
+target_link_libraries(load_scene
   ${GLFW_LIBRARIES}
   ${FRAMEWORK_NAME}
   )
+add_dependencies(load_scene glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
+
+install(TARGETS load_scene DESTINATION .)

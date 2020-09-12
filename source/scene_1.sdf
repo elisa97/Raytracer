@@ -25,4 +25,4 @@ define camera eye 90 0 0 5 0 0 -1 0 1 0
 transform eye rotate 0 0 1 0
 #transform eye translate 0 0 186
 #
-render eye test1.ppm 1280 720 3 0
+render eye test1.ppm 1280 720 3 1

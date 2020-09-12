@@ -32,7 +32,7 @@ do
 
   #rendering the file
   echo 'rendering' $i ' from ' $cap
-  ./source/scene_load_test
+  ./source/load_scene
 
   #padding for ffmpeg
   convert test1.ppm 'frms/frame'`printf "%04d" $i`'.png'

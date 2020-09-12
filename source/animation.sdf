@@ -1,0 +1,112 @@
+#it's gonna be fun
+#
+# Materials     name          ka            kd            ks        m   o   r   f
+define material red       1.0 0.0 0.0   1.0 0.0 0.0   1.0 0.0 0.0   20  1.0 0.0 1.0
+define material green     0.0 1.0 0.0   0.0 1.0 0.0   0.0 1.0 0.0   50  1.0 0.0 1.0
+define material blue      0.0 0.0 1.0   0.0 0.0 1.0   0.0 0.0 1.0   90  1.0 0.0 1.0
+define material orange    1.0 0.5 0.0   1.0 0.5 0.0   1.0 0.5 0.0   10  1.0 0.0 1.0
+define material yellow    1.0 1.0 0.0   1.0 1.0 0.0   1.0 1.0 0.0   70  1.0 0.0 1.0
+define material magenta   1.0 0.0 1.0   1.0 0.0 1.0   1.0 0.0 1.0   30  1.0 0.0 1.0
+define material cyan      0.0 1.0 1.0   0.0 1.0 1.0   0.0 1.0 1.0   10  1.0 0.0 1.0
+define material gr-yl     0.5 1.0 0.0   0.5 1.0 0.0   0.5 1.0 0.0   70  1.0 0.0 1.0
+define material bl-mg     0.5 0.0 1.0   0.5 0.0 1.0   0.5 0.0 1.0   70  1.0 0.0 1.0
+define material red-mg    1.0 0.0 0.5   1.0 0.0 0.5   1.0 0.0 0.5   40  1.0 0.0 1.0
+define material gr-cy     0.0 1.0 0.5   0.0 1.0 0.5   0.0 0.1 0.5   80  1.0 0.0 1.0
+define material bl-cy     0.0 0.5 1.0   0.0 0.5 1.0   0.0 0.5 1.0   50  1.0 0.0 1.0
+define material l_grey		0.8 0.8 0.8 	0.8 0.8 0.8 	0.8 0.8 0.8 	20  1.0 0.0 1.0
+#
+define material glass     1.0 1.0 1.0   1.0 1.0 1.0   1.0 1.0 1.0   100 0.0 0.0 1.5
+define material acrylic   0.4 0.8 0.6   0.4 0.8 0.6   1.0 1.0 1.0   100 0.4 0.8 1.3
+define material glassinv  1.0 1.0 1.0   1.0 1.0 1.0   1.0 1.0 1.0   100 0.1 0.9 0.8
+define material mirror	  0.8 0.8 0.8   0.8 0.8 0.8   0.8 0.8 0.8   100 1.0 0.9 1.0
+# more to come
+# mixing shades
+
+#
+#
+# Lights ambient is tinted blue a bit
+define ambient amb 0.2 0.4 0.7 0.15
+#define ambient amb 0.4 0.4 0.4 0.4
+define light sun 20 30 -10 0.5 0.5 0.5 5
+define light l1 -40 10 5 0 0.5 1 2
+define light l2 -20 30 -5 1 0.5 0 1.5 
+#
+#
+# Shapes		type	name					min						max			mat
+# ring of boxes and four spheres
+define shape box mid_bx_0 	-0.5 -0.1 -0.5	0.5 0.1 0.5 red
+define shape box mid_bx_1 	-0.5 -0.1 -0.5	0.5 0.1 0.5 orange
+define shape box mid_bx_2 	-0.5 -0.1 -0.5	0.5 0.1 0.5 yellow
+define shape box mid_bx_3 	-0.5 -0.1 -0.5	0.5 0.1 0.5 gr-yl
+define shape box mid_bx_4 	-0.5 -0.1 -0.5	0.5 0.1 0.5 green
+define shape box mid_bx_5 	-0.5 -0.1 -0.5	0.5 0.1 0.5 gr-cy
+define shape box mid_bx_6 	-0.5 -0.1 -0.5	0.5 0.1 0.5 cyan
+define shape box mid_bx_7 	-0.5 -0.1 -0.5	0.5 0.1 0.5 bl-cy
+define shape box mid_bx_8 	-0.5 -0.1 -0.5	0.5 0.1 0.5 blue
+define shape box mid_bx_9 	-0.5 -0.1 -0.5	0.5 0.1 0.5 bl-mg
+define shape box mid_bx_10 	-0.5 -0.1 -0.5	0.5 0.1 0.5 magenta
+define shape box mid_bx_11 	-0.5 -0.1 -0.5	0.5 0.1 0.5 red-mg
+define shape sphere mid_sp_0 0 0.4 0 0.3 glass
+define shape sphere mid_sp_1 0 0.4 0 0.3 glassinv
+define shape sphere mid_sp_2 0 0.4 0 0.3 mirror
+define shape sphere mid_sp_3 0 0.4 0 0.3 acrylic
+#
+# box in the middle
+define shape box ct_bx_l -0.15 -0.45 -0.45	0.15 0.45 0.45 glass
+define shape box ct_bx_m -0.15 -0.45 -0.45	0.15 0.45 0.45 l_grey
+define shape box ct_bx_r -0.15 -0.45 -0.45	0.15 0.45 0.45 mirror
+#
+# sphere thing in the middle
+define shape sphere up_sp_0 0 1.7 0 0.6 glass
+define shape sphere up_sp_1 -0.4 1.3 0.4 0.2 red
+define shape sphere up_sp_2 -0.4 1.3 -0.4 0.2 orange
+define shape sphere up_sp_3 0.4 1.3 0.4 0.2 yellow
+define shape sphere up_sp_4 0.4 1.3 -0.4 0.2 mirror
+define shape sphere up_sp_5 -0.4 2.1 0.4 0.2 green
+define shape sphere up_sp_6 -0.4 2.1 -0.4 0.2 gr-cy
+define shape sphere up_sp_7 0.4 2.1 0.4 0.2 cyan
+define shape sphere up_sp_8 0.4 2.1 -0.4 0.2 acrylic
+#
+# Camera      name  fov     pos     dir    up
+define camera cam   90.0  0 0 5   0 0 -1  0 1 0
+#
+#
+# Transformation
+transform mid_bx_0 	translate 1.5 -1.8 1.5
+transform mid_sp_0	translate 1.5 -1.8 1.5
+transform mid_bx_1 	translate 1.5 -1.6 0.5
+transform mid_bx_2 	translate 1.5 -1.4 -0.5
+transform mid_bx_3 	translate 1.5 -1.2 -1.5
+transform mid_sp_1	translate 1.5 -1.2 -1.5
+transform mid_bx_4 	translate 0.5 -1.0 -1.5
+transform mid_bx_5 	translate -0.5 -0.8 -1.5
+transform mid_bx_6 	translate -1.5 -0.6 -1.5
+transform mid_sp_2	translate	-1.5 -0.6 -1.5
+transform mid_bx_7 	translate -1.5 -0.4 -0.5
+transform mid_bx_8  translate -1.5 -0.2 0.5
+transform mid_bx_9	translate -1.5 -0.0 1.5
+transform mid_sp_3 	translate -1.5 -0.0 1.5
+transform mid_bx_10	translate -0.5  0.2 1.5
+transform mid_bx_11 translate 0.5 	0.4 1.5
+#
+#
+transform ct_bx_l rotate 90 1 1 0
+transform ct_bx_m rotate 90 1 1 0
+transform ct_bx_r rotate 90 1 1 0
+transform ct_bx_l rotate 45 0 0 1
+transform ct_bx_m rotate 45 0 0 1
+transform ct_bx_r rotate 45 0 0 1
+#
+#transform ct_bx_l scale 0.5 0.5 0.5
+#transform ct_bx_m scale 0.5 0.5 0.5
+#transform ct_bx_r scale 0.5 0.5 0.5
+transform ct_bx_r translate -0.3 0 0
+transform ct_bx_l translate 0.3 0 0
+#
+transform cam rotate 180 0 1 0
+#top
+#transform cam rotate 90 1 0 0
+#
+###############################################################################
+# Render cam filename       x    y  ref aa
+render   cam animation.ppm 1280 720 	3   1
