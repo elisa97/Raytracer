@@ -35,22 +35,22 @@ define light l2 -20 30 -5 1 0.5 0 1.5
 # Shapes		type	name					min/mid				max/rad		mat
 #
 # ring of boxes and four spheres
-define shape box mid_bx_0 	-0.5 -0.1 -0.5	0.5 0.1 0.5 red
-define shape box mid_bx_1 	-0.5 -0.1 -0.5	0.5 0.1 0.5 orange
-define shape box mid_bx_2 	-0.5 -0.1 -0.5	0.5 0.1 0.5 yellow
-define shape box mid_bx_3 	-0.5 -0.1 -0.5	0.5 0.1 0.5 gr-yl
-define shape box mid_bx_4 	-0.5 -0.1 -0.5	0.5 0.1 0.5 green
-define shape box mid_bx_5 	-0.5 -0.1 -0.5	0.5 0.1 0.5 gr-cy
-define shape box mid_bx_6 	-0.5 -0.1 -0.5	0.5 0.1 0.5 cyan
-define shape box mid_bx_7 	-0.5 -0.1 -0.5	0.5 0.1 0.5 bl-cy
-define shape box mid_bx_8 	-0.5 -0.1 -0.5	0.5 0.1 0.5 blue
-define shape box mid_bx_9 	-0.5 -0.1 -0.5	0.5 0.1 0.5 bl-mg
-define shape box mid_bx_10 	-0.5 -0.1 -0.5	0.5 0.1 0.5 magenta
-define shape box mid_bx_11 	-0.5 -0.1 -0.5	0.5 0.1 0.5 red-mg
-define shape sphere mid_sp_0 0 0.4 0 0.3 glass
-define shape sphere mid_sp_1 0 0.4 0 0.3 glassinv
-define shape sphere mid_sp_2 0 0.4 0 0.3 mirror
-define shape sphere mid_sp_3 0 0.4 0 0.3 acrylic
+define shape box mid_bx_0 	1 -0.1 1	2 0.1 2 red
+define shape box mid_bx_1 	1 -0.1 0	2 0.1 1 orange
+define shape box mid_bx_2 	1 -0.1 -1	2 0.1 0 yellow
+define shape box mid_bx_3 	1 -0.1 -2	2 0.1 -1 gr-yl
+define shape box mid_bx_4 	0 -0.1 -2	1 0.1 -1 green
+define shape box mid_bx_5 	-1 -0.1 -1	0 0.1 -2 gr-cy
+define shape box mid_bx_6 	-2 -0.1 -2	-1 0.1 -1 cyan
+define shape box mid_bx_7 	-2 -0.1 -1	-1 0.1 0 bl-cy
+define shape box mid_bx_8 	-2 -0.1 0 -1 0.1 1 blue
+define shape box mid_bx_9 	-2 -0.1 1	 -1 0.1 2 bl-mg
+define shape box mid_bx_10 	-1 -0.1 1 0 0.1 2 magenta
+define shape box mid_bx_11 	0 -0.1 1	1 0.1 2 red-mg
+define shape sphere mid_sp_0 1.5 0.4 1.5 0.3 glass
+define shape sphere mid_sp_1 -1.5 0.4 1.5 0.3 glassinv
+define shape sphere mid_sp_2 -1.5 0.4 -1.5 0.3 mirror
+define shape sphere mid_sp_3 1.5 0.4 -1.5 0.3 acrylic
 #
 # box in the middle
 define shape box ct_bx_0 -0.15 -0.45 -0.45	0.15 0.45 0.45 glass
@@ -81,22 +81,22 @@ define camera cam   90.0  0 0 5   0 0 -1  0 1 0
 #
 # Transformation
 # basic for ring
-transform mid_bx_0 	translate 1.5 -1.8 1.5
-transform mid_sp_0	translate 1.5 -1.8 1.5
-transform mid_bx_1 	translate 1.5 -1.6 0.5
-transform mid_bx_2 	translate 1.5 -1.4 -0.5
-transform mid_bx_3 	translate 1.5 -1.2 -1.5
-transform mid_sp_1	translate 1.5 -1.2 -1.5
-transform mid_bx_4 	translate 0.5 -1.0 -1.5
-transform mid_bx_5 	translate -0.5 -0.8 -1.5
-transform mid_bx_6 	translate -1.5 -0.6 -1.5
-transform mid_sp_2	translate	-1.5 -0.6 -1.5
-transform mid_bx_7 	translate -1.5 -0.4 -0.5
-transform mid_bx_8  translate -1.5 -0.2 0.5
-transform mid_bx_9	translate -1.5 -0.0 1.5
-transform mid_sp_3 	translate -1.5 -0.0 1.5
-transform mid_bx_10	translate -0.5  0.2 1.5
-transform mid_bx_11 translate 0.5 	0.4 1.5
+transform mid_bx_0 	translate 0 -1 0
+transform mid_sp_0	translate 0 -1 0
+transform mid_bx_1 	translate 0 -1 0
+transform mid_bx_2 	translate 0 -1 0
+transform mid_bx_3 	translate 0 -1 0
+transform mid_sp_1	translate 0 -1 0
+transform mid_bx_4 	translate 0 -1 0
+transform mid_bx_5 	translate 0 -1 0
+transform mid_bx_6 	translate 0 -1 0
+transform mid_sp_2	translate	0 -1 0
+transform mid_bx_7 	translate 0 -1 0
+transform mid_bx_8  translate 0 -1 0
+transform mid_bx_9	translate 0 -1 0
+transform mid_sp_3 	translate 0 -1 0
+transform mid_bx_10	translate 0 -1 0
+transform mid_bx_11 translate 0 -1 0
 #
 # for mid_box
 transform ct_bx_0 rotate 90 1 1 0
