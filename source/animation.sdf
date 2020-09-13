@@ -142,4 +142,4 @@ transform cam rotate 189.0 0 1 0
 #
 ###############################################################################
 # Render cam filename       x    y  ref aa
-render   cam animation.ppm 480 270 	3   0
+render   cam animation.ppm 1280 720 	5   1

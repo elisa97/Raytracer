@@ -4,7 +4,7 @@
 org_file="../source/animation.sdf"
 
 cap=540
-i=0
+i=241
 ch=1.5
 
 cd ../build
@@ -13,9 +13,9 @@ clear
 
 #setting up files and directories
 
-rm animation.tmp
-cp $org_file .
-mv animation.sdf animation.tmp
+#rm animation.tmp
+#cp $org_file .
+#mv animation.sdf animation.tmp
 file="animation.tmp"
 
 if [ ! -d "frms/" ]; then
@@ -39,13 +39,13 @@ while [ $i -le $cap ]
 do
   #rewriting lines in the file
   #cam rotation, happens troughout the animation
-  cam_ch=$(echo $i*1.5 | bc -l)
+  cam_ch=$(echo $i*\(1+1/3\) | bc -l)
   sed -i 's/transform cam rotate.*/transform cam rotate '$cam_ch' 0 1 0/' $file
   #cube rotation, also troughout
-  cube_ch=$(echo $i*0.75 | bc -l)
-  sed -i 's/transform ct_bx_0 rotate \([0-9]*\).\([0-9]*\) 1 1 0/transform ct_bx_0 rotate '$cube_ch' 1 1 0/' $file
-  sed -i 's/transform ct_bx_1 rotate \([0-9]*\).\([0-9]*\) 1 1 0/transform ct_bx_1 rotate '$cube_ch' 1 1 0/' $file
-  sed -i 's/transform ct_bx_2 rotate \([0-9]*\).\([0-9]*\) 1 1 0/transform ct_bx_2 rotate '$cube_ch' 1 1 0/' $file
+  cube_ch=$(echo \(2/3\)*$i | bc -l)
+  sed -i 's/transform ct_bx_0 rotate \([0-9]*\).\([0-9]*\) 1 1 1/transform ct_bx_0 rotate '$cube_ch' 1 1 1/' $file
+  sed -i 's/transform ct_bx_1 rotate \([0-9]*\).\([0-9]*\) 1 1 1/transform ct_bx_1 rotate '$cube_ch' 1 1 1/' $file
+  sed -i 's/transform ct_bx_2 rotate \([0-9]*\).\([0-9]*\) 1 1 1/transform ct_bx_2 rotate '$cube_ch' 1 1 1/' $file
   #scaling of the cube at the beginning (first 60 fames) and end (last 60 frames)
   if [ $i -le 59 ] || [ $i -ge 480 ]; then
     fac=$(($i % 60))
@@ -86,28 +86,51 @@ do
       sed -i 's/transform mid_sp_'$j' .*/transform mid_sp_'$j' translate 0 '$step' 0/' $file
     done
   fi
-  #disco ball
+  #disco ball down
   if [ $i -gt 150 ] && [ $i -le 210 ]; then
     num=$((210 - $i))
     step=$(echo 5-\($num/40*$num/20\) | bc -l)
-    echo $step
     for j in {0..8}
     do
       #I shouldn't do this that dirty, but right now I really can't be bothered
       sed -i 's/transform up_sp_'$j' .*/transform up_sp_'$j' translate 0 -'$step' 0/' $file
     done
   fi
-
+  #and up
   if [ $i -gt 370 ] && [ $i -le 430 ]; then
     num=$((370 - $i))
-    step=$(echo 5-\($num/40*$num/20\) | bc -l)
-    echo $step
+    step=$(echo 1-\($num/40*$num/20\) | bc -l)
     for j in {0..8}
     do
-      #I shouldn't do this that dirty, but right now I really can't be bothered
       sed -i 's/transform up_sp_'$j' .*/transform up_sp_'$j' translate 0 -'$step' 0/' $file
     done
   fi
+  #other objs in
+  if [ $i -gt 150 ] && [ $i -le 210 ]; then
+    num=$((210 - $i))
+    step=$(echo $num*$num*$num*0.01 | bc -l)
+    sed -i 's/transform out_bx_0 .*/transform out_bx_0 translate 0 0 -'$step'/' $file
+    sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 0 '$step'/' $file
+    sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 0 '$step'/' $file
+    sed -i 's/transform out_sp_1 .*/transform out_sp_1 translate 0 0 '$step'/' $file
+  fi
+  #and out
+  if [ $i -gt 330 ] && [ $i -le 390 ]; then
+    num=$((390 - $i))
+    step=$(echo $num*$num*$num*0.01 | bc -l)
+    sed -i 's/transform out_bx_0 .*/transform out_bx_0 translate 0 0 -'$step'/' $file
+    sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 0 '$step'/' $file
+    sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 0 '$step'/' $file
+    sed -i 's/transform out_sp_1 .*/transform out_sp_1 translate 0 0 '$step'/' $file
+  fi
+  #moving the objects away to avoid artefacts
+  if [ $i -gt 390 ]; then
+    sed -i 's/transform out_bx_0 .*/transform out_bx_0 translate 0 1000 0/' $file
+    sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 1000 0/' $file
+    sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 1000 0/' $file
+    sed -i 's/transform out_sp_1 .*/transform out_sp_1 translate 0 1000 0/' $file
+  fi
+
   #rendering the file
   echo 'rendering' $i ' from ' $cap
   ./source/load_scene
