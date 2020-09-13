@@ -5,7 +5,8 @@ int main(int argc, char* argv[]){
   std::string path = "../source/scene_1.sdf";
   std::string path2 = "../source/scene_2.sdf";
   std::string path3 = "../source/scene_3.sdf";
-  std::string anim = "../source/animation.sdf";
+  //to not alter the original file and prevent data loss
+  std::string anim = "../build/animation.tmp";
 
   bool verbose = false;
   // Scene test = importScene(path, false);

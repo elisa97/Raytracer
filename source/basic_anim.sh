@@ -1,9 +1,9 @@
 #! /bin/bash
 
 #path to the sdf
-file="../source/animation.sdf"
+org_file="../source/animation.sdf"
 
-cap=150
+cap=540
 i=0
 ch=1.5
 
@@ -11,7 +11,13 @@ cd ../build
 make
 clear
 
-#setting up directories
+#setting up files and directories
+
+rm animation.tmp
+cp $org_file .
+mv animation.sdf animation.tmp
+file="animation.tmp"
+
 if [ ! -d "frms/" ]; then
   echo 'created folder frms'
   mkdir frms
@@ -21,8 +27,12 @@ if [ ! -d "anim/" ]; then
   echo 'created folder anim'
   mkdir anim
 fi
-#remove blank lines in the sdf
-sed '/\n/d' $file
+
+if [ $cap -lt $i ]; then
+  tmp=$cap
+  cap=$i
+  i=$tmp
+fi
 
 #important part
 while [ $i -le $cap ]
@@ -48,18 +58,54 @@ do
     sed -i 's/transform ct_bx_1 scale.*/transform ct_bx_1 scale '$cube_sc' '$cube_sc' '$cube_sc'/' $file
     sed -i 's/transform ct_bx_2 scale.*/transform ct_bx_2 scale '$cube_sc' '$cube_sc' '$cube_sc'/' $file
   fi
-  #the "staircase" 
+  #the "staircase" in (60 to 150)
   if [ $i -ge 60 ] && [ $i -le 150 ]; then
     num=$(($i - 60))
     for j in {0..11}
     do
       step=$(echo -8+1/12*$num+$j*2/10 | bc -l)
-      step_int=${step%.*}
+      step_int=$(echo \($step-1\)/1 | bc)
       if [ $step_int -ge -1 ]; then
         step=-1
       fi
       sed -i 's/transform mid_bx_'$j' .*/transform mid_bx_'$j' translate 0 '$step' 0/' $file
       sed -i 's/transform mid_sp_'$j' .*/transform mid_sp_'$j' translate 0 '$step' 0/' $file
+    done
+  fi
+  #the "staircase" out (390 to end)
+  if [ $i -ge 390 ]; then
+    num=$(($i - 390))
+    for j in {0..11}
+    do
+      step=$(echo -3.4+1/11*$num+$j*2/10 | bc -l)
+      step_int=$(echo \($step-1\)/1 | bc)
+      if [ $step_int -lt -1 ]; then
+        step=-1
+      fi
+      sed -i 's/transform mid_bx_'$j' .*/transform mid_bx_'$j' translate 0 '$step' 0/' $file
+      sed -i 's/transform mid_sp_'$j' .*/transform mid_sp_'$j' translate 0 '$step' 0/' $file
+    done
+  fi
+  #disco ball
+  if [ $i -gt 150 ] && [ $i -le 210 ]; then
+    num=$((210 - $i))
+    step=$(echo 5-\($num/40*$num/20\) | bc -l)
+    echo $step
+    for j in {0..8}
+    do
+      #I shouldn't do this that dirty, but right now I really can't be bothered
+      sed -i 's/transform up_sp_'$j' .*/transform up_sp_'$j' translate 0 -'$step' 0/' $file
+    done
+  fi
+
+  if [ $i -gt 370 ] && [ $i -le 430 ]; then
+    num=$((370 - $i))
+    step=$(echo 5-\($num/40*$num/20\) | bc -l)
+    echo $step
+    for j in {0..8}
+    do
+      #I shouldn't do this that dirty, but right now I really can't be bothered
+      sed -i 's/transform up_sp_'$j' .*/transform up_sp_'$j' translate 0 -'$step' 0/' $file
     done
   fi
   #rendering the file

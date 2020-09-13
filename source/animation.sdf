@@ -48,9 +48,9 @@ define shape box mid_bx_9 	-2 -0.1 1	 -1 0.1 2 bl-mg
 define shape box mid_bx_10 	-1 -0.1 1 0 0.1 2 magenta
 define shape box mid_bx_11 	0 -0.1 1	1 0.1 2 red-mg
 define shape sphere mid_sp_0 1.5 0.4 1.5 0.3 glass
-define shape sphere mid_sp_1 -1.5 0.4 1.5 0.3 glassinv
-define shape sphere mid_sp_2 -1.5 0.4 -1.5 0.3 mirror
 define shape sphere mid_sp_3 1.5 0.4 -1.5 0.3 acrylic
+define shape sphere mid_sp_6 -1.5 0.4 -1.5 0.3 mirror
+define shape sphere mid_sp_9 -1.5 0.4 1.5 0.3 glassinv
 #
 # box in the middle
 define shape box ct_bx_0 -0.15 -0.45 -0.45	0.15 0.45 0.45 glass
@@ -58,15 +58,15 @@ define shape box ct_bx_1 -0.15 -0.45 -0.45	0.15 0.45 0.45 l_grey
 define shape box ct_bx_2 -0.15 -0.45 -0.45	0.15 0.45 0.45 mirror
 #
 # sphere thing in the middle
-define shape sphere up_sp_0 0 1.7 0 0.6 glass
-define shape sphere up_sp_1 -0.4 1.3 0.4 0.2 red
-define shape sphere up_sp_2 -0.4 1.3 -0.4 0.2 orange
-define shape sphere up_sp_3 0.4 1.3 0.4 0.2 yellow
-define shape sphere up_sp_4 0.4 1.3 -0.4 0.2 mirror
-define shape sphere up_sp_5 -0.4 2.1 0.4 0.2 green
-define shape sphere up_sp_6 -0.4 2.1 -0.4 0.2 gr-cy
-define shape sphere up_sp_7 0.4 2.1 0.4 0.2 cyan
-define shape sphere up_sp_8 0.4 2.1 -0.4 0.2 acrylic
+define shape sphere up_sp_0 0 6.7 0 0.6 glass
+define shape sphere up_sp_1 -0.4 6.3 0.4 0.2 red
+define shape sphere up_sp_2 -0.4 6.3 -0.4 0.2 orange
+define shape sphere up_sp_3 0.4 6.3 0.4 0.2 yellow
+define shape sphere up_sp_4 0.4 6.3 -0.4 0.2 mirror
+define shape sphere up_sp_5 -0.4 7.1 0.4 0.2 green
+define shape sphere up_sp_6 -0.4 7.1 -0.4 0.2 gr-cy
+define shape sphere up_sp_7 0.4 7.1 0.4 0.2 cyan
+define shape sphere up_sp_8 0.4 7.1 -0.4 0.2 acrylic
 #
 # things further away (outer)
 define shape sphere out_sp_0 	12 0 -12 	3 	gr-cy
@@ -81,35 +81,35 @@ define camera cam   90.0  0 0 5   0 0 -1  0 1 0
 #
 # Transformation
 # basic for ring
-transform mid_bx_0 translate 0 -7.91666666666666666667 0
-transform mid_sp_0 translate 0 -7.91666666666666666667 0
-transform mid_bx_1 translate 0 -7.71666666666666666667 0
-transform mid_bx_2 translate 0 -7.51666666666666666667 0
-transform mid_bx_3 translate 0 -7.31666666666666666667 0
-transform mid_sp_1 translate 0 -7.71666666666666666667 0
-transform mid_bx_4 translate 0 -7.11666666666666666667 0
-transform mid_bx_5 translate 0 -6.91666666666666666667 0
-transform mid_bx_6 translate 0 -6.71666666666666666667 0
-transform mid_sp_2 translate 0 -7.51666666666666666667 0
-transform mid_bx_7 translate 0 -6.51666666666666666667 0
-transform mid_bx_8 translate 0 -6.31666666666666666667 0
-transform mid_bx_9 translate 0 -6.11666666666666666667 0
-transform mid_sp_3 translate 0 -7.31666666666666666667 0
-transform mid_bx_10 translate 0 -5.91666666666666666667 0
-transform mid_bx_11 translate 0 -5.71666666666666666667 0
+transform mid_bx_0 translate 0 -5 0
+transform mid_sp_0 translate 0 -5 0
+transform mid_bx_1 translate 0 -5 0
+transform mid_bx_2 translate 0 -5 0
+transform mid_bx_3 translate 0 -5 0
+transform mid_sp_3 translate 0 -5 0
+transform mid_bx_4 translate 0 -5 0
+transform mid_bx_5 translate 0 -5 0
+transform mid_bx_6 translate 0 -5 0
+transform mid_sp_6 translate 0 -5 0
+transform mid_bx_7 translate 0 -5 0
+transform mid_bx_8 translate 0 -5 0
+transform mid_bx_9 translate 0 -5 0
+transform mid_sp_9 translate 0 -5 0
+transform mid_bx_10 translate 0 -5 0
+transform mid_bx_11 translate 0 -5 0
 #
 # for mid_box
-transform ct_bx_0 rotate 45.75 1 1 0
-transform ct_bx_1 rotate 45.75 1 1 0
-transform ct_bx_2 rotate 45.75 1 1 0
+transform ct_bx_0 rotate 94.50 1 1 0
+transform ct_bx_1 rotate 94.50 1 1 0
+transform ct_bx_2 rotate 94.50 1 1 0
 # basic
 transform ct_bx_0 rotate 45 0 0 1
 transform ct_bx_1 rotate 45 0 0 1
 transform ct_bx_2 rotate 45 0 0 1
 #
-transform ct_bx_0 scale .99166666666666666666 .99166666666666666666 .99166666666666666666
-transform ct_bx_1 scale .99166666666666666666 .99166666666666666666 .99166666666666666666
-transform ct_bx_2 scale .99166666666666666666 .99166666666666666666 .99166666666666666666
+transform ct_bx_0 scale 1 1 1
+transform ct_bx_1 scale 1 1 1
+transform ct_bx_2 scale 1 1 1
 # basic
 transform ct_bx_0 translate -0.3 0 0
 transform ct_bx_2 translate 0.3 0 0
@@ -119,10 +119,10 @@ transform out_bx_0 rotate 45 1 0 0
 transform out_sp_0 scale 0.8 0.3 0.8
 transform out_bx_1 rotate 30 1 1 0
 #
-transform out_bx_0 translate 0 1000 1000
-transform out_bx_1 translate 0 1000 1000
-transform out_sp_0 translate 0 1000 1000
-transform out_sp_1 translate 0 1000 1000
+transform out_bx_0 translate 0 1000 0
+transform out_bx_1 translate 0 1000 0
+transform out_sp_0 translate 0 1000 0
+transform out_sp_1 translate 0 1000 0
 #
 # sphere 
 transform up_sp_0 translate 0 5 0
@@ -136,7 +136,7 @@ transform up_sp_7 translate 0 5 0
 transform up_sp_8 translate 0 5 0
 #
 # camera
-transform cam rotate 91.5 0 1 0
+transform cam rotate 189.0 0 1 0
 # top view
 #transform eye rotate  0 1 0
 #
