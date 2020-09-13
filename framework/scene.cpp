@@ -306,7 +306,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 						new_scene.camera.scale({x, y, z});
 					}
 					else {
-						std::cout << "The operation " << class_name << " is no supported\n";
+						std::cout << "The operation " << class_name << " is not supported\n";
 					}
 				}
 				else {
@@ -330,7 +330,7 @@ Scene importScene(std::string const& sdf_file, bool verbose)
 						shp->transform_scale({x, y, z});
 					}
 					else {
-						std::cout << "The operation " << class_name << " is no supported\n";
+						std::cout << "The operation " << class_name << " is not supported\n";
 					}
 				}
 			}

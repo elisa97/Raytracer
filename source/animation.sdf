@@ -81,35 +81,35 @@ define camera cam   90.0  0 0 5   0 0 -1  0 1 0
 #
 # Transformation
 # basic for ring
-transform mid_bx_0 	translate 0 -1 0
-transform mid_sp_0	translate 0 -1 0
-transform mid_bx_1 	translate 0 -1 0
-transform mid_bx_2 	translate 0 -1 0
-transform mid_bx_3 	translate 0 -1 0
-transform mid_sp_1	translate 0 -1 0
-transform mid_bx_4 	translate 0 -1 0
-transform mid_bx_5 	translate 0 -1 0
-transform mid_bx_6 	translate 0 -1 0
-transform mid_sp_2	translate	0 -1 0
-transform mid_bx_7 	translate 0 -1 0
-transform mid_bx_8  translate 0 -1 0
-transform mid_bx_9	translate 0 -1 0
-transform mid_sp_3 	translate 0 -1 0
-transform mid_bx_10	translate 0 -1 0
-transform mid_bx_11 translate 0 -1 0
+transform mid_bx_0 translate 0 -7.91666666666666666667 0
+transform mid_sp_0 translate 0 -7.91666666666666666667 0
+transform mid_bx_1 translate 0 -7.71666666666666666667 0
+transform mid_bx_2 translate 0 -7.51666666666666666667 0
+transform mid_bx_3 translate 0 -7.31666666666666666667 0
+transform mid_sp_1 translate 0 -7.71666666666666666667 0
+transform mid_bx_4 translate 0 -7.11666666666666666667 0
+transform mid_bx_5 translate 0 -6.91666666666666666667 0
+transform mid_bx_6 translate 0 -6.71666666666666666667 0
+transform mid_sp_2 translate 0 -7.51666666666666666667 0
+transform mid_bx_7 translate 0 -6.51666666666666666667 0
+transform mid_bx_8 translate 0 -6.31666666666666666667 0
+transform mid_bx_9 translate 0 -6.11666666666666666667 0
+transform mid_sp_3 translate 0 -7.31666666666666666667 0
+transform mid_bx_10 translate 0 -5.91666666666666666667 0
+transform mid_bx_11 translate 0 -5.71666666666666666667 0
 #
 # for mid_box
-transform ct_bx_0 rotate 90 1 1 0
-transform ct_bx_1 rotate 90 1 1 0
-transform ct_bx_2 rotate 90 1 1 0
+transform ct_bx_0 rotate 45.75 1 1 0
+transform ct_bx_1 rotate 45.75 1 1 0
+transform ct_bx_2 rotate 45.75 1 1 0
 # basic
 transform ct_bx_0 rotate 45 0 0 1
 transform ct_bx_1 rotate 45 0 0 1
 transform ct_bx_2 rotate 45 0 0 1
 #
-#transform ct_bx_0 scale 0.5 0.5 0.5
-#transform ct_bx_1 scale 0.5 0.5 0.5
-#transform ct_bx_2 scale 0.5 0.5 0.5
+transform ct_bx_0 scale .99166666666666666666 .99166666666666666666 .99166666666666666666
+transform ct_bx_1 scale .99166666666666666666 .99166666666666666666 .99166666666666666666
+transform ct_bx_2 scale .99166666666666666666 .99166666666666666666 .99166666666666666666
 # basic
 transform ct_bx_0 translate -0.3 0 0
 transform ct_bx_2 translate 0.3 0 0
@@ -119,26 +119,26 @@ transform out_bx_0 rotate 45 1 0 0
 transform out_sp_0 scale 0.8 0.3 0.8
 transform out_bx_1 rotate 30 1 1 0
 #
-transform out_bx_0 translate 0 0 1000
-transform out_bx_1 translate 0 0 1000
-transform out_sp_0 translate 0 0 1000
-transform out_sp_1 translate 0 0 1000
+transform out_bx_0 translate 0 1000 1000
+transform out_bx_1 translate 0 1000 1000
+transform out_sp_0 translate 0 1000 1000
+transform out_sp_1 translate 0 1000 1000
 #
 # sphere 
-transform up_sp_0 translate 0 0 0
-transform up_sp_1 translate 0 0 0
-transform up_sp_2 translate 0 0 0
-transform up_sp_3 translate 0 0 0
-transform up_sp_4 translate 0 0 0
-transform up_sp_5 translate 0 0 0
-transform up_sp_6 translate 0 0 0
-transform up_sp_7 translate 0 0 0
-transform up_sp_8 translate 0 0 0
+transform up_sp_0 translate 0 5 0
+transform up_sp_1 translate 0 5 0
+transform up_sp_2 translate 0 5 0
+transform up_sp_3 translate 0 5 0
+transform up_sp_4 translate 0 5 0
+transform up_sp_5 translate 0 5 0
+transform up_sp_6 translate 0 5 0
+transform up_sp_7 translate 0 5 0
+transform up_sp_8 translate 0 5 0
 #
 # camera
-#transform cam rotate -45 0 1 0
+transform cam rotate 91.5 0 1 0
 # top view
-#transform cam rotate 90 1 0 0
+#transform eye rotate  0 1 0
 #
 ###############################################################################
 # Render cam filename       x    y  ref aa
