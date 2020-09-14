@@ -3,19 +3,18 @@
 #path to the sdf
 org_file="../source/animation.sdf"
 
+start=0
 cap=540
-i=241
-ch=1.5
 
 cd ../build
 make
 clear
 
 #setting up files and directories
-
-#rm animation.tmp
-#cp $org_file .
-#mv animation.sdf animation.tmp
+i=0
+rm animation.tmp
+cp $org_file .
+mv animation.sdf animation.tmp
 file="animation.tmp"
 
 if [ ! -d "frms/" ]; then
@@ -99,7 +98,7 @@ do
   #and up
   if [ $i -gt 370 ] && [ $i -le 430 ]; then
     num=$((370 - $i))
-    step=$(echo 1-\($num/40*$num/20\) | bc -l)
+    step=$(echo 5-\($num/40*$num/20\) | bc -l)
     for j in {0..8}
     do
       sed -i 's/transform up_sp_'$j' .*/transform up_sp_'$j' translate 0 -'$step' 0/' $file
@@ -108,7 +107,7 @@ do
   #other objs in
   if [ $i -gt 150 ] && [ $i -le 210 ]; then
     num=$((210 - $i))
-    step=$(echo $num*$num*$num*0.01 | bc -l)
+    step=$(echo $num*$num*$num*0.001 | bc -l)
     sed -i 's/transform out_bx_0 .*/transform out_bx_0 translate 0 0 -'$step'/' $file
     sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 0 '$step'/' $file
     sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 0 '$step'/' $file
@@ -116,12 +115,12 @@ do
   fi
   #and out
   if [ $i -gt 330 ] && [ $i -le 390 ]; then
-    num=$((390 - $i))
-    step=$(echo $num*$num*$num*0.01 | bc -l)
+    num=$((330 - $i))
+    step=$(echo $num*$num*$num*0.001 | bc -l)
     sed -i 's/transform out_bx_0 .*/transform out_bx_0 translate 0 0 -'$step'/' $file
-    sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 0 '$step'/' $file
-    sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 0 '$step'/' $file
-    sed -i 's/transform out_sp_1 .*/transform out_sp_1 translate 0 0 '$step'/' $file
+    sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 0 -'$step'/' $file
+    sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 0 -'$step'/' $file
+    sed -i 's/transform out_sp_1 .*/transform out_sp_1 translate 0 0 -'$step'/' $file
   fi
   #moving the objects away to avoid artefacts
   if [ $i -gt 390 ]; then
@@ -132,12 +131,13 @@ do
   fi
 
   #rendering the file
-  echo 'rendering' $i ' from ' $cap
-  ./source/load_scene
+  if [ $i -ge $start ]; then
+    echo 'rendering' $i ' from ' $cap
+    ./source/load_scene
 
-  #padding for ffmpeg
-  convert animation.ppm 'frms/frame'`printf "%04d" $i`'.png'
-  
+    #padding for ffmpeg
+    convert animation.ppm 'frms/frame'`printf "%04d" $i`'.png'
+  fi
   ((i++))
 done
 
