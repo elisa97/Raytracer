@@ -1,12 +1,23 @@
 #! /bin/bash
 
-#path to the sdf
+#path to the sdf file
 org_file="../source/animation.sdf"
-
+start_time=`date +"%Y-%m-%d_%H-%M-%S"`
+#start- and endpoint that is rendered orig cap is 540
 start=0
-cap=540
+cap=343
 
-cd ../build
+#preperation
+cd ..
+
+if [ ! -d "build/" ]; then
+  mkdir build
+fi
+
+cd build 
+
+#compiling the raytracer
+cmake ..
 make
 clear
 
@@ -134,7 +145,7 @@ do
   if [ $i -ge $start ]; then
     echo 'rendering' $i ' from ' $cap
     ./source/load_scene
-
+    
     #padding for ffmpeg
     convert animation.ppm 'frms/frame'`printf "%04d" $i`'.png'
   fi
@@ -142,7 +153,9 @@ do
 done
 
 #generating the video
-ffmpeg -r 30 -i frms/'frame%04d.png' anim/anim_$cap.mp4
+ffmpeg -r 30 -i frms/'frame%04d.png' anim/anim_$cap-$start_time.mp4
+end_time=`date +"%Y-%m-%d_%H-%M-%S"`
+echo '> animation done, started at ' $start_time ' finished at ' $end_time
 
 #cleanup if needed
 #rm -rf frms
