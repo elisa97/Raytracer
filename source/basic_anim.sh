@@ -5,13 +5,19 @@ org_file="../source/animation.sdf"
 start_time=`date +"%Y-%m-%d_%H-%M-%S"`
 #start- and endpoint that is rendered orig cap is 540
 start=0
-cap=343
+cap=540
 
-#preperation
+#cap can also be set in the cli
+if [ $1 -ge 1 ]; then
+  cap=$1
+fi
+
+#preperation for the raytracer
 cd ..
 
 if [ ! -d "build/" ]; then
   mkdir build
+  echo '> created the build directory'
 fi
 
 cd build 
@@ -21,7 +27,8 @@ cmake ..
 make
 clear
 
-#setting up files and directories
+echo '> compiled the raytracer'
+#setting up files and directories for the animation
 i=0
 rm animation.tmp
 cp $org_file .
@@ -29,12 +36,12 @@ mv animation.sdf animation.tmp
 file="animation.tmp"
 
 if [ ! -d "frms/" ]; then
-  echo 'created folder frms'
+  echo '> created folder frms'
   mkdir frms
 fi
 
 if [ ! -d "anim/" ]; then
-  echo 'created folder anim'
+  echo '> created folder anim'
   mkdir anim
 fi
 
@@ -44,6 +51,7 @@ if [ $cap -lt $i ]; then
   i=$tmp
 fi
 
+echo '> starting with the animation'
 #important part
 while [ $i -le $cap ]
 do
@@ -128,10 +136,12 @@ do
   if [ $i -gt 330 ] && [ $i -le 390 ]; then
     num=$((330 - $i))
     step=$(echo $num*$num*$num*0.001 | bc -l)
-    sed -i 's/transform out_bx_0 .*/transform out_bx_0 translate 0 0 -'$step'/' $file
-    sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 0 -'$step'/' $file
-    sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 0 -'$step'/' $file
-    sed -i 's/transform out_sp_1 .*/transform out_sp_1 translate 0 0 -'$step'/' $file
+    #there is no abs(), so we truncate the $step and cut the '-' to get the positive $steps
+    pos_step=`echo $step | tr -d -`
+    sed -i 's/transform out_bx_0 .*/transform out_bx_0 translate 0 0 '$step'/' $file
+    sed -i 's/transform out_bx_1 .*/transform out_bx_1 translate 0 0 '$pos_step'/' $file
+    sed -i 's/transform out_sp_0 .*/transform out_sp_0 translate 0 0 '$pos_step'/' $file
+    sed -i 's/transform out_sp_1 .*/transform out_sp_1 translate 0 0 '$pos_step'/' $file 
   fi
   #moving the objects away to avoid artefacts
   if [ $i -gt 390 ]; then
@@ -143,10 +153,10 @@ do
 
   #rendering the file
   if [ $i -ge $start ]; then
-    echo 'rendering' $i ' from ' $cap
+    echo '- rendering' $i ' from ' $cap
     ./source/load_scene
     
-    #padding for ffmpeg
+    #padding and converting for ffmpeg
     convert animation.ppm 'frms/frame'`printf "%04d" $i`'.png'
   fi
   ((i++))
@@ -155,7 +165,7 @@ done
 #generating the video
 ffmpeg -r 30 -i frms/'frame%04d.png' anim/anim_$cap-$start_time.mp4
 end_time=`date +"%Y-%m-%d_%H-%M-%S"`
-echo '> animation done, started at ' $start_time ' finished at ' $end_time
+echo ; echo '> animation done, started at ' $start_time ' finished at ' $end_time ; echo
 
 #cleanup if needed
 #rm -rf frms
