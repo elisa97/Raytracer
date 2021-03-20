@@ -2,7 +2,8 @@
 
 #path to the sdf file
 org_file="../source/animation.sdf"
-start_time=`date +"%Y-%m-%d_%H-%M-%S"`
+start_date=`date +"%Y-%m-%d_%H-%M-%S"`
+start_time=$SECONDS
 #start- and endpoint that is rendered orig cap is 540
 start=0
 cap=540
@@ -164,8 +165,10 @@ done
 
 #generating the video
 ffmpeg -r 30 -i frms/'frame%04d.png' anim/anim_$cap-$start_time.mp4
-end_time=`date +"%Y-%m-%d_%H-%M-%S"`
-echo ; echo '> animation done, started at ' $start_time ' finished at ' $end_time ; echo
+end_date=`date +"%Y-%m-%d_%H-%M-%S"`
+end_time=$SECONDS
+echo ; echo '> animation done, started at ' $start_date ' finished at ' $end_date ; echo
+echo '> took '$(( end_time-start_time ))' seconds' ; echo
 
 #cleanup if needed
 #rm -rf frms
