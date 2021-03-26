@@ -1,6 +1,6 @@
 <h1 align="center">a C++ Raytracer</h1>  
 
-![anim](misc/anim2.webp)
+![anim](misc/anim.webp)
 
 
 a very compressed webp to give an idea of whats possible with a bit of scripting, a nicer mp4 can be found in `misc/`
