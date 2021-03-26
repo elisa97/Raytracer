@@ -4,34 +4,29 @@
 org_file="../source/animation.sdf"
 start_date=`date +"%Y-%m-%d_%H-%M-%S"`
 start_time=$SECONDS
-#start- and endpoint that is rendered orig cap is 540
+#start- and endpoint that is rendered orig cap is 539
 start=0
 cap=539
 
 #cap can also be set in the cli
-if [ $1 -ge 1 ]; then
-  cap=$1
+if [ ! -z $1]; then
+  if [ $1 -ge "1" ]; then
+    cap=$1
+  fi
 fi
 
-#preperation for the raytracer
+cd ..
 
 if [ ! -d "build/" ]; then
-  mkdir build
-  echo '> created the build directory'
+  echo '> build directory missing; running setup'
+  ./setup.sh
 fi
 
-cd build 
-
-#compiling the raytracer
-cmake ..
-make
-clear
-
-echo '> compiled the raytracer'
+cd build
 
 #setting up files and directories for the animation
 
-if [ -e "animation.tmp" ]; then
+if [ -f "animation.tmp" ]; then
   rm animation.tmp
 fi
 
@@ -57,16 +52,7 @@ if [ $cap -lt $i ]; then
   i=$tmp
 fi
 
-read -p '> starting with the animation[Y/n]' input
-
-case $input in 
-  [nN]* )
-    exit 0
-    ;;
-  [qQ]* )
-    exit 0
-    ;;
-esac
+echo '> starting the animation'
 
 #important part
 while [ $i -le $cap ]
