@@ -165,7 +165,7 @@ do
 done
 
 #generating the video
-ffmpeg -r 30 -i frms/'frame%04d.png' anim/anim_$cap-$start_time.mp4
+ffmpeg -r 30 -i frms/'frame%04d.png' anim/anim_$cap-$start_date.mp4
 end_date=`date +"%Y-%m-%d_%H-%M-%S"`
 end_time=$SECONDS
 echo ; echo '> animation done, started at ' $start_date ' finished at ' $end_date ; echo

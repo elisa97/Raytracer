@@ -23,6 +23,11 @@ if [ -f $input ]; then
     else
         echo '> rendering '$input
         ../build/source/load_scene $input
+        ppm=`awk '/^render/ {print $3}' $input`
+        png=${ppm%.ppm}'.png'
+        cd ../build
+        convert $ppm $png
+        echo '> file saved as build/'$png 
     fi
 else
     echo 'the file does not exist, please check the spelling'
