@@ -5,7 +5,7 @@ if [ ! -d "build/" ]; then
   echo '> created the build directory'
 fi
 
-cd build 
+cd build || exit
 
 #compiling the raytracer
 cmake ..
